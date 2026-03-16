@@ -6,6 +6,8 @@ import Image from "next/image";
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [servicio, setServicio] = useState("autos");
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -31,6 +33,28 @@ export default function Home() {
     };
   }, []);
 
+  const handleContacto = () => {
+    const phones: Record<string, string> = {
+      autos: "59894774465",
+      motos: "59898151659",
+      tramites: "59894774465",
+      teorica: "59894774465",
+      defensivo: "59894774465",
+      psicologia: "59894774465",
+    };
+    const labels: Record<string, string> = {
+      autos: "clases de autos",
+      motos: "clases de motos",
+      tramites: "gestoría de trámites",
+      teorica: "la prueba teórica",
+      defensivo: "la charla de manejo defensivo",
+      psicologia: "apoyo psicológico",
+    };
+    const phone = phones[servicio] || phones.autos;
+    const text = `Hola! Me interesa consultar sobre ${labels[servicio] || servicio}${mensaje ? `. ${mensaje}` : "."}`;
+    window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`, "_blank");
+  };
+
   return (
     <>
       {/* NAV */}
@@ -39,43 +63,40 @@ export default function Home() {
           <a href="#hero" className="logo">Academia<span>Punta</span></a>
           <ul className="nav-links">
             <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#proceso">Proceso</a></li>
+            <li><a href="#guia">Guía</a></li>
+            <li><a href="#materiales">Materiales</a></li>
             <li><a href="#testimonios">Opiniones</a></li>
+            <li><a href="#interes">Links</a></li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
-          <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-nav" target="_blank" rel="noopener noreferrer">
-            Empezar →
-          </a>
+          <a href="#contacto" className="btn-nav">Empezar →</a>
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú">
             <span></span><span></span><span></span>
           </button>
         </div>
         <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
           <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
-          <a href="#proceso" onClick={() => setMenuOpen(false)}>Proceso</a>
+          <a href="#guia" onClick={() => setMenuOpen(false)}>Guía</a>
+          <a href="#materiales" onClick={() => setMenuOpen(false)}>Materiales</a>
           <a href="#testimonios" onClick={() => setMenuOpen(false)}>Opiniones</a>
-          <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
-          <a href="https://api.whatsapp.com/send?phone=59894774465" className="btn-mobile" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
-            Empezar ahora
-          </a>
+          <a href="#interes" onClick={() => setMenuOpen(false)}>Links de interés</a>
+          <a href="#contacto" className="btn-mobile" onClick={() => setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
 
-      {/* HERO con imagen de fondo */}
+      {/* HERO */}
       <section className="hero" id="hero">
         <div className="hero-bg-img"></div>
         <div className="hero-overlay"></div>
         <div className="hero-inner">
-          <div className="hero-badge">🚗 Punta del Este, Uruguay</div>
+          <div className="hero-badge">🚗 Punta del Este, Maldonado — Uruguay</div>
           <h1>Tu licencia,<span>sin dramas.</span></h1>
           <p className="hero-sub">
             Clases personalizadas para autos y motos. Instructores certificados.
             Tramitamos todo por vos ante la IDM.
           </p>
           <div className="hero-btns">
-            <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-primary" target="_blank" rel="noopener noreferrer">
-              Quiero empezar 🚀
-            </a>
+            <a href="#contacto" className="btn-primary">Quiero empezar 🚀</a>
             <a href="#servicios" className="btn-outline">Ver servicios</a>
           </div>
           <div className="hero-stats">
@@ -101,7 +122,7 @@ export default function Home() {
             { icon: "📋", title: "Gestoría IDM", desc: "Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro." },
             { icon: "🧠", title: "Prueba Teórica", desc: "Clase de apoyo con docente. Porque el 70% reprueba sin preparación adecuada." },
             { icon: "🛡️", title: "Manejo Defensivo", desc: "Charlas lunes, miércoles y viernes. Doble horario: 8:00 hs y 18:30 hs." },
-            { icon: "🧘", title: "Apoyo Psicológico", desc: "¿Le tenés miedo al volante? Tenemos profesionales que te acompañan en el proceso." },
+            { icon: "🧘", title: "Apoyo Psicológico", desc: "¿Le tenés miedo al volante? Profesionales que te acompañan en el proceso." },
           ].map((s, i) => (
             <div className="service-card reveal" key={i}>
               <div className="s-icon">{s.icon}</div>
@@ -114,94 +135,88 @@ export default function Home() {
 
       {/* BANNER AUTOS */}
       <div className="img-banner">
-        <Image
-          src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1600&q=80"
-          alt="Clases de manejo en autos"
-          width={1600}
-          height={420}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          unoptimized
-        />
+        <Image src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1600&q=80" alt="Clases de autos" width={1600} height={420} style={{ width:"100%", height:"100%", objectFit:"cover" }} unoptimized />
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Clases de autos<br /><span>personalizadas</span></h2>
-            <p>Aprendé a tu ritmo con instructores pacientes y certificados. Pasamos a buscarte para cada clase.</p>
-            <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20clases%20de%20autos." className="btn-primary" target="_blank" rel="noopener noreferrer">
-              Consultar ahora
-            </a>
+            <p>Aprendé a tu ritmo con instructores pacientes y certificados. Te buscamos para cada clase.</p>
+            <a href="#contacto" className="btn-primary">Consultar ahora</a>
           </div>
         </div>
       </div>
 
-      {/* PROCESO */}
-      <section className="section" id="proceso">
-        <div className="section-tag">Cómo funciona</div>
-        <h2 className="section-title">Del cero a tu <span>licencia</span></h2>
-        <div className="steps">
+      {/* GUIA PARA LICENCIAS */}
+      <section className="section" id="guia">
+        <div className="section-tag">Paso a paso</div>
+        <h2 className="section-title">Guía para <span>obtener tu licencia</span></h2>
+        <div className="guia-grid">
           {[
-            { num: "01", title: "Clases de manejo", desc: "Aprendé con instructores habilitados. Vehículo de la academia incluido." },
-            { num: "02", title: "Charla de manejo defensivo", desc: "Instancia obligatoria. La coordinamos a tu horario." },
-            { num: "03", title: "Certificado de aptitud física", desc: "Te damos la lista completa de instituciones autorizadas en Maldonado." },
-            { num: "04", title: "Prueba teórica", desc: "Con clase de apoyo opcional. Coordinamos fecha en la oficina IDM." },
-            { num: "05", title: "Prueba práctica", desc: "En pista La Loma con nuestro vehículo e instructor habilitado." },
-            { num: "06", title: "¡Licencia en mano!", desc: "Gestionamos el trámite final. Vos solo disfrutás el resultado." },
-          ].map((step, i) => (
-            <div className="step reveal" key={i}>
-              <div className="step-num">{step.num}</div>
-              <div className="step-body">
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
-              </div>
+            { num: "PASO 01", title: "Trámite en IDM", desc: "Academia Punta realiza los trámites para las diferentes licencias ante la Intendencia de Maldonado." },
+            { num: "PASO 02", title: "Charla de Manejo Defensivo", desc: "Lunes, miércoles y viernes a las 8:00 hs y 18:30 hs. Presentarse con documento de identidad 5 min antes." },
+            { num: "PASO 03", title: "Prueba Teórica", desc: "En la oficina de Licencias de conducir de la IDM. Coordinamos fecha y hora a tu conveniencia." },
+            { num: "PASO 04", title: "Certificado de Aptitud Física", desc: "En instituciones autorizadas: SEMM, Bioeste, CASMU, Círculo Católico, Asistencial Médica y más. ATENCIÓN: el carnet de salud NO es válido." },
+            { num: "PASO 05", title: "Prueba Práctica", desc: "En pista La Loma. Presentamos vehículo e instructor registrados y habilitados (auto y/o moto)." },
+            { num: "PASO 06", title: "Clases de Manejo", desc: "Unidades nuevas. Amplio horario lunes a sábados. Clases personalizadas. Pasamos a buscarte." },
+          ].map((g, i) => (
+            <div className="guia-card reveal" key={i}>
+              <div className="guia-num">{g.num}</div>
+              <h3>{g.title}</h3>
+              <p>{g.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* GALERÍA DE FOTOS */}
-      <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
-        <div className="section-tag">Nuestras clases</div>
-        <h2 className="section-title">Aprendé con los <span>mejores</span></h2>
+      {/* MATERIALES DE ESTUDIO */}
+      <section className="section" id="materiales">
+        <div className="section-tag">Descargá gratis</div>
+        <h2 className="section-title">Materiales <span>de estudio</span></h2>
+        <div className="materiales-grid">
+          <div className="material-card reveal">
+            <div className="material-info">
+              <h3>📘 Guía Nacional de Conducción Amateur</h3>
+              <p>Autos y motos — Descargá el PDF oficial para prepararte</p>
+            </div>
+            <a href="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/05/GuiaAutosYMotos.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">
+              ⬇️ Descargar PDF
+            </a>
+          </div>
+          <div className="material-card reveal">
+            <div className="material-info">
+              <h3>📗 Guía Nacional de Conducción Profesional</h3>
+              <p>Licencia profesional — Material oficial completo</p>
+            </div>
+            <a href="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/05/GuiaProfesional.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">
+              ⬇️ Descargar PDF
+            </a>
+          </div>
+          <div className="material-card reveal" style={{ gridColumn: "1 / -1" }}>
+            <div className="material-info">
+              <h3>💻 Clase de Apoyo a la Prueba Teórica</h3>
+              <p>Clase virtual con docente para prepararte y aprobar el teórico. El 70% reprueba sin preparación.</p>
+            </div>
+            <a href="https://academiadechoferespunta.com.uy/clasevirtual/" className="btn-download" target="_blank" rel="noopener noreferrer">
+              Ver clase virtual →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* GALERIA */}
+      <section className="section" style={{ paddingTop: "0" }}>
         <div className="foto-grid">
           {[
             { src: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&q=80", label: "Clases de Autos" },
             { src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", label: "Clases de Motos" },
-            { src: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80", label: "Pista La Loma" },
+            { src: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80", label: "Instructores Certificados" },
           ].map((foto, i) => (
             <div className="foto-item reveal" key={i}>
-              <Image
-                src={foto.src}
-                alt={foto.label}
-                width={800}
-                height={600}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                unoptimized
-              />
+              <Image src={foto.src} alt={foto.label} width={800} height={600} style={{ width:"100%", height:"100%", objectFit:"cover" }} unoptimized />
               <div className="foto-label">{foto.label}</div>
             </div>
           ))}
         </div>
       </section>
-
-      {/* BANNER MOTOS */}
-      <div className="img-banner">
-        <Image
-          src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=1600&q=80"
-          alt="Clases de motos"
-          width={1600}
-          height={420}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          unoptimized
-        />
-        <div className="img-banner-overlay">
-          <div className="img-banner-text">
-            <h2>Clases de motos<br /><span>en pista La Loma</span></h2>
-            <p>Proporcionamos vehículo, casco y reflectivos. Horarios de lunes a sábados.</p>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." className="btn-primary" target="_blank" rel="noopener noreferrer">
-              Consultar ahora
-            </a>
-          </div>
-        </div>
-      </div>
 
       {/* TESTIMONIOS */}
       <section className="section" id="testimonios">
@@ -225,52 +240,209 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PAGINAS DE INTERES */}
+      <section className="section" id="interes">
+        <div className="section-tag">Recursos útiles</div>
+        <h2 className="section-title">Páginas <span>de interés</span></h2>
+        <div className="interes-grid">
+          {[
+            { icon: "🚗", title: "Permiso de Conducción — SUCIVE", desc: "Web oficial de SUCIVE para trámites de permiso", url: "https://www.sucive.gub.uy/formulario_punc?0" },
+            { icon: "📋", title: "Licencia de Conducir — IDM", desc: "Trámite de licencia en Intendencia de Maldonado", url: "https://www.maldonado.gub.uy/tramites/tramites-licencias-conducir" },
+            { icon: "🛡️", title: "Unidad Nacional de Seguridad Vial", desc: "UNASEV — Seguridad vial en Uruguay", url: "https://www.gub.uy/unidad-nacional-seguridad-vial/" },
+            { icon: "🧘", title: "Lic. Psicóloga Ana Claudia Martínez", desc: "Servicio de asistencia psicológica para conductores", url: "http://www.consultoriopsicologico.wordpress.com/" },
+            { icon: "📝", title: "Examen Teórico — Academia Punta", desc: "Practicá el examen teórico online con nosotros", url: "https://academiadechoferespunta.com.uy/prueba" },
+            { icon: "💬", title: "Contacto directo", desc: "Escribinos por WhatsApp y te respondemos al toque", url: "https://api.whatsapp.com/send?phone=59894774465" },
+          ].map((item, i) => (
+            <a className="interes-card reveal" href={item.url} key={i} target="_blank" rel="noopener noreferrer">
+              <div className="interes-icon">{item.icon}</div>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* REDES SOCIALES */}
+      <section className="section" style={{ paddingTop: "0" }}>
+        <div className="section-tag">Seguinos</div>
+        <h2 className="section-title">Nuestras <span>redes sociales</span></h2>
+        <div className="redes-grid">
+          <a href="https://www.instagram.com/academiadechoferespunta/" className="red-card reveal" target="_blank" rel="noopener noreferrer">
+            <div className="red-icon">📸</div>
+            <div>
+              <span>Instagram</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.2rem" }}>@academiadechoferespunta</p>
+            </div>
+          </a>
+          <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="red-card reveal" target="_blank" rel="noopener noreferrer">
+            <div className="red-icon">👍</div>
+            <div>
+              <span>Facebook</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.2rem" }}>Academia de Choferes Punta</p>
+            </div>
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=59894774465" className="red-card reveal" target="_blank" rel="noopener noreferrer">
+            <div className="red-icon">💬</div>
+            <div>
+              <span>WhatsApp Autos</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.2rem" }}>094 774 465</p>
+            </div>
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=59898151659" className="red-card reveal" target="_blank" rel="noopener noreferrer">
+            <div className="red-icon">💬</div>
+            <div>
+              <span>WhatsApp Motos</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--muted)", marginTop: "0.2rem" }}>098 151 659</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      {/* MAPA */}
+      <section className="section" style={{ paddingTop: "0" }}>
+        <div className="section-tag">Dónde estamos</div>
+        <h2 className="section-title">Maldonado, <span>Uruguay</span></h2>
+        <div className="mapa-wrapper reveal">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3272.0!2d-54.95!3d-34.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x957511348d9fc7b7%3A0xe755a1d8711427e8!2sAcademia%20de%20Choferes%20Punta!5e0!3m2!1ses!2suy!4v1"
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Ubicación Academia de Choferes Punta"
+          ></iframe>
+        </div>
+      </section>
+
       {/* CTA BAND */}
       <div className="cta-band">
         <div className="cta-band-inner">
           <h2>¿Listo para sacar<br />tu licencia hoy?</h2>
           <div className="cta-band-btns">
-            <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-dark" target="_blank" rel="noopener noreferrer">
-              📱 WhatsApp — Autos
-            </a>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." className="btn-dark" target="_blank" rel="noopener noreferrer">
-              📱 WhatsApp — Motos
-            </a>
+            <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-dark" target="_blank" rel="noopener noreferrer">📱 Autos — 094 774 465</a>
+            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." className="btn-dark" target="_blank" rel="noopener noreferrer">📱 Motos — 098 151 659</a>
           </div>
         </div>
       </div>
 
       {/* CONTACTO */}
-      <section className="section contacto" id="contacto">
-        <div className="section-tag">Contacto</div>
-        <h2 className="section-title">¿Tenés alguna <span>consulta?</span></h2>
-        <p className="contacto-sub">Escribinos por WhatsApp y te respondemos al toque.</p>
-        <div className="contacto-btns">
-          <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-wa" target="_blank" rel="noopener noreferrer">
-            📱 WhatsApp — Autos
-          </a>
-          <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." className="btn-wa" target="_blank" rel="noopener noreferrer">
-            📱 WhatsApp — Motos
-          </a>
-        </div>
-        <div className="redes">
-          <a href="https://www.instagram.com/academiadechoferespunta/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <section className="section" id="contacto">
+        <div className="section-tag">Escribinos</div>
+        <h2 className="section-title">Elegí tu servicio y <span>contactanos</span></h2>
+        <div className="contacto-grid">
+          <div className="contacto-info">
+            <h3>Información de contacto</h3>
+            <div className="contacto-item">
+              <div className="contacto-item-icon">🚗</div>
+              <div className="contacto-item-text">
+                <strong>WhatsApp — Autos</strong>
+                <p>094 774 465</p>
+              </div>
+            </div>
+            <div className="contacto-item">
+              <div className="contacto-item-icon">🏍️</div>
+              <div className="contacto-item-text">
+                <strong>WhatsApp — Motos</strong>
+                <p>098 151 659</p>
+              </div>
+            </div>
+            <div className="contacto-item">
+              <div className="contacto-item-icon">📍</div>
+              <div className="contacto-item-text">
+                <strong>Ubicación</strong>
+                <p>Maldonado, Uruguay<br />Punta del Este y alrededores</p>
+              </div>
+            </div>
+            <div className="contacto-item">
+              <div className="contacto-item-icon">🕐</div>
+              <div className="contacto-item-text">
+                <strong>Horario de clases</strong>
+                <p>Lunes a Sábados<br />Horario amplio y flexible</p>
+              </div>
+            </div>
+            <div className="contacto-item">
+              <div className="contacto-item-icon">📸</div>
+              <div className="contacto-item-text">
+                <strong>Instagram</strong>
+                <p>@academiadechoferespunta</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="contacto-form">
+            <h3>Seleccioná tu consulta y te abrimos WhatsApp</h3>
+            <div className="form-group">
+              <label>¿Qué servicio te interesa?</label>
+              <select value={servicio} onChange={(e) => setServicio(e.target.value)}>
+                <option value="autos">🚗 Clases de Autos</option>
+                <option value="motos">🏍️ Clases de Motos</option>
+                <option value="tramites">📋 Gestoría de Trámites IDM</option>
+                <option value="teorica">🧠 Prueba Teórica</option>
+                <option value="defensivo">🛡️ Charla de Manejo Defensivo</option>
+                <option value="psicologia">🧘 Apoyo Psicológico</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Tu consulta (opcional)</label>
+              <textarea
+                placeholder="Contanos tu situación o pregunta..."
+                value={mensaje}
+                onChange={(e) => setMensaje(e.target.value)}
+              ></textarea>
+            </div>
+            <button className="btn-wa-form" onClick={handleContacto}>
+              💬 Enviar por WhatsApp
+            </button>
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer>
         <div className="footer-inner">
-          <div className="footer-logo">Academia<span>Punta</span></div>
-          <p>La academia de choferes de referencia en Maldonado, Uruguay.</p>
-          <div className="footer-links">
-            <a href="#servicios">Servicios</a>
-            <a href="#proceso">Proceso</a>
-            <a href="#testimonios">Opiniones</a>
-            <a href="#contacto">Contacto</a>
+          <div className="footer-grid">
+            <div className="footer-brand">
+              <div className="footer-logo">Academia<span>Punta</span></div>
+              <p>La academia de choferes de referencia en Punta del Este y Maldonado, Uruguay. Más de 15 años formando conductores seguros.</p>
+              <div className="footer-social">
+                <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram">ig</a>
+                <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook">fb</a>
+                <a href="https://api.whatsapp.com/send?phone=59894774465" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">wa</a>
+              </div>
+            </div>
+            <div className="footer-col">
+              <h4>Servicios</h4>
+              <ul>
+                <li><a href="#servicios">Clases de Autos</a></li>
+                <li><a href="#servicios">Clases de Motos</a></li>
+                <li><a href="#servicios">Gestoría IDM</a></li>
+                <li><a href="#servicios">Prueba Teórica</a></li>
+                <li><a href="#servicios">Manejo Defensivo</a></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h4>Recursos</h4>
+              <ul>
+                <li><a href="#guia">Guía de Licencia</a></li>
+                <li><a href="#materiales">Materiales de Estudio</a></li>
+                <li><a href="#interes">Páginas de Interés</a></li>
+                <li><a href="https://academiadechoferespunta.com.uy/prueba" target="_blank" rel="noopener noreferrer">Examen Teórico</a></li>
+              </ul>
+            </div>
+            <div className="footer-col">
+              <h4>Contacto</h4>
+              <ul>
+                <li><a href="https://api.whatsapp.com/send?phone=59894774465">094 774 465 — Autos</a></li>
+                <li><a href="https://api.whatsapp.com/send?phone=59898151659">098 151 659 — Motos</a></li>
+                <li><a href="#contacto">Formulario de contacto</a></li>
+              </ul>
+            </div>
           </div>
-          <div className="footer-copy">© 2025 Academia de Choferes Punta — Maldonado, Uruguay</div>
+          <div className="footer-bottom">
+            <span>© 2025 Academia de Choferes Punta — Maldonado, Uruguay</span>
+            <span>Diseño web moderno</span>
+          </div>
         </div>
       </footer>
 

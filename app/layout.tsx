@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Academia de Choferes Punta — Sacá tu licencia sin dramas",
-  description: "La academia de choferes de referencia en Punta del Este y Maldonado. Clases personalizadas de autos y motos, instructores certificados y gestión completa de trámites.",
+  description: "La academia de choferes de referencia en Punta del Este y Maldonado. Clases de autos y motos, instructores certificados, gestoría IDM completa.",
   keywords: "academia choferes punta del este, licencia conducir maldonado, clases manejo uruguay, autoescuela punta del este",
   openGraph: {
     title: "Academia de Choferes Punta",
