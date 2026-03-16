@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
-// SVG iconos oficiales
 const IconWhatsApp = () => (
   <svg viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -31,6 +30,346 @@ const IconFacebook = () => (
   </svg>
 );
 
+const IconGoogle = () => (
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+);
+
+const reviews = [
+  {
+    nombre: "Romi Giedzinski",
+    inicial: "R",
+    color: "#E91E63",
+    estrellas: 5,
+    fecha: "hace 2 meses",
+    texto: "Súper recomendado! Un placer tomar clases con Darío. Súper profesional y con una paciencia infinita.",
+  },
+  {
+    nombre: "Cesar Sanchez",
+    inicial: "C",
+    color: "#2196F3",
+    estrellas: 5,
+    fecha: "hace 3 meses",
+    texto: "Excelente experiencia. Totalmente recomendable. Muy agradecido al instructor Fernando.",
+  },
+  {
+    nombre: "Guillermo Cortes",
+    inicial: "G",
+    color: "#4CAF50",
+    estrellas: 5,
+    fecha: "hace 4 meses",
+    texto: "Excelente academia, muy comprometidos los instructores.",
+  },
+  {
+    nombre: "Evelyn Schlenzak",
+    inicial: "E",
+    color: "#FF9800",
+    estrellas: 5,
+    fecha: "hace 1 mes",
+    texto: "Estoy muy agradecida con Fernando por toda la ayuda durante mi preparación para el examen. Gracias a su paciencia y dedicación, pude aprobar el examen sin problemas. ¡Recomiendo 100% esta academia!",
+  },
+  {
+    nombre: "Martin Gannuso",
+    inicial: "M",
+    color: "#9C27B0",
+    estrellas: 5,
+    fecha: "hace 5 meses",
+    texto: "100 por ciento recomendable!!! Tanto el rápido aprendizaje como la buena predisposición de los instructores! Muchas gracias por todo!",
+  },
+  {
+    nombre: "Gabriel URU",
+    inicial: "G",
+    color: "#00BCD4",
+    estrellas: 5,
+    fecha: "hace 2 meses",
+    texto: "Excelentes instructores, mucha atención a los detalles para estar tranquilos y confiados en las pruebas, flota impecable. Puntualidad, comunicación, super recomendados 10/10 en todo.",
+  },
+  {
+    nombre: "Mauro Corbo",
+    inicial: "M",
+    color: "#FF5722",
+    estrellas: 5,
+    fecha: "hace 6 meses",
+    texto: "Agradecido a la academia Punta por el servicio brindado, herramienta y atención de primera lo recomiendo para todo aquel que necesite este servicio.",
+  },
+  {
+    nombre: "Mauricio González",
+    inicial: "M",
+    color: "#607D8B",
+    estrellas: 5,
+    fecha: "hace 3 meses",
+    texto: "Puntual y buen trato, recomendable.",
+  },
+  {
+    nombre: "Melisa Alvarez",
+    inicial: "M",
+    color: "#F44336",
+    estrellas: 5,
+    fecha: "hace 1 mes",
+    texto: "Excelente academia para aprender a manejar!! Enseñan con mucha paciencia y dedicación. Muchas gracias por enseñarme a manejar y hacerlo con tan buena onda!",
+  },
+  {
+    nombre: "Lucas Fernández",
+    inicial: "L",
+    color: "#3F51B5",
+    estrellas: 5,
+    fecha: "hace 2 semanas",
+    texto: "Muy buena atención desde el primer momento. Los instructores son muy pacientes y profesionales. Totalmente recomendable para cualquiera que quiera sacar su licencia.",
+  },
+];
+
+function GoogleStars({ count }: { count: number }) {
+  return (
+    <div style={{ display: "flex", gap: "2px" }}>
+      {[...Array(5)].map((_, i) => (
+        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill={i < count ? "#FBBC04" : "#dadce0"}>
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      ))}
+    </div>
+  );
+}
+
+function ReviewSlider() {
+  const [current, setCurrent] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right">("right");
+  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const goTo = (index: number, dir: "left" | "right") => {
+    if (isAnimating) return;
+    setDirection(dir);
+    setIsAnimating(true);
+    setTimeout(() => {
+      setCurrent(index);
+      setIsAnimating(false);
+    }, 350);
+  };
+
+  const prev = () => goTo(current === 0 ? reviews.length - 1 : current - 1, "left");
+  const next = () => goTo(current === reviews.length - 1 ? 0 : current + 1, "right");
+
+  useEffect(() => {
+    autoRef.current = setInterval(() => next(), 4000);
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
+  }, [current]);
+
+  const r = reviews[current];
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Resumen */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "2rem",
+        marginBottom: "2.5rem",
+        padding: "1.5rem 2rem",
+        background: "var(--card)",
+        border: "1px solid var(--border)",
+        flexWrap: "wrap",
+      }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "3.5rem", color: "var(--white)", lineHeight: 1 }}>4.9</div>
+          <GoogleStars count={5} />
+          <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.3rem" }}>677 reseñas</div>
+        </div>
+        <div style={{ flex: 1, minWidth: "200px" }}>
+          {[5,4,3,2,1].map(n => (
+            <div key={n} style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.3rem" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--muted)", minWidth: "0.8rem" }}>{n}</span>
+              <div style={{ flex: 1, height: "6px", background: "var(--border)", borderRadius: "3px", overflow: "hidden" }}>
+                <div style={{
+                  height: "100%",
+                  background: "#FBBC04",
+                  borderRadius: "3px",
+                  width: n === 5 ? "95%" : n === 4 ? "4%" : "1%"
+                }}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <a
+          href="https://www.google.com/search?q=Academia+de+Choferes+Punta+Maldonado#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,1"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            background: "transparent",
+            border: "1px solid var(--border)",
+            color: "var(--white)",
+            padding: "0.6rem 1.2rem",
+            fontFamily: "Syne, sans-serif",
+            fontWeight: 700,
+            fontSize: "0.78rem",
+            textDecoration: "none",
+            transition: "border-color 0.2s",
+          }}
+        >
+          <IconGoogle /> Ver en Google
+        </a>
+      </div>
+
+      {/* Slider card */}
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <div
+          style={{
+            background: "var(--card)",
+            border: "1px solid var(--border)",
+            padding: "2.5rem",
+            borderRadius: "0",
+            transition: isAnimating ? "opacity 0.35s ease, transform 0.35s ease" : "none",
+            opacity: isAnimating ? 0 : 1,
+            transform: isAnimating
+              ? direction === "right" ? "translateX(-30px)" : "translateX(30px)"
+              : "translateX(0)",
+          }}
+        >
+          {/* Header Google Review */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.2rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+              <div style={{
+                width: "2.8rem",
+                height: "2.8rem",
+                borderRadius: "50%",
+                background: r.color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "Syne, sans-serif",
+                fontWeight: 800,
+                fontSize: "1.1rem",
+                color: "white",
+                flexShrink: 0,
+              }}>
+                {r.inicial}
+              </div>
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.95rem", color: "var(--white)" }}>{r.nombre}</div>
+                <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.1rem" }}>{r.fecha}</div>
+              </div>
+            </div>
+            <div style={{ opacity: 0.6 }}>
+              <IconGoogle />
+            </div>
+          </div>
+
+          {/* Estrellas */}
+          <div style={{ marginBottom: "1rem" }}>
+            <GoogleStars count={r.estrellas} />
+          </div>
+
+          {/* Texto */}
+          <p style={{
+            fontSize: "0.95rem",
+            lineHeight: 1.75,
+            color: "var(--text)",
+            fontStyle: "italic",
+          }}>
+            &ldquo;{r.texto}&rdquo;
+          </p>
+
+          {/* Publicado en Google */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            marginTop: "1.5rem",
+            paddingTop: "1rem",
+            borderTop: "1px solid var(--border)",
+            fontSize: "0.75rem",
+            color: "var(--muted)",
+          }}>
+            <IconGoogle />
+            <span>Publicado en Google Maps</span>
+          </div>
+        </div>
+
+        {/* Controles */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginTop: "1.5rem",
+        }}>
+          <button
+            onClick={prev}
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              color: "var(--white)",
+              width: "2.8rem",
+              height: "2.8rem",
+              cursor: "pointer",
+              fontSize: "1rem",
+              transition: "border-color 0.2s, background 0.2s",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.borderColor = "#FFFF00"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.borderColor = "var(--border)"; }}
+          >
+            ←
+          </button>
+
+          {/* Dots */}
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            {reviews.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i, i > current ? "right" : "left")}
+                style={{
+                  width: i === current ? "1.8rem" : "0.5rem",
+                  height: "0.5rem",
+                  borderRadius: "4px",
+                  background: i === current ? "#FFFF00" : "var(--border)",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "all 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={next}
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--border)",
+              color: "var(--white)",
+              width: "2.8rem",
+              height: "2.8rem",
+              cursor: "pointer",
+              fontSize: "1rem",
+              transition: "border-color 0.2s",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.borderColor = "#FFFF00"; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.borderColor = "var(--border)"; }}
+          >
+            →
+          </button>
+        </div>
+
+        {/* Contador */}
+        <div style={{ textAlign: "center", marginTop: "1rem", fontSize: "0.75rem", color: "var(--muted)" }}>
+          {current + 1} / {reviews.length}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -40,7 +379,6 @@ export default function Home() {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
-
     const reveals = document.querySelectorAll(".reveal");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -54,29 +392,17 @@ export default function Home() {
       { threshold: 0.1 }
     );
     reveals.forEach((el) => observer.observe(el));
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
+    return () => { window.removeEventListener("scroll", handleScroll); observer.disconnect(); };
   }, []);
 
   const handleContacto = () => {
     const phones: Record<string, string> = {
-      autos: "59894774465",
-      motos: "59898151659",
-      tramites: "59894774465",
-      teorica: "59894774465",
-      defensivo: "59894774465",
-      psicologia: "59894774465",
+      autos: "59894774465", motos: "59898151659", tramites: "59894774465",
+      teorica: "59894774465", defensivo: "59894774465", psicologia: "59894774465",
     };
     const labels: Record<string, string> = {
-      autos: "clases de autos",
-      motos: "clases de motos",
-      tramites: "gestoría de trámites IDM",
-      teorica: "la prueba teórica",
-      defensivo: "la charla de manejo defensivo",
-      psicologia: "apoyo psicológico",
+      autos: "clases de autos", motos: "clases de motos", tramites: "gestoría de trámites IDM",
+      teorica: "la prueba teórica", defensivo: "la charla de manejo defensivo", psicologia: "apoyo psicológico",
     };
     const phone = phones[servicio] || phones.autos;
     const text = `Hola! Me interesa consultar sobre ${labels[servicio]}${mensaje ? `. ${mensaje}` : "."}`;
@@ -130,13 +456,13 @@ export default function Home() {
             <a href="#servicios" className="btn-outline">Ver servicios</a>
           </div>
           <div className="hero-stats">
-            <div className="stat"><span className="num">5★</span><span className="label">Google</span></div>
+            <div className="stat"><span className="num">4.9★</span><span className="label">Google</span></div>
+            <div className="stat-div"></div>
+            <div className="stat"><span className="num">677</span><span className="label">Reseñas</span></div>
             <div className="stat-div"></div>
             <div className="stat"><span className="num">+15</span><span className="label">Años</span></div>
             <div className="stat-div"></div>
             <div className="stat"><span className="num">100%</span><span className="label">Certificados</span></div>
-            <div className="stat-div"></div>
-            <div className="stat"><span className="num">2</span><span className="label">Modalidades</span></div>
           </div>
         </div>
       </section>
@@ -254,26 +580,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* TESTIMONIOS */}
+      {/* TESTIMONIOS SLIDER */}
       <section className="section" id="testimonios">
         <div className="section-tag">Opiniones reales</div>
-        <h2 className="section-title">Lo que dicen <span>nuestros alumnos</span></h2>
-        <div className="testi-grid">
-          {[
-            { texto: "Súper recomendado. Un placer tomar clases con Darío. Profesional y con paciencia infinita.", autor: "Romi Giedzinski" },
-            { texto: "Gracias a Fernando pude aprobar sin problemas. Paciencia y dedicación total. ¡100% recomendable!", autor: "Evelyn Schlenzak" },
-            { texto: "Flota impecable, instructores excelentes. 10/10 en todo. Muy agradecido.", autor: "Gabriel URU" },
-            { texto: "100% recomendable. Rápido aprendizaje y buena predisposición de los instructores.", autor: "Martin Gannuso" },
-            { texto: "Enseñan con paciencia y dedicación. ¡Gracias por hacerlo con tan buena onda!", autor: "Melisa Alvarez" },
-            { texto: "Herramienta y atención de primera. Lo recomiendo para todo el que necesite este servicio.", autor: "Mauro Corbo" },
-          ].map((t, i) => (
-            <div className="testi-card reveal" key={i}>
-              <div className="stars">★★★★★</div>
-              <p>&ldquo;{t.texto}&rdquo;</p>
-              <div className="author">{t.autor}</div>
-            </div>
-          ))}
-        </div>
+        <h2 className="section-title">Lo que dicen en <span>Google</span></h2>
+        <ReviewSlider />
       </section>
 
       {/* PAGINAS DE INTERES */}
@@ -328,9 +639,7 @@ export default function Home() {
         <div className="mapa-wrapper reveal">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26176.04!2d-54.9516!3d-34.9013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x957511348d9fc7b7%3A0xe755a1d8711427e8!2sAcademia%20de%20Choferes%20Punta!5e0!3m2!1ses!2suy!4v1"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"
             title="Ubicación Academia de Choferes Punta"
           ></iframe>
         </div>
@@ -372,14 +681,13 @@ export default function Home() {
             </div>
             <div className="contacto-item">
               <div className="contacto-item-icon">🕐</div>
-              <div className="contacto-item-text"><strong>Horario de clases</strong><p>Lunes a Sábados — Horario amplio y flexible</p></div>
+              <div className="contacto-item-text"><strong>Horario de clases</strong><p>Lunes a Sábados — Amplio y flexible</p></div>
             </div>
             <div className="contacto-item">
               <div className="contacto-item-icon">📸</div>
               <div className="contacto-item-text"><strong>Instagram</strong><p>@academiadechoferespunta</p></div>
             </div>
           </div>
-
           <div className="contacto-form">
             <h3>Seleccioná tu consulta y te abrimos WhatsApp</h3>
             <div className="form-group">
@@ -416,15 +724,9 @@ export default function Home() {
               </a>
               <p>La academia de choferes de referencia en Punta del Este y Maldonado, Uruguay. Más de 15 años formando conductores seguros.</p>
               <div className="footer-social">
-                <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <IconInstagram />
-                </a>
-                <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <IconFacebook />
-                </a>
-                <a href="https://api.whatsapp.com/send?phone=59894774465" className="social-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                  <IconWhatsApp />
-                </a>
+                <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer"><IconInstagram /></a>
+                <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer"><IconFacebook /></a>
+                <a href="https://api.whatsapp.com/send?phone=59894774465" className="social-btn" target="_blank" rel="noopener noreferrer"><IconWhatsApp /></a>
               </div>
             </div>
             <div className="footer-col">
@@ -462,7 +764,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* WA FLOTANTE */}
       <a href="https://api.whatsapp.com/send?phone=59894774465" className="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <IconWhatsApp />
       </a>
