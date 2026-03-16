@@ -542,14 +542,7 @@ export default function Home() {
               <p>Licencia profesional — Material oficial completo</p>
             </div>
             <a href="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/05/GuiaProfesional.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar PDF</a>
-          </div>
-          <div className="material-card reveal" style={{ gridColumn: "1 / -1" }}>
-            <div className="material-info">
-              <h3>💻 Clase de Apoyo a la Prueba Teórica</h3>
-              <p>Clase virtual con docente. El 70% reprueba sin preparación — no seas parte de esa estadística.</p>
-            </div>
-            <a href="https://academiadechoferespunta.com.uy/clasevirtual/" className="btn-download" target="_blank" rel="noopener noreferrer">Ver clase virtual →</a>
-          </div>
+       
         </div>
       </section>
 
