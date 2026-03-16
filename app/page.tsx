@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import QuizModal from "./components/QuizModal";
 
 const IconWhatsApp = () => (
   <svg viewBox="0 0 24 24" fill="#25D366" xmlns="http://www.w3.org/2000/svg">
@@ -767,6 +768,8 @@ export default function Home() {
       <a href="https://api.whatsapp.com/send?phone=59894774465" className="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <IconWhatsApp />
       </a>
+
+      <QuizModal />
     </>
   );
 }
