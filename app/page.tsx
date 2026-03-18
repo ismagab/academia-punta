@@ -193,7 +193,7 @@ export default function Home() {
     window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`,"_blank");
   };
 
-  const LOGO="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/04/ICONO-circle-cropped-g.png";
+  const LOGO="/logo.jpg";
 
   return (
     <>
@@ -337,11 +337,11 @@ export default function Home() {
         <div className="materiales-grid">
           <div className="material-card reveal-left">
             <div className="material-info"><h3>📘 Guía Amateur</h3><p>Autos y motos — PDF oficial</p></div>
-            <a href="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/05/GuiaAutosYMotos.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar</a>
+            <a href="/pdfs/GuiaAutosYMotos.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar</a>
           </div>
           <div className="material-card reveal-right">
             <div className="material-info"><h3>📗 Guía Profesional</h3><p>Licencia profesional — PDF completo</p></div>
-            <a href="https://academiadechoferespunta.com.uy/wp-content/uploads/2022/05/GuiaProfesional.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar</a>
+            <a href="/pdfs/GuiaProfesional.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar</a>
           </div>
           <div className="material-card reveal" style={{gridColumn:"1 / -1"}}>
             <div className="material-info"><h3>💻 Clase Virtual — Apoyo Teórico</h3><p>Clase con docente online. El 70% reprueba sin preparación.</p></div>

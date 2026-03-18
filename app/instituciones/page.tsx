@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Lista completa de instituciones autorizadas para realizar el certificado de aptitud física requerido para obtener la licencia de conducir en Maldonado, Uruguay.",
 };
 
-const LOGO = "https://academiadechoferespunta.com.uy/wp-content/uploads/2022/04/ICONO-circle-cropped-g.png";
+const LOGO = "/logo.jpg";
 
 const instituciones = [
   { nombre:"Asistencial Médica",         lugares:["Aiguá","Gregorio Aznárez","La Barra","Pan de Azúcar","Piriápolis","Punta del Este"] },
