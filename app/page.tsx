@@ -2,9 +2,9 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import QuizModal from "./components/QuizModal";
 
-/* ── ICONOS ── */
 const IconWhatsApp = () => (
   <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -35,7 +35,6 @@ const IconGoogle = () => (
   </svg>
 );
 
-/* ── VOLANTE ── */
 const WheelWatermark = () => (
   <svg className="hero-wheel-bg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="50" cy="50" r="46" stroke="white" strokeWidth="2.5"/>
@@ -50,7 +49,6 @@ const WheelWatermark = () => (
   </svg>
 );
 
-/* ── SEMÁFORO (solo hero y CTA) ── */
 function TrafficLight({ variant = "dark-to-light" }: { variant?: "dark-to-light"|"light-to-dark" }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -74,7 +72,6 @@ function TrafficLight({ variant = "dark-to-light" }: { variant?: "dark-to-light"
   );
 }
 
-/* ── SEPARADOR SOLO CARRETERA (sin semáforo) ── */
 function RoadDivider({ variant = "dark-to-light" }: { variant?: "dark-to-light"|"light-to-dark" }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
@@ -84,19 +81,13 @@ function RoadDivider({ variant = "dark-to-light" }: { variant?: "dark-to-light"|
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
-  return (
-    <div ref={ref} className={`traffic-transition ${variant}${active?" animated":""}`}>
-      {/* sin semáforo, solo carretera */}
-    </div>
-  );
+  return <div ref={ref} className={`traffic-transition ${variant}${active?" animated":""}`}></div>;
 }
 
-/* ── GOOGLE STARS ── */
 function GoogleStars({ count }: { count: number }) {
   return <div style={{display:"flex",gap:"2px"}}>{[...Array(5)].map((_,i)=><svg key={i} width="16" height="16" viewBox="0 0 24 24" fill={i<count?"#FBBC04":"#ddd"}><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>)}</div>;
 }
 
-/* ── REVIEWS ── */
 const reviews = [
   {nombre:"Romi Giedzinski",  inicial:"R",color:"#E91E63",estrellas:5,fecha:"hace 2 meses", texto:"Súper recomendado! Un placer tomar clases con Darío. Profesional y con una paciencia infinita."},
   {nombre:"Cesar Sanchez",    inicial:"C",color:"#2196F3",estrellas:5,fecha:"hace 3 meses", texto:"Excelente experiencia. Totalmente recomendable. Muy agradecido al instructor Fernando."},
@@ -138,10 +129,16 @@ function ReviewSlider() {
             </div>
           ))}
         </div>
-        <a href="https://www.google.com/search?q=Academia+de+Choferes+Punta+Maldonado#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,1" target="_blank" rel="noopener noreferrer"
-          style={{display:"flex",alignItems:"center",gap:"0.5rem",background:"var(--black)",color:"var(--yellow)",padding:"0.7rem 1.3rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"0.9rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px"}}>
-          <IconGoogle/> Ver en Google
-        </a>
+        <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+          <a href="https://www.google.com/search?q=Academia+de+Choferes+Punta+Maldonado#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,1" target="_blank" rel="noopener noreferrer"
+            style={{display:"flex",alignItems:"center",gap:"0.5rem",background:"var(--black)",color:"var(--yellow)",padding:"0.6rem 1.2rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"0.85rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",whiteSpace:"nowrap"}}>
+            <IconGoogle/> Ver en Google
+          </a>
+          <a href="https://www.google.com/search?hl=es-UY&gl=uy&q=Academia+de+Choferes+Punta#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,3" target="_blank" rel="noopener noreferrer"
+            style={{display:"flex",alignItems:"center",gap:"0.5rem",background:"var(--yellow)",color:"var(--black)",padding:"0.6rem 1.2rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"0.85rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",whiteSpace:"nowrap"}}>
+            ⭐ Dejanos una reseña
+          </a>
+        </div>
       </div>
       <div style={{background:"var(--white)",border:"1px solid var(--border)",borderBottom:"3px solid var(--yellow)",padding:"2rem",borderRadius:"4px",transition:anim?"opacity 0.32s,transform 0.32s":"none",opacity:anim?0:1,transform:anim?(dir==="r"?"translateX(-18px)":"translateX(18px)"):"translateX(0)"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:"1rem"}}>
@@ -170,7 +167,7 @@ function ReviewSlider() {
   );
 }
 
-/* ══════════════════ MAIN ══════════════════ */
+/* ══ MAIN ══ */
 export default function Home() {
   const [menuOpen,setMenuOpen]=useState(false);
   const [scrolled,setScrolled]=useState(false);
@@ -200,7 +197,7 @@ export default function Home() {
 
   return (
     <>
-      {/* NAV */}
+      {/* ══ NAV ══ */}
       <nav className={scrolled?"scrolled":""}>
         <div className="nav-inner">
           <a href="#hero" className="logo">
@@ -208,11 +205,13 @@ export default function Home() {
             <div className="logo-text">Academia <span>Punta</span></div>
           </a>
           <ul className="nav-links">
+            {/* Páginas externas */}
+            <li><Link href="/nosotros" style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none"}}>Nosotros</Link></li>
+            {/* Secciones landing */}
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#guia">Guía</a></li>
             <li><a href="#materiales">Materiales</a></li>
             <li><a href="#testimonios">Opiniones</a></li>
-            <li><a href="#interes">Links</a></li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
           <a href="#contacto" className="btn-nav">Empezar →</a>
@@ -221,16 +220,16 @@ export default function Home() {
           </button>
         </div>
         <div className={`mobile-menu${menuOpen?" open":""}`}>
-          <a href="#servicios" onClick={()=>setMenuOpen(false)}>Servicios</a>
-          <a href="#guia"       onClick={()=>setMenuOpen(false)}>Guía</a>
-          <a href="#materiales" onClick={()=>setMenuOpen(false)}>Materiales</a>
-          <a href="#testimonios"onClick={()=>setMenuOpen(false)}>Opiniones</a>
-          <a href="#interes"    onClick={()=>setMenuOpen(false)}>Links de interés</a>
-          <a href="#contacto"   className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
+          <Link href="/nosotros" onClick={()=>setMenuOpen(false)} style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem"}}>Nosotros</Link>
+          <a href="#servicios"   onClick={()=>setMenuOpen(false)}>Servicios</a>
+          <a href="#guia"        onClick={()=>setMenuOpen(false)}>Guía</a>
+          <a href="#materiales"  onClick={()=>setMenuOpen(false)}>Materiales</a>
+          <a href="#testimonios" onClick={()=>setMenuOpen(false)}>Opiniones</a>
+          <a href="#contacto"    className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
 
-      {/* ══ HERO — foto interior conduciendo ══ */}
+      {/* ══ HERO ══ */}
       <section className="hero" id="hero">
         <div className="hero-photo">
           <Image src="/fotos/1001029674.jpg" alt="Conduciendo en Academia Punta" width={1600} height={900} style={{width:"100%",height:"100%",objectFit:"cover"}} priority/>
@@ -258,7 +257,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ SEMÁFORO 1 — solo aquí negro→crema ══ */}
+      {/* SEMÁFORO 1 */}
       <TrafficLight variant="dark-to-light"/>
 
       {/* ══ SERVICIOS ══ */}
@@ -267,12 +266,12 @@ export default function Home() {
         <h2 className="section-title reveal-left">Todo para <span>tu licencia</span></h2>
         <div className="services-grid">
           {[
-            {icon:"🚗",title:"Clases de Autos",    desc:"Unidades nuevas, lunes a sábados. Te pasamos a buscar para cada clase."},
-            {icon:"🏍️",title:"Clases de Motos",   desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos."},
-            {icon:"📋",title:"Gestoría IDM",        desc:"Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro."},
-            {icon:"🧠",title:"Prueba Teórica",      desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
-            {icon:"🛡️",title:"Manejo Defensivo",   desc:"Lunes, miércoles y viernes. Doble horario: 8:00 y 18:30 hs."},
-            {icon:"🌎",title:"Clases en Inglés",    desc:"Need driving lessons in English? We offer lessons in English for international visitors."},
+            {icon:"🚗",title:"Clases de Autos",   desc:"Unidades nuevas, lunes a sábados. Te pasamos a buscar para cada clase."},
+            {icon:"🏍️",title:"Clases de Motos",  desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos."},
+            {icon:"📋",title:"Gestoría IDM",       desc:"Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro."},
+            {icon:"🧠",title:"Prueba Teórica",     desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
+            {icon:"🛡️",title:"Manejo Defensivo",  desc:"Lunes, miércoles y viernes. Doble horario: 8:00 y 18:30 hs."},
+            {icon:"🌎",title:"Clases en Inglés",   desc:"Need driving lessons in English? We offer classes for international visitors."},
           ].map((s,i)=>(
             <div className="service-card reveal" key={i} style={{transitionDelay:`${i*0.08}s`}}>
               <span className="s-icon">{s.icon}</span>
@@ -283,19 +282,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ BANNER AUTOS — foto dos autos en pista ══ */}
+      {/* BANNER FLOTA */}
       <div className="img-banner">
         <Image src="/fotos/1001029677.jpg" alt="Flota Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 40%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Nuestra <span>flota</span></h2>
-            <p>Chevrolets nuevos con doble mando. Clases personalizadas de lunes a sábados.</p>
+            <p>Chevrolets nuevos con doble mando registrados y habilitados en IDM como Coche Escuela.</p>
             <a href="#contacto" className="btn-primary">Reservar clase</a>
           </div>
         </div>
       </div>
 
-      {/* ══ CARRETERA sola crema→oscuro ══ */}
+      {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
       {/* ══ GUIA — oscuro ══ */}
@@ -305,24 +304,30 @@ export default function Home() {
           <h2 className="section-title reveal-left">Guía para <span>obtener tu licencia</span></h2>
           <div className="guia-grid">
             {[
-              {num:"01",title:"Trámite en IDM",    desc:"Realizamos los trámites para las diferentes licencias ante la Intendencia de Maldonado."},
-              {num:"02",title:"Charla Defensivo",   desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad."},
-              {num:"03",title:"Prueba Teórica",     desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
-              {num:"04",title:"Aptitud Física",     desc:"Instituciones autorizadas: SEMM, Bioeste, CASMU, Círculo Católico y más."},
-              {num:"05",title:"Prueba Práctica",    desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
-              {num:"06",title:"¡Licencia!",         desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
+              {num:"01",title:"Trámite en IDM",   desc:"Realizamos los trámites para las diferentes licencias ante la Intendencia de Maldonado."},
+              {num:"02",title:"Charla Defensivo",  desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
+              {num:"03",title:"Prueba Teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
+              {num:"04",title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido."},
+              {num:"05",title:"Prueba Práctica",   desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
+              {num:"06",title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
             ].map((g,i)=>(
               <div className="guia-card reveal" key={i} style={{transitionDelay:`${i*0.1}s`}}>
                 <div className="guia-num">{g.num}</div>
                 <h3>{g.title}</h3>
                 <p>{g.desc}</p>
+                {/* En el paso 4, link a la página de instituciones */}
+                {g.num === "04" && (
+                  <Link href="/instituciones" style={{display:"inline-flex",alignItems:"center",gap:"0.4rem",marginTop:"0.7rem",color:"#FFE600",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.78rem",letterSpacing:"0.12em",textTransform:"uppercase",textDecoration:"none"}}>
+                    Ver instituciones →
+                  </Link>
+                )}
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* ══ CARRETERA oscuro→crema ══ */}
+      {/* CARRETERA oscuro→crema */}
       <RoadDivider variant="dark-to-light"/>
 
       {/* ══ MATERIALES ══ */}
@@ -345,16 +350,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ GALERÍA REAL — 3 fotos de la academia ══ */}
+      {/* GALERÍA 1 */}
       <div className="section-cream2">
         <div className="section-inner">
           <div className="section-tag"><span>Nuestros vehículos</span></div>
           <h2 className="section-title reveal-left">Flota <span>de la academia</span></h2>
           <div className="foto-grid">
             {[
-              {src:"/fotos/1001029671.jpg", label:"Auto Rojo — Chevrolet Onix RS"},
-              {src:"/fotos/1001029686.jpg", label:"Moto BMW G310"},
-              {src:"/fotos/1001029692.jpg", label:"Dos autos en pista"},
+              {src:"/fotos/1001029671.jpg",label:"Chevrolet Onix RS"},
+              {src:"/fotos/1001029686.jpg",label:"BMW G310 — Moto"},
+              {src:"/fotos/1001029692.jpg",label:"Flota en pista"},
             ].map((f,i)=>(
               <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.12}s`}}>
                 <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
@@ -365,21 +370,21 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ BANNER MOTOS — BMW G310 ══ */}
+      {/* BANNER MOTOS */}
       <div className="img-banner">
-        <Image src="/fotos/1001029680.jpg" alt="Moto BMW G310 Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 30%"}} unoptimized/>
+        <Image src="/fotos/1001029680.jpg" alt="Moto BMW G310" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 30%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Clases de <span>motos</span></h2>
-            <p>BMW G310 con casco y reflectivos incluidos. Pista La Loma, lunes a sábados.</p>
+            <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados.</p>
             <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." className="btn-primary" target="_blank" rel="noopener noreferrer">Consultar motos</a>
           </div>
         </div>
       </div>
 
-      {/* ══ BANNER INGLÉS — foto real del cliente ══ */}
-      <div className="img-banner" style={{height:"220px"}}>
-        <Image src="/fotos/1001029677.jpg" alt="Clases en inglés" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.4)"}} unoptimized/>
+      {/* BANNER INGLÉS */}
+      <div className="img-banner" style={{height:"200px"}}>
+        <Image src="/fotos/1001029677.jpg" alt="Clases en inglés" width={1600} height={200} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.35)"}} unoptimized/>
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
           <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.2rem,3vw,2rem)",color:"white",letterSpacing:"0.08em"}}>Need driving lessons in English?</p>
           <a href="https://api.whatsapp.com/send?phone=59894774465&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",animation:"none"}}>
@@ -388,19 +393,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ CARRETERA crema→oscuro ══ */}
+      {/* CARRETERA → oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* ══ SEGUNDA GALERÍA — más fotos reales ══ */}
+      {/* GALERÍA 2 oscuro */}
       <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>En acción</span></div>
           <h2 className="section-title reveal-left">Aprendé con <span>los mejores</span></h2>
           <div className="foto-grid">
             {[
-              {src:"/fotos/1001029695.jpg", label:"Auto blanco — Chevrolet Joy"},
-              {src:"/fotos/1001029689.jpg", label:"Auto rojo frontal"},
-              {src:"/fotos/1001029698.jpg", label:"Suzuki Alto — Comenzá desde tu hogar"},
+              {src:"/fotos/1001029695.jpg",label:"Chevrolet Joy — Auto Blanco"},
+              {src:"/fotos/1001029689.jpg",label:"Chevrolet Onix RS frontal"},
+              {src:"/fotos/1001029698.jpg",label:"Suzuki Alto"},
             ].map((f,i)=>(
               <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.12}s`}}>
                 <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
@@ -411,33 +416,36 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ CARRETERA oscuro→crema ══ */}
+      {/* CARRETERA oscuro→crema */}
       <RoadDivider variant="dark-to-light"/>
 
-      {/* ══ TESTIMONIOS ══ */}
+      {/* TESTIMONIOS */}
       <section className="section" id="testimonios">
         <div className="section-tag"><span>Opiniones reales</span></div>
         <h2 className="section-title reveal-left">Lo que dicen en <span>Google</span></h2>
         <ReviewSlider/>
       </section>
 
-      {/* ══ CARRETERA crema→oscuro ══ */}
+      {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* ══ INTERES — oscuro ══ */}
+      {/* INTERES oscuro */}
       <div className="section-dark" id="interes">
         <div className="section-inner">
           <div className="section-tag"><span>Recursos útiles</span></div>
           <h2 className="section-title reveal-left">Páginas <span>de interés</span></h2>
           <div className="interes-grid">
             {[
-              {icon:"🚗",title:"Permiso — SUCIVE",       desc:"Trámites de permiso en web oficial",         url:"https://www.sucive.gub.uy/formulario_punc?0"},
-              {icon:"📋",title:"Licencia — IDM",          desc:"Trámite en Intendencia de Maldonado",        url:"https://www.maldonado.gub.uy/tramites/tramites-licencias-conducir"},
-              {icon:"🛡️",title:"UNASEV",                 desc:"Unidad Nacional de Seguridad Vial",          url:"https://www.gub.uy/unidad-nacional-seguridad-vial/"},
-              {icon:"🧘",title:"Psicóloga A.C. Martínez", desc:"Asistencia psicológica para conductores",    url:"http://www.consultoriopsicologico.wordpress.com/"},
-              {icon:"💬",title:"Contacto WhatsApp",        desc:"Te respondemos al toque",                    url:"https://api.whatsapp.com/send?phone=59894774465"},
+              {icon:"🚗",title:"Permiso — SUCIVE",       desc:"Trámites de permiso oficial",              url:"https://www.sucive.gub.uy/formulario_punc?0"},
+              {icon:"📋",title:"Licencia — IDM",          desc:"Trámite en Intendencia Maldonado",          url:"https://www.maldonado.gub.uy/tramites/tramites-licencias-conducir"},
+              {icon:"🛡️",title:"UNASEV",                 desc:"Unidad Nacional de Seguridad Vial",         url:"https://www.gub.uy/unidad-nacional-seguridad-vial/"},
+              {icon:"🧘",title:"Psicóloga A.C. Martínez", desc:"Asistencia psicológica para conductores",   url:"http://www.consultoriopsicologico.wordpress.com/"},
+              {icon:"🏥",title:"Instituciones Aptitud Física", desc:"Lista completa de centros autorizados",url:"/instituciones"},
+              {icon:"💬",title:"Contacto WhatsApp",        desc:"Te respondemos al toque",                  url:"https://api.whatsapp.com/send?phone=59894774465"},
             ].map((item,i)=>(
-              <a className="interes-card reveal" href={item.url} key={i} target="_blank" rel="noopener noreferrer" style={{transitionDelay:`${i*0.1}s`}}>
+              <a className="interes-card reveal" href={item.url} key={i}
+                target={item.url.startsWith("/")?"_self":"_blank"} rel="noopener noreferrer"
+                style={{transitionDelay:`${i*0.1}s`}}>
                 <div className="interes-icon">{item.icon}</div>
                 <div><h3>{item.title}</h3><p>{item.desc}</p></div>
               </a>
@@ -446,19 +454,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ CARRETERA oscuro→crema ══ */}
+      {/* CARRETERA oscuro→crema */}
       <RoadDivider variant="dark-to-light"/>
 
-      {/* ══ REDES ══ */}
+      {/* REDES */}
       <section className="section">
         <div className="section-tag"><span>Seguinos</span></div>
         <h2 className="section-title reveal-left">Nuestras <span>redes</span></h2>
         <div className="redes-grid">
           {[
-            {href:"https://www.instagram.com/academiadechoferespunta/",                          icon:<IconInstagram/>,     label:"Instagram",      sub:"@academiadechoferespunta"},
-            {href:"https://www.facebook.com/Academia-de-choferes-Punta-339658393468083",         icon:<IconFacebook/>,      label:"Facebook",       sub:"Academia de Choferes Punta"},
-            {href:"https://api.whatsapp.com/send?phone=59894774465",                            icon:<IconWhatsAppGreen/>, label:"WhatsApp Autos", sub:"094 774 465"},
-            {href:"https://api.whatsapp.com/send?phone=59898151659",                            icon:<IconWhatsAppGreen/>, label:"WhatsApp Motos", sub:"098 151 659"},
+            {href:"https://www.instagram.com/academiadechoferespunta/",icon:<IconInstagram/>,label:"Instagram",sub:"@academiadechoferespunta"},
+            {href:"https://www.facebook.com/Academia-de-choferes-Punta-339658393468083",icon:<IconFacebook/>,label:"Facebook",sub:"Academia de Choferes Punta"},
+            {href:"https://api.whatsapp.com/send?phone=59894774465",icon:<IconWhatsAppGreen/>,label:"WhatsApp Autos",sub:"094 774 465"},
+            {href:"https://api.whatsapp.com/send?phone=59898151659",icon:<IconWhatsAppGreen/>,label:"WhatsApp Motos",sub:"098 151 659"},
           ].map((r,i)=>(
             <a key={i} href={r.href} className="red-card reveal" target="_blank" rel="noopener noreferrer" style={{transitionDelay:`${i*0.1}s`}}>
               <div className="red-icon">{r.icon}</div>
@@ -468,10 +476,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ CARRETERA crema→oscuro ══ */}
+      {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* ══ MAPA ══ */}
+      {/* MAPA oscuro */}
       <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>Dónde estamos</span></div>
@@ -482,10 +490,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ SEMÁFORO 2 — solo antes del CTA ══ */}
-      <TrafficLight variant="dark-to-light"/>
+      {/* Degradado oscuro→amarillo */}
+      <div style={{height:"40px",background:"linear-gradient(to bottom,#181818 0%,#FFE600 100%)"}}></div>
 
-      {/* ══ CTA BAND — semáforo decorativo ══ */}
+      {/* CTA + semáforo 2 */}
       <div className="cta-band">
         <div className="cta-band-inner">
           <div className="semaforo-cta reveal">
@@ -505,7 +513,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ CONTACTO — oscuro ══ */}
+      {/* CONTACTO */}
       <div className="section-dark" id="contacto">
         <div className="section-inner">
           <div className="section-tag"><span>Escribinos</span></div>
@@ -552,7 +560,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ══ FOOTER ══ */}
+      {/* FOOTER */}
       <footer>
         <div className="footer-inner">
           <div className="footer-grid">
@@ -563,9 +571,9 @@ export default function Home() {
               </a>
               <p>La academia de choferes de referencia en Punta del Este y Maldonado, Uruguay. Más de 15 años formando conductores seguros.</p>
               <div className="footer-social">
-                <a href="https://www.instagram.com/academiadechoferespunta/"                         className="social-btn" target="_blank" rel="noopener noreferrer"><IconInstagram/></a>
-                <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083"        className="social-btn" target="_blank" rel="noopener noreferrer"><IconFacebook/></a>
-                <a href="https://api.whatsapp.com/send?phone=59894774465"                           className="social-btn" target="_blank" rel="noopener noreferrer"><IconWhatsAppGreen/></a>
+                <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer"><IconInstagram/></a>
+                <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer"><IconFacebook/></a>
+                <a href="https://api.whatsapp.com/send?phone=59894774465" className="social-btn" target="_blank" rel="noopener noreferrer"><IconWhatsAppGreen/></a>
               </div>
             </div>
             <div className="footer-col">
@@ -579,12 +587,12 @@ export default function Home() {
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Recursos</h4>
+              <h4>Academia</h4>
               <ul>
+                <li><Link href="/nosotros" style={{fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none"}}>Quiénes Somos</Link></li>
                 <li><a href="#guia">Guía de Licencia</a></li>
+                <li><Link href="/instituciones" style={{fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none"}}>Instituciones Médicas</Link></li>
                 <li><a href="#materiales">Materiales PDF</a></li>
-                <li><a href="#interes">Páginas de Interés</a></li>
-                <li><a href="https://academiadechoferespunta.com.uy/prueba" target="_blank" rel="noopener noreferrer">Examen Teórico</a></li>
               </ul>
             </div>
             <div className="footer-col">
@@ -592,7 +600,7 @@ export default function Home() {
               <ul>
                 <li><a href="https://api.whatsapp.com/send?phone=59894774465">094 774 465 — Autos</a></li>
                 <li><a href="https://api.whatsapp.com/send?phone=59898151659">098 151 659 — Motos</a></li>
-                <li><a href="#contacto">Formulario de contacto</a></li>
+                <li><a href="https://www.google.com/search?q=Academia+de+Choferes+Punta+Maldonado#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,3" target="_blank" rel="noopener noreferrer">⭐ Dejanos una reseña</a></li>
               </ul>
             </div>
           </div>
@@ -605,7 +613,6 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* WA FLOTANTE */}
       <a href="https://api.whatsapp.com/send?phone=59894774465" className="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <IconWhatsApp/>
       </a>

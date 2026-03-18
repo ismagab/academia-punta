@@ -280,7 +280,7 @@ nav.scrolled {
   min-height: 100vh;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   overflow: hidden;
   background: var(--black);
 }
@@ -351,7 +351,7 @@ nav.scrolled {
   z-index: 4;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 9rem 2rem 8rem;
+  padding: 7rem 2rem 5rem;
   width: 100%;
 }
 
