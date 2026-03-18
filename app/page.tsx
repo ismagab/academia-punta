@@ -345,7 +345,7 @@ export default function Home() {
           </div>
           <div className="material-card reveal" style={{gridColumn:"1 / -1"}}>
             <div className="material-info"><h3>💻 Clase Virtual — Apoyo Teórico</h3><p>Clase con docente online. El 70% reprueba sin preparación.</p></div>
-            <a href="https://academiadechoferespunta.com.uy/clasevirtual/" className="btn-download" target="_blank" rel="noopener noreferrer">Ver clase →</a>
+            <a href="https://www.youtube.com/@academiadechoferespunta" className="btn-download" target="_blank" rel="noopener noreferrer">Ver clase →</a>
           </div>
         </div>
       </section>
@@ -606,6 +606,11 @@ export default function Home() {
           </div>
           <div className="footer-bottom">
             <span>© 2025 Academia de Choferes Punta — Maldonado, Uruguay</span>
+            <div style={{display:"flex",gap:"1.2rem",flexWrap:"wrap",justifyContent:"center"}}>
+              <Link href="/terminos"   style={{fontSize:"0.72rem",color:"rgba(255,255,255,0.3)",textDecoration:"none",fontFamily:"Barlow Condensed,sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Términos</Link>
+              <Link href="/privacidad" style={{fontSize:"0.72rem",color:"rgba(255,255,255,0.3)",textDecoration:"none",fontFamily:"Barlow Condensed,sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Privacidad</Link>
+              <Link href="/aviso-legal" style={{fontSize:"0.72rem",color:"rgba(255,255,255,0.3)",textDecoration:"none",fontFamily:"Barlow Condensed,sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Aviso Legal</Link>
+            </div>
             <a href="https://api.whatsapp.com/send?phone=50373260136" className="vortex-credit" target="_blank" rel="noopener noreferrer">
               ⚡ Diseñado por VORTEX
             </a>
