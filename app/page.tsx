@@ -232,7 +232,7 @@ export default function Home() {
       {/* ══ HERO ══ */}
       <section className="hero" id="hero">
         <div className="hero-photo">
-          <Image src="/fotos/1001029674.jpg" alt="Conduciendo en Academia Punta" width={1600} height={900} style={{width:"100%",height:"100%",objectFit:"cover"}} priority/>
+          <Image src="/fotos/1001029674.jpg" alt="Conduciendo en Academia Punta" width={1600} height={900} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%"}} priority/>
         </div>
         <div className="hero-overlay"></div>
         <WheelWatermark/>
