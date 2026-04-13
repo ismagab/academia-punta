@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import QuizModal from "./components/QuizModal";
 
+/* ══ SVG ICONS ══ */
 const IconWhatsApp = () => (
   <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -32,6 +33,108 @@ const IconGoogle = () => (
     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
     <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+);
+
+/* Elegant SVG icons for services / interest sections */
+const SvgCar = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <path d="M8 30h32M12 38h4m16 0h4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <path d="M6 30l4-12h28l4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="14" cy="35" r="3" stroke="currentColor" strokeWidth="2.5"/>
+    <circle cx="34" cy="35" r="3" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M16 22l2-6h12l2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgMoto = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <circle cx="10" cy="34" r="6" stroke="currentColor" strokeWidth="2.5"/>
+    <circle cx="38" cy="34" r="6" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M16 34h16M24 34l-4-12h8l6 8H28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 22l-4-6h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="32" cy="18" r="2" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+const SvgDoc = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M16 16h16M16 22h16M16 28h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M30 32l4 4 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const SvgBrain = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <path d="M24 10c-6 0-10 4-10 9 0 3 1.5 5.5 4 7v4h12v-4c2.5-1.5 4-4 4-7 0-5-4-9-10-9z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+    <path d="M20 36v4h8v-4M14 19c-3 0-5 2-5 5s2 5 5 5M34 19c3 0 5 2 5 5s-2 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgShield = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <path d="M24 6L8 13v12c0 9 6.8 17.4 16 20 9.2-2.6 16-11 16-20V13L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+    <path d="M16 24l5 5 10-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const SvgGlobe = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <circle cx="24" cy="24" r="16" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M8 24h32M24 8c-4 4-6 9-6 16s2 12 6 16M24 8c4 4 6 9 6 16s-2 12-6 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgStar = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <path d="M24 6l4.5 9 10 1.5-7.2 7 1.7 10-9-4.7-9 4.7 1.7-10-7.2-7 10-1.5L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+  </svg>
+);
+const SvgProfLicense = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <rect x="6" y="14" width="36" height="24" rx="3" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M6 20h36M14 28h8M14 33h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="36" cy="30" r="4" stroke="currentColor" strokeWidth="2"/>
+    <path d="M33 30l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 10v4M30 10v4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+  </svg>
+);
+
+/* Interest section SVG icons */
+const SvgSucive = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <rect x="8" y="10" width="32" height="28" rx="3" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M8 18h32M16 26h4m8 0h4M16 32h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M18 10V8a2 2 0 014 0v2M26 10V8a2 2 0 014 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgIDM = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <path d="M24 6L6 16v26h36V16L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+    <rect x="18" y="28" width="12" height="14" rx="1" stroke="currentColor" strokeWidth="2"/>
+    <path d="M16 24h4M28 24h4M16 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgUnasev = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <path d="M24 6L8 13v12c0 9 6.8 17.4 16 20 9.2-2.6 16-11 16-20V13L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+    <path d="M17 24l5 5 9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const SvgPsico = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <circle cx="24" cy="18" r="8" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M12 40c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <path d="M24 10v4M20 14l3 3M28 14l-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+const SvgHospital = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <rect x="8" y="14" width="32" height="28" rx="2" stroke="currentColor" strokeWidth="2.5"/>
+    <path d="M16 14V10a2 2 0 012-2h12a2 2 0 012 2v4" stroke="currentColor" strokeWidth="2"/>
+    <path d="M20 28v-8M16 24h8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    <rect x="18" y="34" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+const SvgWAContact = () => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+    <path d="M24 6C14.059 6 6 14.059 6 24c0 3.176.832 6.16 2.291 8.748L6 42l9.518-2.26A17.93 17.93 0 0024 42c9.941 0 18-8.059 18-18S33.941 6 24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
+    <path d="M18 22c0 5.5 4.5 10 10 10 1.5 0 2.9-.3 4.1-.9l3.9.9-1-3.8c.6-1.2.9-2.6.9-4.2 0-5.5-4.5-10-10-10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
 
@@ -108,8 +211,8 @@ function ReviewSlider() {
   const autoRef=useRef<ReturnType<typeof setInterval>|null>(null);
   const goTo=(idx:number,d:"l"|"r")=>{if(anim)return;setDir(d);setAnim(true);setTimeout(()=>{setCurrent(idx);setAnim(false);},320);};
   const prev=()=>goTo(current===0?reviews.length-1:current-1,"l");
-  const next=()=>goTo(current===reviews.length-1?0:current+1,"r");
-  useEffect(()=>{autoRef.current=setInterval(next,4500);return()=>{if(autoRef.current)clearInterval(autoRef.current);};},[current]);
+  const next=useCallback(()=>goTo(current===reviews.length-1?0:current+1,"r"),[current,anim]);
+  useEffect(()=>{autoRef.current=setInterval(next,4500);return()=>{if(autoRef.current)clearInterval(autoRef.current);};},[next]);
   const r=reviews[current];
   return (
     <div>
@@ -167,33 +270,324 @@ function ReviewSlider() {
   );
 }
 
+/* ══ HERO CAROUSEL ══ */
+const heroSlides = [
+  {
+    src: "/fotos/1001029674.jpg",
+    alt: "Cambiá de licencia sin drama — Academia Punta",
+    badge: "🚗 Punta del Este, Maldonado — Uruguay",
+    title: <>Tu licencia,<span className="highlight">sin dramas.</span><span className="tagline">Academia Punta</span></>,
+    sub: "Clases personalizadas para autos y motos. Instructores certificados. Tramitamos todo ante la IDM.",
+    ctaLabel: "Quiero empezar 🚀",
+    ctaHref: "#contacto",
+  },
+  {
+    src: "/fotos/1001029677.jpg",
+    alt: "Cambio de categoría de licencia — Academia Punta",
+    badge: "🔄 Cambio de licencia sin trámites complicados",
+    title: <>Cambio de <span className="highlight">fotos y categoría</span><span className="tagline">Tu licencia al día</span></>,
+    sub: "Actualizá tu licencia o pasá de categoría. Nos encargamos de todos los trámites ante la IDM.",
+    ctaLabel: "Consultar ahora",
+    ctaHref: "#contacto",
+  },
+  {
+    src: "/fotos/1001029695.jpg",
+    alt: "Driving lessons in English — Academia Punta",
+    badge: "🇬🇧 English lessons available",
+    title: <>Driving lessons<span className="highlight" style={{fontFamily:"Bebas Neue,sans-serif"}}>in English</span><span className="tagline" style={{fontFamily:"Bebas Neue,sans-serif"}}>For everyone</span></>,
+    sub: "International visitors and residents welcome. Certified instructors. WhatsApp: +598 93 312 019",
+    ctaLabel: "Contact us on WhatsApp",
+    ctaHref: "https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English.",
+    ctaExternal: true,
+  },
+  {
+    src: "/fotos/1001029686.jpg",
+    alt: "Clases de moto G1 G2 G3 — Academia Punta",
+    badge: "🏍️ Pista La Loma — Maldonado",
+    title: <>Clases de motos<span className="highlight">G1, G2 y G3</span><span className="tagline">Casco incluido</span></>,
+    sub: "BMW G310. Vehículo, casco y reflectivos incluidos. Lunes a sábados en pista La Loma.",
+    ctaLabel: "Consultar motos",
+    ctaHref: "https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos.",
+    ctaExternal: true,
+  },
+];
+
+function HeroCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [direction, setDirection] = useState<"next"|"prev">("next");
+  const timerRef = useRef<ReturnType<typeof setInterval>|null>(null);
+
+  const goTo = useCallback((idx: number, dir: "next"|"prev") => {
+    if (animating) return;
+    setDirection(dir);
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent(idx);
+      setAnimating(false);
+    }, 600);
+  }, [animating]);
+
+  const next = useCallback(() => goTo(current === heroSlides.length - 1 ? 0 : current + 1, "next"), [current, goTo]);
+  const prev = useCallback(() => goTo(current === 0 ? heroSlides.length - 1 : current - 1, "prev"), [current, goTo]);
+
+  useEffect(() => {
+    timerRef.current = setInterval(next, 5500);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [next]);
+
+  const slide = heroSlides[current];
+
+  return (
+    <section className="hero" id="hero">
+      {/* Slides background */}
+      {heroSlides.map((s, i) => (
+        <div key={i} className="hero-photo" style={{
+          opacity: i === current ? 1 : 0,
+          transition: "opacity 0.7s ease",
+          position: i === 0 ? "relative" : "absolute",
+          inset: 0,
+          zIndex: i === current ? 1 : 0,
+        }}>
+          <Image src={s.src} alt={s.alt} width={1600} height={900}
+            style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%"}}
+            priority={i === 0} unoptimized={i !== 0}/>
+        </div>
+      ))}
+      <div className="hero-overlay" style={{zIndex:2}}></div>
+      <WheelWatermark/>
+
+      {/* Content */}
+      <div className="hero-inner" style={{zIndex:3}}>
+        <div className="hero-badge"
+          style={{
+            opacity: animating ? 0 : 1,
+            transform: animating ? (direction === "next" ? "translateY(-10px)" : "translateY(10px)") : "translateY(0)",
+            transition: "opacity 0.5s, transform 0.5s",
+          }}>
+          {slide.badge}
+        </div>
+        <h1 style={{
+          opacity: animating ? 0 : 1,
+          transform: animating ? (direction === "next" ? "translateX(-20px)" : "translateX(20px)") : "translateX(0)",
+          transition: "opacity 0.55s 0.05s, transform 0.55s 0.05s",
+        }}>
+          {slide.title}
+        </h1>
+        <p className="hero-sub" style={{
+          opacity: animating ? 0 : 1,
+          transform: animating ? "translateY(8px)" : "translateY(0)",
+          transition: "opacity 0.5s 0.1s, transform 0.5s 0.1s",
+        }}>
+          {slide.sub}
+        </p>
+        <div className="hero-btns" style={{
+          opacity: animating ? 0 : 1,
+          transition: "opacity 0.5s 0.15s",
+        }}>
+          {slide.ctaExternal ? (
+            <a href={slide.ctaHref} className="btn-primary" target="_blank" rel="noopener noreferrer">{slide.ctaLabel}</a>
+          ) : (
+            <a href={slide.ctaHref} className="btn-primary">{slide.ctaLabel}</a>
+          )}
+          <a href="#servicios" className="btn-outline">Ver servicios</a>
+        </div>
+        <div className="hero-stats">
+          <div className="stat"><span className="num">4.9★</span><span className="label">Google</span></div>
+          <div className="stat"><span className="num">677</span><span className="label">Reseñas</span></div>
+          <div className="stat"><span className="num">+15</span><span className="label">Años</span></div>
+          <div className="stat"><span className="num">100%</span><span className="label">Certificados</span></div>
+        </div>
+      </div>
+
+      {/* Carousel controls */}
+      <button onClick={prev} aria-label="Anterior" style={{
+        position:"absolute",left:"1.2rem",top:"50%",transform:"translateY(-50%)",
+        zIndex:4,background:"rgba(0,0,0,0.45)",border:"1px solid rgba(255,255,255,0.2)",
+        color:"white",width:"2.6rem",height:"2.6rem",borderRadius:"50%",
+        cursor:"pointer",fontSize:"1.1rem",backdropFilter:"blur(4px)",
+        display:"flex",alignItems:"center",justifyContent:"center",
+        transition:"background 0.2s",
+      }}>‹</button>
+      <button onClick={next} aria-label="Siguiente" style={{
+        position:"absolute",right:"1.2rem",top:"50%",transform:"translateY(-50%)",
+        zIndex:4,background:"rgba(0,0,0,0.45)",border:"1px solid rgba(255,255,255,0.2)",
+        color:"white",width:"2.6rem",height:"2.6rem",borderRadius:"50%",
+        cursor:"pointer",fontSize:"1.1rem",backdropFilter:"blur(4px)",
+        display:"flex",alignItems:"center",justifyContent:"center",
+        transition:"background 0.2s",
+      }}>›</button>
+
+      {/* Dots */}
+      <div style={{
+        position:"absolute",bottom:"5.5rem",left:"50%",transform:"translateX(-50%)",
+        zIndex:4,display:"flex",gap:"0.5rem",alignItems:"center",
+      }}>
+        {heroSlides.map((_,i) => (
+          <button key={i} onClick={() => goTo(i, i > current ? "next" : "prev")} aria-label={`Slide ${i+1}`} style={{
+            width: i === current ? "1.8rem" : "0.5rem",
+            height:"0.5rem",borderRadius:"4px",
+            background: i === current ? "var(--yellow)" : "rgba(255,255,255,0.45)",
+            border:"none",cursor:"pointer",padding:0,
+            transition:"all 0.35s cubic-bezier(0.4,0,0.2,1)",
+          }}/>
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div style={{
+        position:"absolute",bottom:0,left:0,height:"3px",
+        background:"var(--yellow)",zIndex:4,
+        width:`${((current+1)/heroSlides.length)*100}%`,
+        transition:"width 0.6s ease",
+      }}/>
+    </section>
+  );
+}
+
+/* ══ FLEET CAROUSEL ══ */
+const fleetItems = [
+  {src:"/fotos/1001029671.jpg", label:"Chevrolet Onix RS", cat:"Auto"},
+  {src:"/fotos/1001029695.jpg", label:"Chevrolet Joy — Blanco", cat:"Auto"},
+  {src:"/fotos/1001029689.jpg", label:"Chevrolet Onix RS frontal", cat:"Auto"},
+  {src:"/fotos/1001029698.jpg", label:"Suzuki Alto", cat:"Auto"},
+  {src:"/fotos/1001029692.jpg", label:"Flota en pista", cat:"Auto"},
+  {src:"/fotos/1001029686.jpg", label:"BMW G310 — Categoría G2/G3", cat:"Moto"},
+  {src:"/fotos/1001029680.jpg", label:"Moto BMW G310", cat:"Moto"},
+  {src:"/fotos/1001029677.jpg", label:"Moto en pista La Loma", cat:"Moto G1/G2/G3"},
+];
+
+function FleetCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [anim, setAnim] = useState(false);
+  const autoRef = useRef<ReturnType<typeof setInterval>|null>(null);
+  const visibleCount = 3;
+  const total = fleetItems.length;
+
+  const goTo = (idx: number) => {
+    if (anim) return;
+    setAnim(true);
+    setTimeout(() => { setCurrent(idx); setAnim(false); }, 400);
+  };
+  const next = useCallback(() => goTo(current >= total - visibleCount ? 0 : current + 1), [current, anim]);
+  const prev = useCallback(() => goTo(current === 0 ? total - visibleCount : current - 1), [current, anim]);
+
+  useEffect(() => {
+    autoRef.current = setInterval(next, 4000);
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
+  }, [next]);
+
+  const visible = [
+    fleetItems[current % total],
+    fleetItems[(current + 1) % total],
+    fleetItems[(current + 2) % total],
+  ];
+
+  return (
+    <div style={{position:"relative"}}>
+      <div style={{
+        display:"grid",
+        gridTemplateColumns:"repeat(3,1fr)",
+        gap:"1rem",
+        transition: anim ? "opacity 0.4s,transform 0.4s" : "none",
+        opacity: anim ? 0.4 : 1,
+        transform: anim ? "scale(0.98)" : "scale(1)",
+      }}>
+        {visible.map((f, i) => (
+          <div key={i} style={{
+            position:"relative",aspectRatio:"4/3",overflow:"hidden",
+            borderRadius:"6px",border:"1px solid rgba(255,255,255,0.08)",
+          }}>
+            <Image src={f.src} alt={f.label} width={600} height={450}
+              style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.6s"}}
+              unoptimized/>
+            <div style={{
+              position:"absolute",inset:0,
+              background:"linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%)",
+            }}/>
+            <div style={{
+              position:"absolute",bottom:"0.8rem",left:"0.8rem",right:"0.8rem",
+            }}>
+              <span style={{
+                display:"inline-block",background:"var(--yellow)",color:"var(--black)",
+                fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,
+                fontSize:"0.62rem",letterSpacing:"0.1em",textTransform:"uppercase",
+                padding:"0.15rem 0.5rem",borderRadius:"2px",marginBottom:"0.3rem",
+              }}>{f.cat}</span>
+              <div style={{
+                fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,
+                fontSize:"0.85rem",color:"white",letterSpacing:"0.04em",
+              }}>{f.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Controls */}
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"1.2rem"}}>
+        <button onClick={prev} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:"white",width:"2.4rem",height:"2.4rem",borderRadius:"50%",cursor:"pointer",fontSize:"1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s"}}>‹</button>
+        <div style={{display:"flex",gap:"0.4rem"}}>
+          {Array.from({length: total - visibleCount + 1}).map((_,i) => (
+            <button key={i} onClick={() => goTo(i)} style={{
+              width: i === current ? "1.4rem" : "0.4rem",
+              height:"0.4rem",borderRadius:"3px",
+              background: i === current ? "var(--yellow)" : "rgba(255,255,255,0.3)",
+              border:"none",cursor:"pointer",padding:0,transition:"all 0.3s",
+            }}/>
+          ))}
+        </div>
+        <button onClick={next} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:"white",width:"2.4rem",height:"2.4rem",borderRadius:"50%",cursor:"pointer",fontSize:"1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s"}}>›</button>
+      </div>
+    </div>
+  );
+}
+
 /* ══ MAIN ══ */
 export default function Home() {
-  const [menuOpen,setMenuOpen]=useState(false);
-  const [scrolled,setScrolled]=useState(false);
-  const [servicio,setServicio]=useState("autos");
-  const [mensaje,setMensaje]=useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
+  const [servicio, setServicio]   = useState("autos");
+  const [mensaje, setMensaje]     = useState("");
+  const footerRef = useRef<HTMLElement>(null);
+  const [showQuiz, setShowQuiz]   = useState(true);
 
-  useEffect(()=>{
-    const onScroll=()=>setScrolled(window.scrollY>50);
-    window.addEventListener("scroll",onScroll);
-    const els=document.querySelectorAll(".reveal,.reveal-left,.reveal-right");
-    const obs=new IntersectionObserver((entries)=>{
-      entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add("visible"),i*90);obs.unobserve(e.target);}});
-    },{threshold:0.1});
-    els.forEach(el=>obs.observe(el));
-    return()=>{window.removeEventListener("scroll",onScroll);obs.disconnect();};
-  },[]);
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
+      // Hide quiz widget when footer is visible
+      if (footerRef.current) {
+        const rect = footerRef.current.getBoundingClientRect();
+        setShowQuiz(rect.top > window.innerHeight - 80);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    const els = document.querySelectorAll(".reveal,.reveal-left,.reveal-right");
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(()=>e.target.classList.add("visible"),i*90); obs.unobserve(e.target); }});
+    }, {threshold:0.1});
+    els.forEach(el => obs.observe(el));
+    return () => { window.removeEventListener("scroll", onScroll); obs.disconnect(); };
+  }, []);
 
-  const handleContacto=()=>{
-    const phones:Record<string,string>={autos:"59894774465",motos:"59898151659",tramites:"59894774465",teorica:"59894774465",defensivo:"59894774465",psicologia:"59894774465"};
-    const labels:Record<string,string>={autos:"clases de autos",motos:"clases de motos",tramites:"gestoría de trámites IDM",teorica:"la prueba teórica",defensivo:"la charla de manejo defensivo",psicologia:"apoyo psicológico"};
-    const phone=phones[servicio]||phones.autos;
-    const text=`Hola! Me interesa consultar sobre ${labels[servicio]}${mensaje?`. ${mensaje}`:"."}`; 
-    window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`,"_blank");
+  const handleContacto = () => {
+    const phones: Record<string,string> = {
+      autos:"59894774465", motos:"59898151659",
+      tramites:"59894774465", teorica:"59894774465",
+      defensivo:"59894774465", psicologia:"59894774465",
+      ingles:"59893312019",
+    };
+    const labels: Record<string,string> = {
+      autos:"clases de autos", motos:"clases de motos",
+      tramites:"gestoría de trámites IDM", teorica:"la prueba teórica",
+      defensivo:"la charla de manejo defensivo", psicologia:"apoyo psicológico",
+      ingles:"driving lessons in English",
+    };
+    const phone = phones[servicio] || phones.autos;
+    const text = `Hola! Me interesa consultar sobre ${labels[servicio]}${mensaje?`. ${mensaje}`:"."}`;
+    window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`, "_blank");
   };
 
-  const LOGO="/logo.jpg";
+  const LOGO = "/logo.jpg";
 
   return (
     <>
@@ -205,9 +599,7 @@ export default function Home() {
             <div className="logo-text">Academia <span>Punta</span></div>
           </a>
           <ul className="nav-links">
-            {/* Páginas externas */}
             <li><Link href="/nosotros" style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none"}}>Nosotros</Link></li>
-            {/* Secciones landing */}
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#guia">Guía</a></li>
             <li><a href="#materiales">Materiales</a></li>
@@ -229,33 +621,8 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ══ HERO ══ */}
-      <section className="hero" id="hero">
-        <div className="hero-photo">
-          <Image src="/fotos/1001029674.jpg" alt="Conduciendo en Academia Punta" width={1600} height={900} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%"}} priority/>
-        </div>
-        <div className="hero-overlay"></div>
-        <WheelWatermark/>
-        <div className="hero-inner">
-          <div className="hero-badge">🚗 Punta del Este, Maldonado — Uruguay</div>
-          <h1>
-            Tu licencia,
-            <span className="highlight">sin dramas.</span>
-            <span className="tagline">Academia Punta</span>
-          </h1>
-          <p className="hero-sub">Clases personalizadas para autos y motos. Instructores certificados. Tramitamos todo ante la IDM.</p>
-          <div className="hero-btns">
-            <a href="#contacto" className="btn-primary">Quiero empezar 🚀</a>
-            <a href="#servicios" className="btn-outline">Ver servicios</a>
-          </div>
-          <div className="hero-stats">
-            <div className="stat"><span className="num">4.9★</span><span className="label">Google</span></div>
-            <div className="stat"><span className="num">677</span><span className="label">Reseñas</span></div>
-            <div className="stat"><span className="num">+15</span><span className="label">Años</span></div>
-            <div className="stat"><span className="num">100%</span><span className="label">Certificados</span></div>
-          </div>
-        </div>
-      </section>
+      {/* ══ HERO CAROUSEL ══ */}
+      <HeroCarousel/>
 
       {/* SEMÁFORO 1 */}
       <TrafficLight variant="dark-to-light"/>
@@ -266,15 +633,16 @@ export default function Home() {
         <h2 className="section-title reveal-left">Todo para <span>tu licencia</span></h2>
         <div className="services-grid">
           {[
-            {icon:"🚗",title:"Clases de Autos",   desc:"Unidades nuevas, lunes a sábados. Te pasamos a buscar para cada clase."},
-            {icon:"🏍️",title:"Clases de Motos",  desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos."},
-            {icon:"📋",title:"Gestoría IDM",       desc:"Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro."},
-            {icon:"🧠",title:"Prueba Teórica",     desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
-            {icon:"🛡️",title:"Manejo Defensivo",  desc:"Lunes, miércoles y viernes. Doble horario: 8:00 y 18:30 hs."},
-            {icon:"🌎",title:"Clases en Inglés",   desc:"Need driving lessons in English? We offer classes for international visitors."},
-          ].map((s,i)=>(
+            {icon:<SvgCar/>,      title:"Clases de Autos",             desc:"Unidades nuevas, lunes a sábados. Te pasamos a buscar para cada clase."},
+            {icon:<SvgMoto/>,     title:"Clases de Motos G1, G2 y G3", desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos. BMW G310."},
+            {icon:<SvgDoc/>,      title:"Gestoría IDM",                 desc:"Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro."},
+            {icon:<SvgBrain/>,    title:"Prueba Teórica",               desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
+            {icon:<SvgShield/>,   title:"Manejo Defensivo",             desc:"Lunes, miércoles y viernes. Doble horario: 8:00 y 18:30 hs."},
+            {icon:<SvgGlobe/>,    title:"Clases en Inglés",             desc:"Need driving lessons in English? We offer classes for international visitors."},
+            {icon:<SvgProfLicense/>, title:"Licencias Profesionales",  desc:"Vehículos especiales. Formación y gestoría ante la IDM Maldonado."},
+          ].map((s,i) => (
             <div className="service-card reveal" key={i} style={{transitionDelay:`${i*0.08}s`}}>
-              <span className="s-icon">{s.icon}</span>
+              <span className="s-icon" style={{color:"var(--yellow)",display:"flex",alignItems:"center",justifyContent:"center",width:"3rem",height:"3rem",background:"rgba(255,230,0,0.08)",borderRadius:"8px",marginBottom:"0.8rem"}}>{s.icon}</span>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
             </div>
@@ -304,19 +672,18 @@ export default function Home() {
           <h2 className="section-title reveal-left">Guía para <span>obtener tu licencia</span></h2>
           <div className="guia-grid">
             {[
-              {num:"01",title:"Trámite en IDM",   desc:"Realizamos los trámites para las diferentes licencias ante la Intendencia de Maldonado."},
-              {num:"02",title:"Charla Defensivo",  desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
-              {num:"03",title:"Prueba Teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
-              {num:"04",title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido."},
-              {num:"05",title:"Prueba Práctica",   desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
-              {num:"06",title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
-            ].map((g,i)=>(
+              {title:"Trámite en IDM",   desc:"Realizamos los trámites para las diferentes licencias ante la Intendencia de Maldonado."},
+              {title:"Charla Defensivo",  desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
+              {title:"Prueba Teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
+              {title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido.", link:true},
+              {title:"Prueba Práctica",   desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
+              {title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
+            ].map((g, i) => (
               <div className="guia-card reveal" key={i} style={{transitionDelay:`${i*0.1}s`}}>
-                <div className="guia-num">{g.num}</div>
+                {/* Sin número — quitados por pedido */}
                 <h3>{g.title}</h3>
                 <p>{g.desc}</p>
-                {/* En el paso 4, link a la página de instituciones */}
-                {g.num === "04" && (
+                {g.link && (
                   <Link href="/instituciones" style={{display:"inline-flex",alignItems:"center",gap:"0.4rem",marginTop:"0.7rem",color:"#FFE600",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.78rem",letterSpacing:"0.12em",textTransform:"uppercase",textDecoration:"none"}}>
                     Ver instituciones →
                   </Link>
@@ -350,23 +717,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALERÍA 1 */}
-      <div className="section-cream2">
+      {/* FLOTA — carrusel elegante oscuro */}
+      <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>Nuestros vehículos</span></div>
           <h2 className="section-title reveal-left">Flota <span>de la academia</span></h2>
-          <div className="foto-grid">
-            {[
-              {src:"/fotos/1001029671.jpg",label:"Chevrolet Onix RS"},
-              {src:"/fotos/1001029686.jpg",label:"BMW G310 — Moto"},
-              {src:"/fotos/1001029692.jpg",label:"Flota en pista"},
-            ].map((f,i)=>(
-              <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.12}s`}}>
-                <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
-                <div className="foto-label">{f.label}</div>
-              </div>
-            ))}
-          </div>
+          <p style={{color:"rgba(255,255,255,0.55)",marginBottom:"1.5rem",fontSize:"0.9rem"}}>5 autos · 3 motos categorías G1, G2 y G3</p>
+          <FleetCarousel/>
         </div>
       </div>
 
@@ -376,19 +733,25 @@ export default function Home() {
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Clases de <span>motos</span></h2>
-            <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados.</p>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." className="btn-primary" target="_blank" rel="noopener noreferrer">Consultar motos</a>
+            <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados. Categorías G1, G2 y G3.</p>
+            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." className="btn-primary" target="_blank" rel="noopener noreferrer">
+              <span style={{display:"inline-flex",alignItems:"center",gap:"0.5rem"}}><IconWhatsAppGreen/> Consultar motos — 098 151 659</span>
+            </a>
           </div>
         </div>
       </div>
 
-      {/* BANNER INGLÉS */}
-      <div className="img-banner" style={{height:"200px"}}>
-        <Image src="/fotos/1001029677.jpg" alt="Clases en inglés" width={1600} height={200} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.35)"}} unoptimized/>
+      {/* BANNER INGLÉS — mejorado */}
+      <div className="img-banner" style={{height:"220px"}}>
+        <Image src="/fotos/1001029677.jpg" alt="Driving lessons in English" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.3)"}} unoptimized/>
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
-          <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.2rem,3vw,2rem)",color:"white",letterSpacing:"0.08em"}}>Need driving lessons in English?</p>
-          <a href="https://api.whatsapp.com/send?phone=59894774465&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",animation:"none"}}>
-            🇬🇧 Clases de manejo en inglés
+          <div style={{display:"flex",gap:"0.5rem",alignItems:"center",justifyContent:"center"}}>
+            <span style={{fontSize:"1.5rem"}}>🇬🇧</span>
+            <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.4rem,3.5vw,2.2rem)",color:"white",letterSpacing:"0.08em",margin:0}}>Driving lessons in English</p>
+          </div>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:"0.9rem",margin:0}}>International visitors welcome · Certified instructors</p>
+          <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",animation:"none",display:"inline-flex",alignItems:"center",gap:"0.5rem"}}>
+            <IconWhatsAppGreen/> Contact us — +598 93 312 019
           </a>
         </div>
       </div>
@@ -406,7 +769,7 @@ export default function Home() {
               {src:"/fotos/1001029695.jpg",label:"Chevrolet Joy — Auto Blanco"},
               {src:"/fotos/1001029689.jpg",label:"Chevrolet Onix RS frontal"},
               {src:"/fotos/1001029698.jpg",label:"Suzuki Alto"},
-            ].map((f,i)=>(
+            ].map((f, i) => (
               <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.12}s`}}>
                 <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
                 <div className="foto-label">{f.label}</div>
@@ -436,17 +799,17 @@ export default function Home() {
           <h2 className="section-title reveal-left">Páginas <span>de interés</span></h2>
           <div className="interes-grid">
             {[
-              {icon:"🚗",title:"Permiso — SUCIVE",       desc:"Trámites de permiso oficial",              url:"https://www.sucive.gub.uy/formulario_punc?0"},
-              {icon:"📋",title:"Licencia — IDM",          desc:"Trámite en Intendencia Maldonado",          url:"https://www.maldonado.gub.uy/tramites/tramites-licencias-conducir"},
-              {icon:"🛡️",title:"UNASEV",                 desc:"Unidad Nacional de Seguridad Vial",         url:"https://www.gub.uy/unidad-nacional-seguridad-vial/"},
-              {icon:"🧘",title:"Psicóloga A.C. Martínez", desc:"Asistencia psicológica para conductores",   url:"http://www.consultoriopsicologico.wordpress.com/"},
-              {icon:"🏥",title:"Instituciones Aptitud Física", desc:"Lista completa de centros autorizados",url:"/instituciones"},
-              {icon:"💬",title:"Contacto WhatsApp",        desc:"Te respondemos al toque",                  url:"https://api.whatsapp.com/send?phone=59894774465"},
-            ].map((item,i)=>(
+              {icon:<SvgSucive/>,   title:"Permiso — SUCIVE",            desc:"Trámites de permiso oficial",              url:"https://www.sucive.gub.uy/formulario_punc?0"},
+              {icon:<SvgIDM/>,      title:"Licencia — IDM",              desc:"Trámite en Intendencia Maldonado",          url:"https://www.maldonado.gub.uy/tramites/tramites-licencias-conducir"},
+              {icon:<SvgUnasev/>,   title:"UNASEV",                      desc:"Unidad Nacional de Seguridad Vial",         url:"https://www.gub.uy/unidad-nacional-seguridad-vial/"},
+              {icon:<SvgPsico/>,    title:"Psicóloga A.C. Martínez",     desc:"Asistencia psicológica para conductores",   url:"http://www.consultoriopsicologico.wordpress.com/"},
+              {icon:<SvgHospital/>, title:"Aptitud Física",              desc:"Lista de centros autorizados",              url:"/instituciones"},
+              {icon:<SvgWAContact/>,title:"Contacto WhatsApp",           desc:"Te respondemos al toque",                  url:"https://api.whatsapp.com/send?phone=59894774465"},
+            ].map((item, i) => (
               <a className="interes-card reveal" href={item.url} key={i}
                 target={item.url.startsWith("/")?"_self":"_blank"} rel="noopener noreferrer"
                 style={{transitionDelay:`${i*0.1}s`}}>
-                <div className="interes-icon">{item.icon}</div>
+                <div className="interes-icon" style={{color:"var(--yellow)"}}>{item.icon}</div>
                 <div><h3>{item.title}</h3><p>{item.desc}</p></div>
               </a>
             ))}
@@ -467,7 +830,8 @@ export default function Home() {
             {href:"https://www.facebook.com/Academia-de-choferes-Punta-339658393468083",icon:<IconFacebook/>,label:"Facebook",sub:"Academia de Choferes Punta"},
             {href:"https://api.whatsapp.com/send?phone=59894774465",icon:<IconWhatsAppGreen/>,label:"WhatsApp Autos",sub:"094 774 465"},
             {href:"https://api.whatsapp.com/send?phone=59898151659",icon:<IconWhatsAppGreen/>,label:"WhatsApp Motos",sub:"098 151 659"},
-          ].map((r,i)=>(
+            {href:"https://api.whatsapp.com/send?phone=59893312019",icon:<IconWhatsAppGreen/>,label:"WhatsApp Inglés",sub:"093 312 019"},
+          ].map((r, i) => (
             <a key={i} href={r.href} className="red-card reveal" target="_blank" rel="noopener noreferrer" style={{transitionDelay:`${i*0.1}s`}}>
               <div className="red-icon">{r.icon}</div>
               <div><div className="red-label">{r.label}</div><div className="red-sub">{r.sub}</div></div>
@@ -493,7 +857,7 @@ export default function Home() {
       {/* Degradado oscuro→amarillo */}
       <div style={{height:"40px",background:"linear-gradient(to bottom,#181818 0%,#FFE600 100%)"}}></div>
 
-      {/* CTA + semáforo 2 */}
+      {/* CTA — ¿Listo para sacar tu licencia? */}
       <div className="cta-band">
         <div className="cta-band-inner">
           <div className="semaforo-cta reveal">
@@ -509,6 +873,9 @@ export default function Home() {
             <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." className="btn-dark reveal" target="_blank" rel="noopener noreferrer">
               <IconWhatsAppGreen/> Motos — 098 151 659
             </a>
+            <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-dark reveal" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",borderColor:"#e53935"}}>
+              <IconWhatsAppGreen/> English — 093 312 019
+            </a>
           </div>
         </div>
       </div>
@@ -522,12 +889,13 @@ export default function Home() {
             <div className="contacto-info reveal-left">
               <h3>Información de contacto</h3>
               {[
-                {icon:"🚗",strong:"WhatsApp — Autos",  text:"094 774 465"},
-                {icon:"🏍️",strong:"WhatsApp — Motos", text:"098 151 659"},
-                {icon:"📍",strong:"Ubicación",          text:"Maldonado, Uruguay — Punta del Este y alrededores"},
-                {icon:"🕐",strong:"Horario de clases",  text:"Lunes a Sábados — Amplio y flexible"},
-                {icon:"📸",strong:"Instagram",          text:"@academiadechoferespunta"},
-              ].map((c,i)=>(
+                {icon:"🚗", strong:"WhatsApp — Autos",   text:"094 774 465"},
+                {icon:"🏍️",strong:"WhatsApp — Motos",   text:"098 151 659"},
+                {icon:"🇬🇧",strong:"WhatsApp — Inglés",  text:"093 312 019"},
+                {icon:"📍", strong:"Ubicación",           text:"Maldonado, Uruguay — Punta del Este y alrededores"},
+                {icon:"🕐", strong:"Horario de clases",   text:"Lunes a Sábados — Amplio y flexible"},
+                {icon:"📸", strong:"Instagram",           text:"@academiadechoferespunta"},
+              ].map((c, i) => (
                 <div className="contacto-item" key={i}>
                   <div className="contacto-item-icon">{c.icon}</div>
                   <div className="contacto-item-text"><strong>{c.strong}</strong><p>{c.text}</p></div>
@@ -540,7 +908,8 @@ export default function Home() {
                 <label>¿Qué servicio te interesa?</label>
                 <select value={servicio} onChange={e=>setServicio(e.target.value)}>
                   <option value="autos">🚗 Clases de Autos</option>
-                  <option value="motos">🏍️ Clases de Motos</option>
+                  <option value="motos">🏍️ Clases de Motos G1 / G2 / G3</option>
+                  <option value="ingles">🇬🇧 Driving lessons in English</option>
                   <option value="tramites">📋 Gestoría de Trámites IDM</option>
                   <option value="teorica">🧠 Prueba Teórica</option>
                   <option value="defensivo">🛡️ Charla de Manejo Defensivo</option>
@@ -561,7 +930,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER */}
-      <footer>
+      <footer ref={footerRef}>
         <div className="footer-inner">
           <div className="footer-grid">
             <div className="footer-brand">
@@ -580,10 +949,11 @@ export default function Home() {
               <h4>Servicios</h4>
               <ul>
                 <li><a href="#servicios">Clases de Autos</a></li>
-                <li><a href="#servicios">Clases de Motos</a></li>
+                <li><a href="#servicios">Clases de Motos G1/G2/G3</a></li>
                 <li><a href="#servicios">Gestoría IDM</a></li>
                 <li><a href="#servicios">Prueba Teórica</a></li>
                 <li><a href="#servicios">Clases en Inglés</a></li>
+                <li><a href="#servicios">Licencias Profesionales</a></li>
               </ul>
             </div>
             <div className="footer-col">
@@ -600,6 +970,7 @@ export default function Home() {
               <ul>
                 <li><a href="https://api.whatsapp.com/send?phone=59894774465">094 774 465 — Autos</a></li>
                 <li><a href="https://api.whatsapp.com/send?phone=59898151659">098 151 659 — Motos</a></li>
+                <li><a href="https://api.whatsapp.com/send?phone=59893312019">093 312 019 — English</a></li>
                 <li><a href="https://www.google.com/search?q=Academia+de+Choferes+Punta+Maldonado#lrd=0x957511348d9fc7b7:0xe755a1d8711427e8,3" target="_blank" rel="noopener noreferrer">⭐ Dejanos una reseña</a></li>
               </ul>
             </div>
@@ -618,11 +989,21 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* WA float */}
       <a href="https://api.whatsapp.com/send?phone=59894774465" className="wa-float" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
         <IconWhatsApp/>
       </a>
 
-      <QuizModal/>
+      {/* Quiz widget — se oculta al llegar al footer */}
+      <div style={{
+        transition:"opacity 0.4s, transform 0.4s, visibility 0.4s",
+        opacity: showQuiz ? 1 : 0,
+        transform: showQuiz ? "translateY(0)" : "translateY(20px)",
+        visibility: showQuiz ? "visible" : "hidden",
+        pointerEvents: showQuiz ? "auto" : "none",
+      }}>
+        <QuizModal/>
+      </div>
     </>
   );
 }
