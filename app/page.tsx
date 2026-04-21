@@ -36,7 +36,6 @@ const IconGoogle = () => (
   </svg>
 );
 
-/* Elegant SVG icons for services / interest sections */
 const SvgCar = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
     <path d="M8 30h32M12 38h4m16 0h4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
@@ -80,11 +79,6 @@ const SvgGlobe = () => (
     <path d="M8 24h32M24 8c-4 4-6 9-6 16s2 12 6 16M24 8c4 4 6 9 6 16s-2 12-6 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
-const SvgStar = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <path d="M24 6l4.5 9 10 1.5-7.2 7 1.7 10-9-4.7-9 4.7 1.7-10-7.2-7 10-1.5L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-  </svg>
-);
 const SvgProfLicense = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
     <rect x="6" y="14" width="36" height="24" rx="3" stroke="currentColor" strokeWidth="2.5"/>
@@ -95,7 +89,6 @@ const SvgProfLicense = () => (
   </svg>
 );
 
-/* Interest section SVG icons */
 const SvgSucive = () => (
   <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
     <rect x="8" y="10" width="32" height="28" rx="3" stroke="currentColor" strokeWidth="2.5"/>
@@ -270,7 +263,7 @@ function ReviewSlider() {
   );
 }
 
-/* ══ HERO CAROUSEL ══ */
+/* ══ HERO CAROUSEL — 3 slides (slide de "cambio de categoría" eliminado) ══ */
 const heroSlides = [
   {
     src: "/fotos/1001029674.jpg",
@@ -279,15 +272,6 @@ const heroSlides = [
     title: <>Tu licencia,<span className="highlight">sin dramas.</span><span className="tagline">Academia Punta</span></>,
     sub: "Clases personalizadas para autos y motos. Instructores certificados. Tramitamos todo ante la IDM.",
     ctaLabel: "Quiero empezar 🚀",
-    ctaHref: "#contacto",
-  },
-  {
-    src: "/fotos/1001029677.jpg",
-    alt: "Cambio de categoría de licencia — Academia Punta",
-    badge: "🔄 Cambio de licencia sin trámites complicados",
-    title: <>Cambio de <span className="highlight">fotos y categoría</span><span className="tagline">Tu licencia al día</span></>,
-    sub: "Actualizá tu licencia o pasá de categoría. Nos encargamos de todos los trámites ante la IDM.",
-    ctaLabel: "Consultar ahora",
     ctaHref: "#contacto",
   },
   {
@@ -339,13 +323,14 @@ function HeroCarousel() {
   const slide = heroSlides[current];
 
   return (
-    <section className="hero" id="hero">
-      {/* Slides background */}
+    /* FIX DESKTOP: overflow:hidden en el section para que el carrusel no se desborde */
+    <section className="hero" id="hero" style={{overflow:"hidden"}}>
+      {/* Slides background — todos position:absolute para no romper el layout en desktop */}
       {heroSlides.map((s, i) => (
         <div key={i} className="hero-photo" style={{
           opacity: i === current ? 1 : 0,
           transition: "opacity 0.7s ease",
-          position: i === 0 ? "relative" : "absolute",
+          position: "absolute",
           inset: 0,
           zIndex: i === current ? 1 : 0,
         }}>
@@ -505,25 +490,18 @@ function FleetCarousel() {
               position:"absolute",inset:0,
               background:"linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%)",
             }}/>
-            <div style={{
-              position:"absolute",bottom:"0.8rem",left:"0.8rem",right:"0.8rem",
-            }}>
+            <div style={{position:"absolute",bottom:"0.8rem",left:"0.8rem",right:"0.8rem"}}>
               <span style={{
                 display:"inline-block",background:"var(--yellow)",color:"var(--black)",
                 fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,
                 fontSize:"0.62rem",letterSpacing:"0.1em",textTransform:"uppercase",
                 padding:"0.15rem 0.5rem",borderRadius:"2px",marginBottom:"0.3rem",
               }}>{f.cat}</span>
-              <div style={{
-                fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,
-                fontSize:"0.85rem",color:"white",letterSpacing:"0.04em",
-              }}>{f.label}</div>
+              <div style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,fontSize:"0.85rem",color:"white",letterSpacing:"0.04em"}}>{f.label}</div>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Controls */}
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"1.2rem"}}>
         <button onClick={prev} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:"white",width:"2.4rem",height:"2.4rem",borderRadius:"50%",cursor:"pointer",fontSize:"1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s"}}>‹</button>
         <div style={{display:"flex",gap:"0.4rem"}}>
@@ -550,11 +528,12 @@ export default function Home() {
   const [mensaje, setMensaje]     = useState("");
   const footerRef = useRef<HTMLElement>(null);
   const [showQuiz, setShowQuiz]   = useState(true);
+  /* Estado para abrir el simulador desde el nav */
+  const [simOpen, setSimOpen]     = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      // Hide quiz widget when footer is visible
       if (footerRef.current) {
         const rect = footerRef.current.getBoundingClientRect();
         setShowQuiz(rect.top > window.innerHeight - 80);
@@ -604,6 +583,15 @@ export default function Home() {
             <li><a href="#guia">Guía</a></li>
             <li><a href="#materiales">Materiales</a></li>
             <li><a href="#testimonios">Opiniones</a></li>
+            <li>
+              {/* Link directo al Simulador — abre el modal flotante */}
+              <button onClick={() => setSimOpen(true)} style={{
+                background:"none",border:"none",cursor:"pointer",padding:0,
+                fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,
+                fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",
+                color:"var(--yellow)",
+              }}>🧠 Simulador</button>
+            </li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
           <a href="#contacto" className="btn-nav">Empezar →</a>
@@ -617,7 +605,14 @@ export default function Home() {
           <a href="#guia"        onClick={()=>setMenuOpen(false)}>Guía</a>
           <a href="#materiales"  onClick={()=>setMenuOpen(false)}>Materiales</a>
           <a href="#testimonios" onClick={()=>setMenuOpen(false)}>Opiniones</a>
-          <a href="#contacto"    className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
+          {/* Simulador en mobile menu */}
+          <button onClick={()=>{setSimOpen(true);setMenuOpen(false);}} style={{
+            background:"none",border:"none",cursor:"pointer",textAlign:"left",width:"100%",
+            fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",
+            textTransform:"uppercase",color:"var(--yellow)",
+            padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem",
+          }}>🧠 Simulador Teórico</button>
+          <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
 
@@ -665,7 +660,7 @@ export default function Home() {
       {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* ══ GUIA — oscuro ══ */}
+      {/* ══ GUIA ══ */}
       <div className="section-dark" id="guia">
         <div className="section-inner">
           <div className="section-tag"><span>Paso a paso</span></div>
@@ -680,7 +675,6 @@ export default function Home() {
               {title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
             ].map((g, i) => (
               <div className="guia-card reveal" key={i} style={{transitionDelay:`${i*0.1}s`}}>
-                {/* Sin número — quitados por pedido */}
                 <h3>{g.title}</h3>
                 <p>{g.desc}</p>
                 {g.link && (
@@ -717,7 +711,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FLOTA — carrusel elegante oscuro */}
+      {/* FLOTA */}
       <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>Nuestros vehículos</span></div>
@@ -741,7 +735,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* BANNER INGLÉS — mejorado */}
+      {/* BANNER INGLÉS */}
       <div className="img-banner" style={{height:"220px"}}>
         <Image src="/fotos/1001029677.jpg" alt="Driving lessons in English" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.3)"}} unoptimized/>
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
@@ -759,7 +753,7 @@ export default function Home() {
       {/* CARRETERA → oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* GALERÍA 2 oscuro */}
+      {/* GALERÍA */}
       <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>En acción</span></div>
@@ -792,7 +786,7 @@ export default function Home() {
       {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* INTERES oscuro */}
+      {/* INTERES */}
       <div className="section-dark" id="interes">
         <div className="section-inner">
           <div className="section-tag"><span>Recursos útiles</span></div>
@@ -843,7 +837,7 @@ export default function Home() {
       {/* CARRETERA crema→oscuro */}
       <RoadDivider variant="light-to-dark"/>
 
-      {/* MAPA oscuro */}
+      {/* MAPA */}
       <div className="section-dark">
         <div className="section-inner">
           <div className="section-tag"><span>Dónde estamos</span></div>
@@ -857,7 +851,7 @@ export default function Home() {
       {/* Degradado oscuro→amarillo */}
       <div style={{height:"40px",background:"linear-gradient(to bottom,#181818 0%,#FFE600 100%)"}}></div>
 
-      {/* CTA — ¿Listo para sacar tu licencia? */}
+      {/* CTA */}
       <div className="cta-band">
         <div className="cta-band-inner">
           <div className="semaforo-cta reveal">
@@ -963,6 +957,13 @@ export default function Home() {
                 <li><a href="#guia">Guía de Licencia</a></li>
                 <li><Link href="/instituciones" style={{fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none"}}>Instituciones Médicas</Link></li>
                 <li><a href="#materiales">Materiales PDF</a></li>
+                <li>
+                  <button onClick={() => setSimOpen(true)} style={{
+                    background:"none",border:"none",cursor:"pointer",padding:0,
+                    fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none",
+                    fontFamily:"inherit",textAlign:"left",
+                  }}>🧠 Simulador Teórico</button>
+                </li>
               </ul>
             </div>
             <div className="footer-col">
@@ -994,7 +995,7 @@ export default function Home() {
         <IconWhatsApp/>
       </a>
 
-      {/* Quiz widget — se oculta al llegar al footer */}
+      {/* Quiz / Simulador — botón flotante siempre visible, se oculta solo al llegar al footer */}
       <div style={{
         transition:"opacity 0.4s, transform 0.4s, visibility 0.4s",
         opacity: showQuiz ? 1 : 0,
@@ -1002,7 +1003,7 @@ export default function Home() {
         visibility: showQuiz ? "visible" : "hidden",
         pointerEvents: showQuiz ? "auto" : "none",
       }}>
-        <QuizModal/>
+        <QuizModal forceOpen={simOpen} onForceClose={() => setSimOpen(false)}/>
       </div>
     </>
   );

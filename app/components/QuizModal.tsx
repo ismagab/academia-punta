@@ -54,7 +54,14 @@ function shuffle<T>(arr: T[]): T[] {
 type Estado = "idle" | "jugando" | "resultado";
 type Respuesta = { pregunta: string; seleccion: number; correcta: number; correctamente: boolean };
 
-export default function QuizModal() {
+/* ══ PROPS: forceOpen abre el modal desde el nav ══ */
+export default function QuizModal({
+  forceOpen = false,
+  onForceClose,
+}: {
+  forceOpen?: boolean;
+  onForceClose?: () => void;
+}) {
   const [abierto, setAbierto] = useState(false);
   const [estado, setEstado] = useState<Estado>("idle");
   const [pregs, setPregs] = useState(preguntas.slice(0, 30));
@@ -68,10 +75,20 @@ export default function QuizModal() {
   const [nombre, setNombre] = useState("");
   const [generandoPDF, setGenerandoPDF] = useState(false);
 
+  /* Anuncio flotante aparece a los 5s */
   useEffect(() => {
     const timer = setTimeout(() => setMostrarAnuncio(true), 5000);
     return () => clearTimeout(timer);
   }, []);
+
+  /* Abre el modal cuando se activa forceOpen desde el nav */
+  useEffect(() => {
+    if (forceOpen) {
+      setAbierto(true);
+      setMostrarAnuncio(false);
+      if (onForceClose) onForceClose();
+    }
+  }, [forceOpen]);
 
   useEffect(() => {
     if (estado !== "jugando") return;
@@ -131,15 +148,12 @@ export default function QuizModal() {
       canvas.height = 1500;
       const ctx = canvas.getContext("2d")!;
 
-      // Fondo
       ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, W, canvas.height);
 
-      // Header band
       ctx.fillStyle = "#FFFF00";
       ctx.fillRect(0, 0, W, 8);
 
-      // Logo local
       const logoImg = new window.Image();
       logoImg.crossOrigin = "anonymous";
       logoImg.src = LOGO_URL;
@@ -150,7 +164,6 @@ export default function QuizModal() {
       });
 
       if (logoImg.complete && logoImg.naturalWidth > 0) {
-        // Clip circular
         ctx.save();
         ctx.beginPath();
         ctx.arc(75, 65, 32, 0, Math.PI * 2);
@@ -170,7 +183,6 @@ export default function QuizModal() {
         ctx.textAlign = "left";
       }
 
-      // Nombre academia
       ctx.fillStyle = "#f5f5f5";
       ctx.font = "bold 21px Arial";
       ctx.fillText("Academia de Choferes Punta", 125, 52);
@@ -181,7 +193,6 @@ export default function QuizModal() {
       ctx.font = "12px Arial";
       ctx.fillText("WhatsApp Autos: 094 774 465  |  Motos: 098 151 659  |  English: 093 312 019", 125, 93);
 
-      // Separador
       ctx.strokeStyle = "#222";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -189,7 +200,6 @@ export default function QuizModal() {
       ctx.lineTo(W - 40, 115);
       ctx.stroke();
 
-      // Título
       ctx.fillStyle = "#FFFF00";
       ctx.font = "bold 13px Arial";
       ctx.fillText("SIMULADOR DE PRUEBA TEÓRICA — RESULTADO", 40, 143);
@@ -200,7 +210,6 @@ export default function QuizModal() {
       ctx.fillText(fecha, W - 40, 143);
       ctx.textAlign = "left";
 
-      // Nombre participante
       if (nombre.trim()) {
         ctx.fillStyle = "#aaa";
         ctx.font = "13px Arial";
@@ -210,7 +219,6 @@ export default function QuizModal() {
         ctx.fillText(nombre.trim(), 135, 172);
       }
 
-      // Caja resultado
       const resY = nombre.trim() ? 195 : 170;
       ctx.fillStyle = aprobado ? "rgba(76,175,80,0.10)" : "rgba(244,67,54,0.10)";
       ctx.fillRect(40, resY, W - 80, 115);
@@ -219,107 +227,66 @@ export default function QuizModal() {
       ctx.strokeRect(40, resY, W - 80, 115);
 
       ctx.fillStyle = aprobado ? "#4CAF50" : "#f44336";
-      ctx.font = "bold 30px Arial";
+      ctx.font = "bold 28px Arial";
       ctx.textAlign = "center";
       ctx.fillText(aprobado ? "✓ APROBADO" : "✗ NO APROBADO", W / 2, resY + 42);
-      ctx.fillStyle = "#aaa";
-      ctx.font = "14px Arial";
-      ctx.fillText(
-        aprobado
-          ? "Resultado satisfactorio — Máximo 5 errores permitidos"
-          : `Resultado no satisfactorio — ${errores} errores (máximo permitido: 5)`,
-        W / 2, resY + 72,
-      );
+
+      ctx.fillStyle = "#888";
+      ctx.font = "13px Arial";
+      ctx.fillText(`${correctas}/30 correctas · ${errores} errores · ${porcentaje}% · Tiempo: ${formatTiempo(tiempo)}`, W / 2, resY + 72);
       ctx.fillStyle = "#555";
-      ctx.font = "11px Arial";
-      ctx.fillText("Este es un simulador de autoevaluación — No es un certificado oficial de la IDM", W / 2, resY + 97);
+      ctx.font = "12px Arial";
+      ctx.fillText(aprobado ? "Estás preparado para el examen real de la IDM." : `Máximo permitido: 5 errores. ¡Seguí practicando!`, W / 2, resY + 98);
       ctx.textAlign = "left";
 
-      // Stats
-      const stY = resY + 135;
-      const stats = [
-        { label: "Correctas",  val: `${correctas}/30`, color: "#4CAF50" },
-        { label: "Errores",    val: `${errores}`,       color: errores > 5 ? "#f44336" : "#888" },
-        { label: "Porcentaje", val: `${porcentaje}%`,   color: "#FFFF00" },
-        { label: "Tiempo",     val: formatTiempo(tiempo), color: "#aaa" },
-      ];
-      stats.forEach((s, i) => {
-        const x = 40 + i * 178;
-        ctx.fillStyle = "#161616";
-        ctx.fillRect(x, stY, 165, 70);
-        ctx.strokeStyle = "#222";
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x, stY, 165, 70);
-        ctx.fillStyle = s.color;
-        ctx.font = "bold 24px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText(s.val, x + 82, stY + 34);
-        ctx.fillStyle = "#666";
-        ctx.font = "11px Arial";
-        ctx.fillText(s.label.toUpperCase(), x + 82, stY + 54);
-      });
-      ctx.textAlign = "left";
-
-      // Separador
-      ctx.strokeStyle = "#222";
-      ctx.beginPath();
-      ctx.moveTo(40, stY + 90);
-      ctx.lineTo(W - 40, stY + 90);
-      ctx.stroke();
-
-      // Contacto docentes / instructores
+      let y = resY + 140;
       ctx.fillStyle = "#FFFF00";
       ctx.font = "bold 12px Arial";
-      ctx.fillText("CONTACTAR A LOS INSTRUCTORES", 40, stY + 115);
-      ctx.fillStyle = "#888";
-      ctx.font = "11px Arial";
-      ctx.fillText("🚗  Autos — WhatsApp: +598 94 774 465  |  wa.me/59894774465", 40, stY + 135);
-      ctx.fillText("🏍️  Motos — WhatsApp: +598 98 151 659  |  wa.me/59898151659", 40, stY + 152);
-      ctx.fillText("🇬🇧  English lessons — WhatsApp: +598 93 312 019  |  wa.me/59893312019", 40, stY + 169);
+      ctx.fillText("DETALLE DE RESPUESTAS", 40, y);
+      y += 20;
 
-      // Separador
-      ctx.strokeStyle = "#1a1a1a";
+      ctx.strokeStyle = "#222";
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(40, stY + 185);
-      ctx.lineTo(W - 40, stY + 185);
+      ctx.moveTo(40, y);
+      ctx.lineTo(W - 40, y);
       ctx.stroke();
+      y += 16;
 
-      // Detalle respuestas
-      ctx.fillStyle = "#FFFF00";
-      ctx.font = "bold 13px Arial";
-      ctx.fillText("DETALLE DE RESPUESTAS", 40, stY + 210);
-
-      let y = stY + 235;
-      respuestas.forEach((r, i) => {
-        if (y > 1420) return;
-        ctx.fillStyle = i % 2 === 0 ? "#111" : "#0d0d0d";
-        ctx.fillRect(40, y - 14, W - 80, 50);
-
-        ctx.fillStyle = "#555";
-        ctx.font = "bold 11px Arial";
-        ctx.fillText(`${i + 1}.`, 48, y + 4);
-
-        ctx.fillStyle = "#ccc";
-        ctx.font = "11px Arial";
-        const pregTruncada = r.pregunta.length > 62 ? r.pregunta.substring(0, 62) + "..." : r.pregunta;
-        ctx.fillText(pregTruncada, 68, y);
-
-        ctx.fillStyle = "#888";
-        ctx.font = "10px Arial";
-        const respTexto = preguntas.find(p => p.pregunta === r.pregunta)?.opciones[r.seleccion] || "";
-        const respCorta = respTexto.length > 57 ? respTexto.substring(0, 57) + "..." : respTexto;
-        ctx.fillText(`Tu respuesta: ${respCorta}`, 68, y + 17);
+      for (const [i, r] of respuestas.entries()) {
+        const lineH = 52;
+        ctx.fillStyle = r.correctamente ? "rgba(76,175,80,0.08)" : "rgba(244,67,54,0.06)";
+        ctx.fillRect(40, y, W - 80, lineH - 4);
 
         ctx.fillStyle = r.correctamente ? "#4CAF50" : "#f44336";
-        ctx.font = "bold 14px Arial";
-        ctx.textAlign = "right";
-        ctx.fillText(r.correctamente ? "✓" : "✗", W - 50, y + 8);
-        ctx.textAlign = "left";
+        ctx.font = "bold 13px Arial";
+        ctx.fillText(r.correctamente ? "✓" : "✗", 52, y + 20);
 
-        y += 52;
-      });
+        ctx.fillStyle = "#ccc";
+        ctx.font = "12px Arial";
+        const qText = `${i + 1}. ${r.pregunta}`;
+        ctx.fillText(qText.length > 90 ? qText.substring(0, 90) + "…" : qText, 72, y + 20);
 
-      // Footer
+        const ansOpts = preguntas.find(p => p.pregunta === r.pregunta)?.opciones;
+        if (ansOpts) {
+          ctx.fillStyle = r.correctamente ? "#4CAF50" : "#f44336";
+          ctx.font = "11px Arial";
+          ctx.fillText(`Tu respuesta: ${ansOpts[r.seleccion]}`, 72, y + 38);
+          if (!r.correctamente) {
+            ctx.fillStyle = "#4CAF50";
+            ctx.fillText(`Correcta: ${ansOpts[r.correcta]}`, 320, y + 38);
+          }
+        }
+        y += lineH;
+
+        if (y > 1380) {
+          ctx.fillStyle = "#555";
+          ctx.font = "italic 11px Arial";
+          ctx.fillText(`… y ${respuestas.length - i - 1} respuestas más`, 40, y + 14);
+          break;
+        }
+      }
+
       const footerY = Math.max(y + 20, 1440);
       ctx.fillStyle = "#FFFF00";
       ctx.fillRect(0, footerY, W, 4);
@@ -329,7 +296,6 @@ export default function QuizModal() {
       ctx.fillText("Academia de Choferes Punta — Maldonado, Uruguay", W / 2, footerY + 22);
       ctx.fillText(`${DOMAIN}/  |  Este documento es una autoevaluación y no reemplaza el examen oficial de la IDM`, W / 2, footerY + 38);
 
-      // Recortar al contenido
       const finalH = footerY + 58;
       const final  = document.createElement("canvas");
       final.width  = W;
@@ -349,7 +315,7 @@ export default function QuizModal() {
 
   return (
     <>
-      {/* ANUNCIO FLOTANTE */}
+      {/* ── ANUNCIO FLOTANTE (aparece a los 5s, solo si el modal está cerrado) ── */}
       {mostrarAnuncio && !abierto && (
         <div style={{
           position: "fixed", bottom: "6rem", left: "1.5rem", zIndex: 199,
@@ -385,20 +351,21 @@ export default function QuizModal() {
         </div>
       )}
 
-      {/* BOTÓN FIJO */}
+      {/* ── BOTÓN FLOTANTE FIJO (siempre visible cuando modal cerrado) ── */}
       {!abierto && (
-        <button onClick={() => setAbierto(true)} style={{
+        <button onClick={() => { setAbierto(true); setMostrarAnuncio(false); }} style={{
           position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 199,
           background: "#111", border: "1px solid #FFFF00", color: "#FFFF00",
           padding: "0.7rem 1.2rem", fontFamily: "Syne, sans-serif",
           fontWeight: 700, fontSize: "0.78rem", cursor: "pointer",
           display: "flex", alignItems: "center", gap: "0.5rem",
+          boxShadow: "0 4px 20px rgba(255,255,0,0.12)",
         }}>
           🧠 Simulador Teórico
         </button>
       )}
 
-      {/* MODAL */}
+      {/* ── MODAL ── */}
       {abierto && (
         <div style={{
           position: "fixed", inset: 0, zIndex: 300,
@@ -561,7 +528,6 @@ export default function QuizModal() {
                       : `Tuviste ${errores} errores. El máximo permitido es 5. ¡Seguí practicando!`}
                   </p>
 
-                  {/* Stats */}
                   <div style={{ display: "flex", gap: "0.8rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.5rem" }}>
                     {[
                       ["🎯", `${correctas}/30`, "Correctas", "#4CAF50"],
@@ -577,7 +543,6 @@ export default function QuizModal() {
                     ))}
                   </div>
 
-                  {/* Campo nombre */}
                   <div style={{ marginBottom: "1.2rem", textAlign: "left" }}>
                     <label style={{ display: "block", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666", marginBottom: "0.4rem" }}>
                       Tu nombre para el PDF (opcional)
@@ -597,7 +562,6 @@ export default function QuizModal() {
                     </div>
                   )}
 
-                  {/* Botones acción */}
                   <div style={{ display: "flex", gap: "0.8rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <button onClick={iniciar} style={{
                       background: "#161616", color: "#f5f5f5", border: "1px solid #333",
@@ -622,7 +586,6 @@ export default function QuizModal() {
                     </button>
                   </div>
 
-                  {/* WhatsApp contactos — múltiples instructores */}
                   <div style={{ marginBottom: "1.5rem" }}>
                     <div style={{ fontSize: "0.72rem", color: "#555", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.7rem", textAlign: "left" }}>
                       Contactar instructor / docente
@@ -652,7 +615,6 @@ export default function QuizModal() {
                     </div>
                   </div>
 
-                  {/* Detalle respuestas */}
                   <div style={{ textAlign: "left", borderTop: "1px solid #222", paddingTop: "1.2rem" }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#FFFF00", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>
                       Detalle de respuestas
