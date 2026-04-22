@@ -37,97 +37,201 @@ const IconGoogle = () => (
 );
 
 const SvgCar = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <path d="M8 30h32M12 38h4m16 0h4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-    <path d="M6 30l4-12h28l4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="14" cy="35" r="3" stroke="currentColor" strokeWidth="2.5"/>
-    <circle cx="34" cy="35" r="3" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M16 22l2-6h12l2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg" width="40" height="28">
+    {/* Carrocería principal */}
+    <path d="M4 26 L8 14 Q9 12 11 12 L20 11 Q22 6 24 5 L40 5 Q43 5 45 8 L52 12 L56 12 Q58 12 59 14 L60 26 Z" fill="#2563eb"/>
+    {/* Techo / ventanas */}
+    <path d="M22 11 L24 6 L40 6 L44 9 L49 12 L22 12 Z" fill="#93c5fd"/>
+    {/* Ventana delantera */}
+    <path d="M36 6.5 L43 9 L48 12 L37 12 Z" fill="#bfdbfe" opacity="0.9"/>
+    {/* Ventana trasera */}
+    <path d="M23 6.5 L22 12 L36 12 L36 6.5 Z" fill="#bfdbfe" opacity="0.9"/>
+    {/* Cuerpo inferior */}
+    <path d="M4 26 L60 26 L60 30 Q60 32 58 32 L6 32 Q4 32 4 30 Z" fill="#1d4ed8"/>
+    {/* Rueda trasera */}
+    <circle cx="14" cy="32" r="6" fill="#1f2937"/>
+    <circle cx="14" cy="32" r="3.5" fill="#6b7280"/>
+    <circle cx="14" cy="32" r="1.5" fill="#d1d5db"/>
+    {/* Rueda delantera */}
+    <circle cx="50" cy="32" r="6" fill="#1f2937"/>
+    <circle cx="50" cy="32" r="3.5" fill="#6b7280"/>
+    <circle cx="50" cy="32" r="1.5" fill="#d1d5db"/>
+    {/* Faros delanteros */}
+    <rect x="56" y="17" width="5" height="4" rx="1" fill="#fef08a"/>
+    <rect x="56" y="17" width="5" height="4" rx="1" fill="url(#headlight)" opacity="0.8"/>
+    {/* Faros traseros */}
+    <rect x="3" y="17" width="4" height="4" rx="1" fill="#fca5a5"/>
+    {/* Parrilla */}
+    <rect x="57" y="22" width="4" height="3" rx="0.5" fill="#93c5fd" opacity="0.7"/>
+    {/* Manija */}
+    <rect x="38" y="19" width="5" height="1.5" rx="0.75" fill="#93c5fd" opacity="0.6"/>
+    <defs>
+      <linearGradient id="headlight" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#fde68a"/>
+        <stop offset="100%" stopColor="#fef9c3"/>
+      </linearGradient>
+    </defs>
   </svg>
 );
 const SvgMoto = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <circle cx="10" cy="34" r="6" stroke="currentColor" strokeWidth="2.5"/>
-    <circle cx="38" cy="34" r="6" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M16 34h16M24 34l-4-12h8l6 8H28" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M20 22l-4-6h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="32" cy="18" r="2" stroke="currentColor" strokeWidth="2"/>
+  <svg viewBox="0 0 72 48" xmlns="http://www.w3.org/2000/svg" width="44" height="30">
+    {/* Rueda trasera */}
+    <circle cx="14" cy="36" r="9" fill="#1f2937"/>
+    <circle cx="14" cy="36" r="6" fill="#374151"/>
+    <circle cx="14" cy="36" r="2.5" fill="#9ca3af"/>
+    {/* Rueda delantera */}
+    <circle cx="58" cy="36" r="9" fill="#1f2937"/>
+    <circle cx="58" cy="36" r="6" fill="#374151"/>
+    <circle cx="58" cy="36" r="2.5" fill="#9ca3af"/>
+    {/* Chasis/frame */}
+    <path d="M14 36 L20 22 L36 18 L52 22 L58 36" stroke="#dc2626" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* Motor / bloque central */}
+    <rect x="28" y="22" width="16" height="12" rx="3" fill="#dc2626"/>
+    <rect x="30" y="24" width="12" height="8" rx="2" fill="#ef4444"/>
+    {/* Depósito de combustible */}
+    <ellipse cx="36" cy="18" rx="10" ry="5" fill="#b91c1c"/>
+    {/* Carenado/asiento */}
+    <path d="M26 18 Q36 12 46 18 L44 22 L28 22 Z" fill="#991b1b"/>
+    {/* Horquilla delantera */}
+    <line x1="52" y1="22" x2="58" y2="30" stroke="#6b7280" strokeWidth="2.5" strokeLinecap="round"/>
+    <line x1="54" y1="20" x2="59" y2="30" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round"/>
+    {/* Manubrio */}
+    <path d="M50 16 L54 20 L58 17" stroke="#4b5563" strokeWidth="2.5" strokeLinecap="round"/>
+    {/* Espejo */}
+    <circle cx="50" cy="14" r="2" fill="#6b7280"/>
+    {/* Escape */}
+    <path d="M20 30 Q16 32 12 30" stroke="#9ca3af" strokeWidth="2" fill="none" strokeLinecap="round"/>
+    {/* Faro delantero */}
+    <ellipse cx="61" cy="26" rx="3" ry="4" fill="#fef08a" opacity="0.9"/>
+    {/* Piloto trasero */}
+    <circle cx="16" cy="24" r="2" fill="#fca5a5" opacity="0.8"/>
+    {/* Rayos rueda trasera */}
+    {[0,60,120,180,240,300].map(a => {
+      const r = a * Math.PI / 180;
+      return <line key={a} x1={14+2.5*Math.cos(r)} y1={36+2.5*Math.sin(r)} x2={14+6*Math.cos(r)} y2={36+6*Math.sin(r)} stroke="#6b7280" strokeWidth="0.8"/>;
+    })}
+    {/* Rayos rueda delantera */}
+    {[0,60,120,180,240,300].map(a => {
+      const r = a * Math.PI / 180;
+      return <line key={a} x1={58+2.5*Math.cos(r)} y1={36+2.5*Math.sin(r)} x2={58+6*Math.cos(r)} y2={36+6*Math.sin(r)} stroke="#6b7280" strokeWidth="0.8"/>;
+    })}
   </svg>
 );
 const SvgDoc = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <rect x="10" y="6" width="28" height="36" rx="3" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M16 16h16M16 22h16M16 28h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    <path d="M30 32l4 4 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <rect x="8" y="4" width="26" height="34" rx="3" fill="#3b82f6"/>
+    <rect x="10" y="6" width="22" height="30" rx="2" fill="#eff6ff"/>
+    <path d="M14 14h16M14 19h16M14 24h10" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round"/>
+    <circle cx="34" cy="34" r="8" fill="#22c55e"/>
+    <path d="M30 34l3 3 5-5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 const SvgBrain = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <path d="M24 10c-6 0-10 4-10 9 0 3 1.5 5.5 4 7v4h12v-4c2.5-1.5 4-4 4-7 0-5-4-9-10-9z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-    <path d="M20 36v4h8v-4M14 19c-3 0-5 2-5 5s2 5 5 5M34 19c3 0 5 2 5 5s-2 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <circle cx="24" cy="24" r="20" fill="#8b5cf6" opacity="0.15"/>
+    <path d="M24 8 C17 8 13 13 13 18 C13 21.5 14.5 24.5 17.5 26.5 L17.5 32 L30.5 32 L30.5 26.5 C33.5 24.5 35 21.5 35 18 C35 13 31 8 24 8Z" fill="#8b5cf6"/>
+    <path d="M17.5 32 L30.5 32 L30.5 36 L17.5 36Z" fill="#7c3aed" rx="2"/>
+    <line x1="24" y1="8" x2="24" y2="14" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+    <path d="M13 18 C10 18 8 20 8 23 C8 26 10 28 13 28" stroke="#7c3aed" strokeWidth="2" fill="none" strokeLinecap="round"/>
+    <path d="M35 18 C38 18 40 20 40 23 C40 26 38 28 35 28" stroke="#7c3aed" strokeWidth="2" fill="none" strokeLinecap="round"/>
+    <circle cx="20" cy="20" r="2" fill="white" opacity="0.7"/>
+    <circle cx="28" cy="20" r="2" fill="white" opacity="0.7"/>
   </svg>
 );
 const SvgShield = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <path d="M24 6L8 13v12c0 9 6.8 17.4 16 20 9.2-2.6 16-11 16-20V13L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-    <path d="M16 24l5 5 10-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <path d="M24 4L6 11v13c0 10 7.5 19.3 18 22 10.5-2.7 18-12 18-22V11L24 4Z" fill="#0ea5e9"/>
+    <path d="M24 4L6 11v13c0 10 7.5 19.3 18 22V4Z" fill="#0284c7" opacity="0.4"/>
+    <path d="M15 24l6 6 12-12" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 const SvgGlobe = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <circle cx="24" cy="24" r="16" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M8 24h32M24 8c-4 4-6 9-6 16s2 12 6 16M24 8c4 4 6 9 6 16s-2 12-6 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <circle cx="24" cy="24" r="18" fill="#0ea5e9"/>
+    <ellipse cx="24" cy="24" rx="8" ry="18" fill="none" stroke="white" strokeWidth="1.5" opacity="0.6"/>
+    <line x1="6" y1="24" x2="42" y2="24" stroke="white" strokeWidth="1.5" opacity="0.6"/>
+    <line x1="6" y1="17" x2="42" y2="17" stroke="white" strokeWidth="1" opacity="0.4"/>
+    <line x1="6" y1="31" x2="42" y2="31" stroke="white" strokeWidth="1" opacity="0.4"/>
+    <circle cx="24" cy="24" r="18" fill="none" stroke="white" strokeWidth="2"/>
+    {/* Bandera UK superpuesta */}
+    <rect x="29" y="8" width="14" height="10" rx="1.5" fill="#1d4ed8"/>
+    <path d="M29 8L43 18M43 8L29 18" stroke="white" strokeWidth="1.5"/>
+    <path d="M29 8L43 18M43 8L29 18" stroke="#dc2626" strokeWidth="0.8"/>
+    <line x1="36" y1="8" x2="36" y2="18" stroke="white" strokeWidth="2.5"/>
+    <line x1="29" y1="13" x2="43" y2="13" stroke="white" strokeWidth="2.5"/>
+    <line x1="36" y1="8" x2="36" y2="18" stroke="#dc2626" strokeWidth="1.2"/>
+    <line x1="29" y1="13" x2="43" y2="13" stroke="#dc2626" strokeWidth="1.2"/>
   </svg>
 );
 const SvgProfLicense = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
-    <rect x="6" y="14" width="36" height="24" rx="3" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M6 20h36M14 28h8M14 33h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="36" cy="30" r="4" stroke="currentColor" strokeWidth="2"/>
-    <path d="M33 30l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M18 10v4M30 10v4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+    <rect x="4" y="12" width="40" height="28" rx="3" fill="#f59e0b"/>
+    <rect x="6" y="14" width="36" height="24" rx="2" fill="#fffbeb"/>
+    <rect x="4" y="12" width="40" height="7" rx="3" fill="#d97706"/>
+    <circle cx="14" cy="30" r="5" fill="#fed7aa" stroke="#f59e0b" strokeWidth="1.5"/>
+    <path d="M9 38 C9 35 11 33 14 33 C17 33 19 35 19 38" fill="#fde68a" stroke="#f59e0b" strokeWidth="1"/>
+    <rect x="22" y="25" width="14" height="2" rx="1" fill="#d97706"/>
+    <rect x="22" y="30" width="10" height="2" rx="1" fill="#d97706" opacity="0.6"/>
+    <rect x="22" y="35" width="12" height="2" rx="1" fill="#d97706" opacity="0.4"/>
+    <circle cx="38" cy="37" r="5" fill="#22c55e"/>
+    <path d="M35.5 37l2 2 3.5-3.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const SvgSucive = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <rect x="8" y="10" width="32" height="28" rx="3" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M8 18h32M16 26h4m8 0h4M16 32h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    <path d="M18 10V8a2 2 0 014 0v2M26 10V8a2 2 0 014 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <rect x="6" y="8" width="36" height="32" rx="3" fill="#3b82f6"/>
+    <rect x="8" y="10" width="32" height="28" rx="2" fill="#eff6ff"/>
+    <rect x="6" y="8" width="36" height="8" rx="3" fill="#2563eb"/>
+    <rect x="10" y="22" width="6" height="5" rx="1" fill="#3b82f6"/>
+    <rect x="19" y="22" width="6" height="5" rx="1" fill="#3b82f6"/>
+    <rect x="28" y="22" width="6" height="5" rx="1" fill="#3b82f6"/>
+    <rect x="10" y="30" width="24" height="2.5" rx="1" fill="#93c5fd"/>
+    <path d="M15 9l1.5 4 1.5-4M28 9l1.5 4 1.5-4" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 );
 const SvgIDM = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <path d="M24 6L6 16v26h36V16L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-    <rect x="18" y="28" width="12" height="14" rx="1" stroke="currentColor" strokeWidth="2"/>
-    <path d="M16 24h4M28 24h4M16 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <path d="M24 4L4 16v28h40V16L24 4Z" fill="#10b981"/>
+    <path d="M24 4L4 16v28h20V4Z" fill="#059669" opacity="0.4"/>
+    <rect x="18" y="28" width="12" height="16" rx="1.5" fill="white"/>
+    <rect x="20" y="30" width="8" height="12" rx="1" fill="#10b981" opacity="0.3"/>
+    <rect x="14" y="20" width="6" height="5" rx="1" fill="white" opacity="0.8"/>
+    <rect x="28" y="20" width="6" height="5" rx="1" fill="white" opacity="0.8"/>
+    <path d="M14 16h6M28 16h6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
 const SvgUnasev = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <path d="M24 6L8 13v12c0 9 6.8 17.4 16 20 9.2-2.6 16-11 16-20V13L24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-    <path d="M17 24l5 5 9-9" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <path d="M24 4L6 12v13c0 10.5 7.5 20.3 18 23 10.5-2.7 18-12.5 18-23V12L24 4Z" fill="#f59e0b"/>
+    <path d="M24 4L6 12v13c0 10.5 7.5 20.3 18 23V4Z" fill="#d97706" opacity="0.35"/>
+    <path d="M15 25l6 6 12-12" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 const SvgPsico = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <circle cx="24" cy="18" r="8" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M12 40c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-    <path d="M24 10v4M20 14l3 3M28 14l-3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <circle cx="24" cy="15" r="9" fill="#ec4899"/>
+    <circle cx="24" cy="15" r="6.5" fill="#fce7f3"/>
+    <path d="M12 42c0-6.627 5.373-12 12-12s12 5.373 12 12" fill="#ec4899"/>
+    <circle cx="21" cy="14" r="1.5" fill="#be185d"/>
+    <circle cx="27" cy="14" r="1.5" fill="#be185d"/>
+    <path d="M21 18 Q24 20.5 27 18" stroke="#be185d" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
   </svg>
 );
 const SvgHospital = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <rect x="8" y="14" width="32" height="28" rx="2" stroke="currentColor" strokeWidth="2.5"/>
-    <path d="M16 14V10a2 2 0 012-2h12a2 2 0 012 2v4" stroke="currentColor" strokeWidth="2"/>
-    <path d="M20 28v-8M16 24h8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-    <rect x="18" y="34" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="2"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <rect x="6" y="12" width="36" height="32" rx="2" fill="#ef4444"/>
+    <path d="M14 12V8a2 2 0 012-2h16a2 2 0 012 2v4" fill="#dc2626"/>
+    <rect x="6" y="12" width="36" height="7" fill="#dc2626"/>
+    <rect x="20" y="20" width="8" height="14" rx="1" fill="white"/>
+    <rect x="17" y="23" width="14" height="8" rx="1" fill="white"/>
+    <rect x="20" y="36" width="8" height="8" rx="1" fill="#fecaca"/>
   </svg>
 );
 const SvgWAContact = () => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-    <path d="M24 6C14.059 6 6 14.059 6 24c0 3.176.832 6.16 2.291 8.748L6 42l9.518-2.26A17.93 17.93 0 0024 42c9.941 0 18-8.059 18-18S33.941 6 24 6z" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round"/>
-    <path d="M18 22c0 5.5 4.5 10 10 10 1.5 0 2.9-.3 4.1-.9l3.9.9-1-3.8c.6-1.2.9-2.6.9-4.2 0-5.5-4.5-10-10-10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+    <circle cx="24" cy="24" r="20" fill="#25d366"/>
+    <path d="M33 29.5c-.4-.2-2.4-1.2-2.8-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.6-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.2-2-.9-.8-2-2.2-2.2-2.7-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.2-1.2-3-.3-.8-.7-.7-.9-.7h-.8c-.3 0-.7.1-1.1.5-.4.4-1.4 1.4-1.4 3.4s1.5 3.9 1.7 4.2c.2.3 2.9 4.4 7 6.2 1 .4 1.7.7 2.3.9 1 .3 1.9.3 2.6.2.8-.1 2.4-1 2.7-1.9.3-.9.3-1.7.2-1.9-.1-.1-.3-.2-.7-.4z" fill="white"/>
   </svg>
 );
 
@@ -430,6 +534,43 @@ function HeroCarousel() {
   );
 }
 
+/* ══ LIGHTBOX ══ */
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [onClose]);
+  return (
+    <div onClick={onClose} style={{
+      position:"fixed",inset:0,zIndex:9999,
+      background:"rgba(0,0,0,0.92)",
+      display:"flex",alignItems:"center",justifyContent:"center",
+      cursor:"zoom-out",backdropFilter:"blur(6px)",
+      animation:"fadeIn 0.2s ease",
+    }}>
+      <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
+      <div onClick={e => e.stopPropagation()} style={{
+        position:"relative",maxWidth:"92vw",maxHeight:"88vh",
+        borderRadius:"8px",overflow:"hidden",
+        boxShadow:"0 25px 80px rgba(0,0,0,0.7)",
+      }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} style={{display:"block",maxWidth:"92vw",maxHeight:"88vh",objectFit:"contain"}}/>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"0.75rem 1rem",background:"linear-gradient(to top,rgba(0,0,0,0.75),transparent)",fontFamily:"Barlow Condensed,sans-serif",color:"rgba(255,255,255,0.85)",fontSize:"0.85rem",letterSpacing:"0.05em"}}>{alt}</div>
+      </div>
+      <button onClick={onClose} style={{
+        position:"fixed",top:"1.2rem",right:"1.2rem",
+        background:"rgba(255,255,255,0.15)",border:"1px solid rgba(255,255,255,0.3)",
+        color:"white",width:"2.6rem",height:"2.6rem",borderRadius:"50%",
+        cursor:"pointer",fontSize:"1.2rem",display:"flex",alignItems:"center",justifyContent:"center",
+        backdropFilter:"blur(4px)",
+      }}>✕</button>
+    </div>
+  );
+}
+
 /* ══ FLEET CAROUSEL ══ */
 const fleetItems = [
   {src:"/fotos/1001079125.jpg", label:"Toda la flota", cat:"Equipo"},
@@ -447,6 +588,7 @@ function FleetCarousel() {
   const [current, setCurrent] = useState(0);
   const [anim, setAnim] = useState(false);
   const autoRef = useRef<ReturnType<typeof setInterval>|null>(null);
+  const [lightbox, setLightbox] = useState<{src:string;alt:string}|null>(null);
   const visibleCount = 3;
   const total = fleetItems.length;
 
@@ -471,6 +613,7 @@ function FleetCarousel() {
 
   return (
     <div style={{position:"relative"}}>
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)}/>}
       <div style={{
         display:"grid",
         gridTemplateColumns:"repeat(3,1fr)",
@@ -480,9 +623,10 @@ function FleetCarousel() {
         transform: anim ? "scale(0.98)" : "scale(1)",
       }}>
         {visible.map((f, i) => (
-          <div key={i} style={{
+          <div key={i} onClick={() => setLightbox({src:f.src, alt:f.label})} style={{
             position:"relative",aspectRatio:"4/3",overflow:"hidden",
             borderRadius:"6px",border:"1px solid rgba(255,255,255,0.08)",
+            cursor:"zoom-in",
           }}>
             <Image src={f.src} alt={f.label} width={600} height={450}
               style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform 0.6s"}}
@@ -491,6 +635,10 @@ function FleetCarousel() {
               position:"absolute",inset:0,
               background:"linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 55%)",
             }}/>
+            {/* Zoom hint */}
+            <div style={{position:"absolute",top:"0.6rem",right:"0.6rem",background:"rgba(0,0,0,0.5)",borderRadius:"4px",padding:"0.2rem 0.4rem",backdropFilter:"blur(4px)"}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+            </div>
             <div style={{position:"absolute",bottom:"0.8rem",left:"0.8rem",right:"0.8rem"}}>
               <span style={{
                 display:"inline-block",background:"var(--yellow)",color:"var(--black)",
@@ -535,6 +683,7 @@ function InstructorCarousel() {
   const [current, setCurrent] = useState(0);
   const [anim, setAnim] = useState(false);
   const [dir, setDir] = useState<"l"|"r">("r");
+  const [lightbox, setLightbox] = useState<{src:string;alt:string}|null>(null);
   const autoRef = useRef<ReturnType<typeof setInterval>|null>(null);
   const visibleCount = 3;
   const total = instructorSlides.length;
@@ -562,6 +711,7 @@ function InstructorCarousel() {
 
   return (
     <div style={{position:"relative"}}>
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)}/>}
       <div style={{
         display:"grid",
         gridTemplateColumns:"repeat(3,1fr)",
@@ -571,10 +721,11 @@ function InstructorCarousel() {
         transform: anim ? (dir==="r"?"translateX(-12px)":"translateX(12px)") : "translateX(0)",
       }}>
         {visible.map((f, i) => (
-          <div key={i} style={{
+          <div key={i} onClick={() => setLightbox({src:f.src, alt:f.name})} style={{
             position:"relative",aspectRatio:"3/4",overflow:"hidden",
             borderRadius:"8px",border:"1px solid rgba(255,255,255,0.1)",
             boxShadow:"0 4px 20px rgba(0,0,0,0.35)",
+            cursor:"zoom-in",
           }}>
             <Image src={f.src} alt={f.name} width={600} height={800}
               style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",transition:"transform 0.6s"}}
@@ -583,6 +734,10 @@ function InstructorCarousel() {
               position:"absolute",inset:0,
               background:"linear-gradient(to top,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.1) 55%,transparent 100%)",
             }}/>
+            {/* Zoom hint */}
+            <div style={{position:"absolute",top:"0.6rem",right:"0.6rem",background:"rgba(0,0,0,0.5)",borderRadius:"4px",padding:"0.2rem 0.4rem",backdropFilter:"blur(4px)"}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+            </div>
             <div style={{position:"absolute",bottom:"1rem",left:"1rem",right:"1rem"}}>
               <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"1.05rem",color:"white",letterSpacing:"0.06em",lineHeight:1.2}}>{f.name}</div>
               <div style={{fontFamily:"Barlow Condensed,sans-serif",fontSize:"0.75rem",color:"rgba(255,255,255,0.6)",letterSpacing:"0.05em",marginTop:"0.2rem"}}>{f.role}</div>
