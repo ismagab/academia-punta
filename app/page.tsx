@@ -530,7 +530,6 @@ export default function Home() {
   const footerRef = useRef<HTMLElement>(null); // kept for potential future use
   /* Estado para abrir el simulador desde el nav */
   const [simOpen, setSimOpen]     = useState(false);
-
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
