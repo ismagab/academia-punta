@@ -521,22 +521,106 @@ function FleetCarousel() {
   );
 }
 
+/* ══ INSTRUCTOR CAROUSEL ══ */
+const instructorSlides = [
+  {src:"/fotos/1001079176.jpg", name:"Clase de Motos",      role:"Pista La Loma — G1, G2, G3"},
+  {src:"/fotos/1001079215.jpg", name:"Instructor en Acción",role:"Clases personalizadas"},
+  {src:"/fotos/1001079203.jpg", name:"Equipo Academia",     role:"Más de 15 años formando conductores"},
+  {src:"/fotos/1001079128.jpg", name:"Instructor — Autos",  role:"Chevrolet doble mando"},
+  {src:"/fotos/1001079188.jpg", name:"Instructora",         role:"Suzuki Alto — Clases de autos"},
+  {src:"/fotos/1001079218.jpg", name:"Toda la Academia",    role:"Punta del Este & Maldonado"},
+];
+
+function InstructorCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [anim, setAnim] = useState(false);
+  const [dir, setDir] = useState<"l"|"r">("r");
+  const autoRef = useRef<ReturnType<typeof setInterval>|null>(null);
+  const visibleCount = 3;
+  const total = instructorSlides.length;
+
+  const goTo = useCallback((idx: number, d: "l"|"r") => {
+    if (anim) return;
+    setDir(d);
+    setAnim(true);
+    setTimeout(() => { setCurrent(idx); setAnim(false); }, 380);
+  }, [anim]);
+
+  const next = useCallback(() => goTo(current >= total - visibleCount ? 0 : current + 1, "r"), [current, anim, goTo]);
+  const prev = useCallback(() => goTo(current === 0 ? total - visibleCount : current - 1, "l"), [current, anim, goTo]);
+
+  useEffect(() => {
+    autoRef.current = setInterval(next, 4200);
+    return () => { if (autoRef.current) clearInterval(autoRef.current); };
+  }, [next]);
+
+  const visible = [
+    instructorSlides[current % total],
+    instructorSlides[(current + 1) % total],
+    instructorSlides[(current + 2) % total],
+  ];
+
+  return (
+    <div style={{position:"relative"}}>
+      <div style={{
+        display:"grid",
+        gridTemplateColumns:"repeat(3,1fr)",
+        gap:"1rem",
+        transition: anim ? "opacity 0.38s,transform 0.38s" : "none",
+        opacity: anim ? 0.35 : 1,
+        transform: anim ? (dir==="r"?"translateX(-12px)":"translateX(12px)") : "translateX(0)",
+      }}>
+        {visible.map((f, i) => (
+          <div key={i} style={{
+            position:"relative",aspectRatio:"3/4",overflow:"hidden",
+            borderRadius:"8px",border:"1px solid rgba(255,255,255,0.1)",
+            boxShadow:"0 4px 20px rgba(0,0,0,0.35)",
+          }}>
+            <Image src={f.src} alt={f.name} width={600} height={800}
+              style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center top",transition:"transform 0.6s"}}
+              unoptimized/>
+            <div style={{
+              position:"absolute",inset:0,
+              background:"linear-gradient(to top,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.1) 55%,transparent 100%)",
+            }}/>
+            <div style={{position:"absolute",bottom:"1rem",left:"1rem",right:"1rem"}}>
+              <div style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"1.05rem",color:"white",letterSpacing:"0.06em",lineHeight:1.2}}>{f.name}</div>
+              <div style={{fontFamily:"Barlow Condensed,sans-serif",fontSize:"0.75rem",color:"rgba(255,255,255,0.6)",letterSpacing:"0.05em",marginTop:"0.2rem"}}>{f.role}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:"1.2rem"}}>
+        <button onClick={prev} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:"white",width:"2.4rem",height:"2.4rem",borderRadius:"50%",cursor:"pointer",fontSize:"1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s"}}>‹</button>
+        <div style={{display:"flex",gap:"0.4rem"}}>
+          {Array.from({length: total - visibleCount + 1}).map((_,i) => (
+            <button key={i} onClick={() => goTo(i, i > current ? "r" : "l")} style={{
+              width: i === current ? "1.4rem" : "0.4rem",
+              height:"0.4rem",borderRadius:"3px",
+              background: i === current ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
+              border:"none",cursor:"pointer",padding:0,transition:"all 0.3s",
+            }}/>
+          ))}
+        </div>
+        <button onClick={next} style={{background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.15)",color:"white",width:"2.4rem",height:"2.4rem",borderRadius:"50%",cursor:"pointer",fontSize:"1rem",display:"flex",alignItems:"center",justifyContent:"center",transition:"background 0.2s"}}>›</button>
+      </div>
+    </div>
+  );
+}
+
 /* ══ MAIN ══ */
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled]   = useState(false);
   const [servicio, setServicio]   = useState("autos");
   const [mensaje, setMensaje]     = useState("");
-  const footerRef = useRef<HTMLElement>(null); // kept for potential future use
+  const footerRef = useRef<HTMLElement>(null); // kept for layout reference
   /* Estado para abrir el simulador desde el nav */
   const [simOpen, setSimOpen]     = useState(false);
+
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-      if (footerRef.current) {
-        const rect = footerRef.current.getBoundingClientRect();
-        setShowQuiz(rect.top > window.innerHeight - 80);
-      }
     };
     window.addEventListener("scroll", onScroll);
     const els = document.querySelectorAll(".reveal,.reveal-left,.reveal-right");
@@ -591,9 +675,6 @@ export default function Home() {
                 color:"var(--yellow)",
               }}>🧠 Simulador</button>
             </li>
-            <li>
-              <button onClick={()=>setSimOpen(true)} style={{background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"var(--yellow)"}}>🧠 Simulador</button>
-            </li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
           <a href="#contacto" className="btn-nav">Empezar →</a>
@@ -614,7 +695,6 @@ export default function Home() {
             textTransform:"uppercase",color:"var(--yellow)",
             padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem",
           }}>🧠 Simulador Teórico</button>
-          <button onClick={()=>{setSimOpen(true);setMenuOpen(false);}} style={{background:"none",border:"none",cursor:"pointer",textAlign:"left",width:"100%",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:"var(--yellow)",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem"}}>🧠 Simulador Teórico</button>
           <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
@@ -640,7 +720,7 @@ export default function Home() {
             {icon:<SvgProfLicense/>, title:"Licencias Profesionales",  desc:"Vehículos especiales. Formación y gestoría ante la IDM Maldonado."},
           ].map((s,i) => (
             <div className="service-card reveal" key={i} style={{transitionDelay:`${i*0.08}s`}}>
-              <span className="s-icon" style={{color:"var(--yellow)",display:"flex",alignItems:"center",justifyContent:"center",width:"3.5rem",height:"3.5rem",background:"rgba(255,230,0,0.1)",borderRadius:"10px",marginBottom:"1rem",border:"1px solid rgba(255,230,0,0.15)"}}>{s.icon}</span>
+              <span className="s-icon" style={{color:"#1a1a2e",display:"flex",alignItems:"center",justifyContent:"center",width:"3.5rem",height:"3.5rem",background:"linear-gradient(135deg,#e8eaf6 0%,#c5cae9 100%)",borderRadius:"12px",marginBottom:"1rem",border:"1px solid rgba(63,81,181,0.18)",boxShadow:"0 2px 8px rgba(63,81,181,0.10)"}}>{s.icon}</span>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
             </div>
@@ -731,8 +811,8 @@ export default function Home() {
           <div className="img-banner-text">
             <h2>Clases de <span>motos</span></h2>
             <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados. Categorías G1, G2 y G3.</p>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:"0.6rem",background:"#25D366",color:"#000",padding:"0.75rem 1.4rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"1rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",fontWeight:700}}>
-              <IconWhatsAppGreen/> Motos — 098 151 659
+            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:"0.45rem",background:"rgba(37,211,102,0.92)",color:"#000",padding:"0.55rem 1.1rem",fontFamily:"Barlow Condensed,sans-serif",fontSize:"0.85rem",letterSpacing:"0.08em",textDecoration:"none",borderRadius:"4px",fontWeight:700,backdropFilter:"blur(4px)",border:"1px solid rgba(255,255,255,0.2)"}}>
+              <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsAppGreen/></span> Motos — 098 151 659
             </a>
           </div>
         </div>
@@ -747,8 +827,8 @@ export default function Home() {
             <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.4rem,3.5vw,2.2rem)",color:"white",letterSpacing:"0.08em",margin:0}}>Driving lessons in English</p>
           </div>
           <p style={{color:"rgba(255,255,255,0.75)",fontSize:"0.9rem",margin:0}}>International visitors welcome · Certified instructors</p>
-          <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",animation:"none",display:"inline-flex",alignItems:"center",gap:"0.5rem"}}>
-            <IconWhatsAppGreen/> Contact us — +598 93 312 019
+          <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#c62828",animation:"none",display:"inline-flex",alignItems:"center",gap:"0.45rem",padding:"0.55rem 1.1rem",fontSize:"0.85rem",letterSpacing:"0.08em",borderRadius:"4px"}}>
+            <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsAppGreen/></span> Contact us — +598 93 312 019
           </a>
         </div>
       </div>
@@ -761,21 +841,7 @@ export default function Home() {
         <div className="section-inner">
           <div className="section-tag"><span>En acción</span></div>
           <h2 className="section-title reveal-left">Aprendé con <span>los mejores</span></h2>
-          <div className="foto-grid">
-            {[
-              {src:"/fotos/1001079176.jpg",label:"Clase de motos — Pista La Loma"},
-              {src:"/fotos/1001079215.jpg",label:"Instructor en acción"},
-              {src:"/fotos/1001079203.jpg",label:"Equipo Academia Punta"},
-              {src:"/fotos/1001079128.jpg",label:"Instructor con Chevrolet"},
-              {src:"/fotos/1001079188.jpg",label:"Instructora — Suzuki Alto"},
-              {src:"/fotos/1001079218.jpg",label:"Toda la academia"},
-            ].map((f, i) => (
-              <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.1}s`}}>
-                <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
-                <div className="foto-label">{f.label}</div>
-              </div>
-            ))}
-          </div>
+          <InstructorCarousel/>
         </div>
       </div>
 
@@ -809,7 +875,7 @@ export default function Home() {
               <a className="interes-card reveal" href={item.url} key={i}
                 target={item.url.startsWith("/")?"_self":"_blank"} rel="noopener noreferrer"
                 style={{transitionDelay:`${i*0.1}s`}}>
-                <div className="interes-icon" style={{color:"var(--yellow)",background:"rgba(255,230,0,0.08)",padding:"0.5rem",borderRadius:"8px",display:"inline-flex",marginBottom:"0.2rem"}}>{item.icon}</div>
+                <div className="interes-icon" style={{color:"#1a1a2e",background:"linear-gradient(135deg,#e8eaf6 0%,#c5cae9 100%)",padding:"0.6rem",borderRadius:"10px",display:"inline-flex",marginBottom:"0.2rem",border:"1px solid rgba(63,81,181,0.15)",boxShadow:"0 2px 8px rgba(63,81,181,0.10)"}}>{item.icon}</div>
                 <div><h3>{item.title}</h3><p>{item.desc}</p></div>
               </a>
             ))}
@@ -930,7 +996,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER */}
-      <footer ref={footerRef} style={{marginBottom:0,paddingBottom:0}}>
+      <footer style={{marginBottom:0,paddingBottom:0,display:"block"}}>
         <div className="footer-inner">
           <div className="footer-grid">
             <div className="footer-brand">
