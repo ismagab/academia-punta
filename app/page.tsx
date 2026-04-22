@@ -528,7 +528,6 @@ export default function Home() {
   const [servicio, setServicio]   = useState("autos");
   const [mensaje, setMensaje]     = useState("");
   const footerRef = useRef<HTMLElement>(null); // kept for potential future use
-  const [simOpen, setSimOpen]     = useState(false);
   /* Estado para abrir el simulador desde el nav */
   const [simOpen, setSimOpen]     = useState(false);
 
