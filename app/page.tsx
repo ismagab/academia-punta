@@ -432,14 +432,15 @@ function HeroCarousel() {
 
 /* ══ FLEET CAROUSEL ══ */
 const fleetItems = [
-  {src:"/fotos/1001029671.jpg", label:"Chevrolet Onix RS", cat:"Auto"},
-  {src:"/fotos/1001029695.jpg", label:"Chevrolet Joy — Blanco", cat:"Auto"},
-  {src:"/fotos/1001029689.jpg", label:"Chevrolet Onix RS frontal", cat:"Auto"},
-  {src:"/fotos/1001029698.jpg", label:"Suzuki Alto", cat:"Auto"},
-  {src:"/fotos/1001029692.jpg", label:"Flota en pista", cat:"Auto"},
-  {src:"/fotos/1001029686.jpg", label:"BMW G310 — Categoría G2/G3", cat:"Moto"},
-  {src:"/fotos/1001029680.jpg", label:"Moto BMW G310", cat:"Moto"},
-  {src:"/fotos/1001029677.jpg", label:"Moto en pista La Loma", cat:"Moto G1/G2/G3"},
+  {src:"/fotos/1001079125.jpg", label:"Toda la flota", cat:"Equipo"},
+  {src:"/fotos/1001079209.jpg", label:"Flota en rambla", cat:"Autos"},
+  {src:"/fotos/1001079134.jpg", label:"Citroën C3 — BED 7080", cat:"Auto"},
+  {src:"/fotos/1001079143.jpg", label:"Chevrolet — BEC 2806", cat:"Auto"},
+  {src:"/fotos/1001079146.jpg", label:"Suzuki Alto — BEC 9215", cat:"Auto"},
+  {src:"/fotos/1001079170.jpg", label:"Chevrolet RS — BEC 7380", cat:"Auto"},
+  {src:"/fotos/1001079137.jpg", label:"BMW G310 — Motos G2/G3", cat:"Moto"},
+  {src:"/fotos/1001079116.jpg", label:"Honda Wave — Motos G1", cat:"Moto"},
+  {src:"/fotos/1001079161.jpg", label:"Flota en Punta del Este", cat:"Flota"},
 ];
 
 function FleetCarousel() {
@@ -526,8 +527,8 @@ export default function Home() {
   const [scrolled, setScrolled]   = useState(false);
   const [servicio, setServicio]   = useState("autos");
   const [mensaje, setMensaje]     = useState("");
-  const footerRef = useRef<HTMLElement>(null);
-  const [showQuiz, setShowQuiz]   = useState(true);
+  const footerRef = useRef<HTMLElement>(null); // kept for potential future use
+  const [simOpen, setSimOpen]     = useState(false);
   /* Estado para abrir el simulador desde el nav */
   const [simOpen, setSimOpen]     = useState(false);
 
@@ -592,6 +593,9 @@ export default function Home() {
                 color:"var(--yellow)",
               }}>🧠 Simulador</button>
             </li>
+            <li>
+              <button onClick={()=>setSimOpen(true)} style={{background:"none",border:"none",cursor:"pointer",padding:0,fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"var(--yellow)"}}>🧠 Simulador</button>
+            </li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
           <a href="#contacto" className="btn-nav">Empezar →</a>
@@ -612,6 +616,7 @@ export default function Home() {
             textTransform:"uppercase",color:"var(--yellow)",
             padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem",
           }}>🧠 Simulador Teórico</button>
+          <button onClick={()=>{setSimOpen(true);setMenuOpen(false);}} style={{background:"none",border:"none",cursor:"pointer",textAlign:"left",width:"100%",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:"var(--yellow)",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem"}}>🧠 Simulador Teórico</button>
           <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
@@ -637,7 +642,7 @@ export default function Home() {
             {icon:<SvgProfLicense/>, title:"Licencias Profesionales",  desc:"Vehículos especiales. Formación y gestoría ante la IDM Maldonado."},
           ].map((s,i) => (
             <div className="service-card reveal" key={i} style={{transitionDelay:`${i*0.08}s`}}>
-              <span className="s-icon" style={{color:"var(--yellow)",display:"flex",alignItems:"center",justifyContent:"center",width:"3rem",height:"3rem",background:"rgba(255,230,0,0.08)",borderRadius:"8px",marginBottom:"0.8rem"}}>{s.icon}</span>
+              <span className="s-icon" style={{color:"var(--yellow)",display:"flex",alignItems:"center",justifyContent:"center",width:"3.5rem",height:"3.5rem",background:"rgba(255,230,0,0.1)",borderRadius:"10px",marginBottom:"1rem",border:"1px solid rgba(255,230,0,0.15)"}}>{s.icon}</span>
               <h3>{s.title}</h3>
               <p>{s.desc}</p>
             </div>
@@ -647,7 +652,7 @@ export default function Home() {
 
       {/* BANNER FLOTA */}
       <div className="img-banner">
-        <Image src="/fotos/1001029677.jpg" alt="Flota Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 40%"}} unoptimized/>
+        <Image src="/fotos/1001079218.jpg" alt="Equipo Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 40%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Nuestra <span>flota</span></h2>
@@ -723,13 +728,13 @@ export default function Home() {
 
       {/* BANNER MOTOS */}
       <div className="img-banner">
-        <Image src="/fotos/1001029680.jpg" alt="Moto BMW G310" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 30%"}} unoptimized/>
+        <Image src="/fotos/1001079137.jpg" alt="Clases de moto BMW G310 — Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 30%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Clases de <span>motos</span></h2>
             <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados. Categorías G1, G2 y G3.</p>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." className="btn-primary" target="_blank" rel="noopener noreferrer">
-              <span style={{display:"inline-flex",alignItems:"center",gap:"0.5rem"}}><IconWhatsAppGreen/> Consultar motos — 098 151 659</span>
+            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:"0.6rem",background:"#25D366",color:"#000",padding:"0.75rem 1.4rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"1rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",fontWeight:700}}>
+              <IconWhatsAppGreen/> Motos — 098 151 659
             </a>
           </div>
         </div>
@@ -737,7 +742,7 @@ export default function Home() {
 
       {/* BANNER INGLÉS */}
       <div className="img-banner" style={{height:"220px"}}>
-        <Image src="/fotos/1001029677.jpg" alt="Driving lessons in English" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.3)"}} unoptimized/>
+        <Image src="/fotos/1001079155.jpg" alt="Driving lessons in English" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.3)"}} unoptimized/>
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
           <div style={{display:"flex",gap:"0.5rem",alignItems:"center",justifyContent:"center"}}>
             <span style={{fontSize:"1.5rem"}}>🇬🇧</span>
@@ -760,11 +765,14 @@ export default function Home() {
           <h2 className="section-title reveal-left">Aprendé con <span>los mejores</span></h2>
           <div className="foto-grid">
             {[
-              {src:"/fotos/1001029695.jpg",label:"Chevrolet Joy — Auto Blanco"},
-              {src:"/fotos/1001029689.jpg",label:"Chevrolet Onix RS frontal"},
-              {src:"/fotos/1001029698.jpg",label:"Suzuki Alto"},
+              {src:"/fotos/1001079176.jpg",label:"Clase de motos — Pista La Loma"},
+              {src:"/fotos/1001079215.jpg",label:"Instructor en acción"},
+              {src:"/fotos/1001079203.jpg",label:"Equipo Academia Punta"},
+              {src:"/fotos/1001079128.jpg",label:"Instructor con Chevrolet"},
+              {src:"/fotos/1001079188.jpg",label:"Instructora — Suzuki Alto"},
+              {src:"/fotos/1001079218.jpg",label:"Toda la academia"},
             ].map((f, i) => (
-              <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.12}s`}}>
+              <div className="foto-item reveal" key={i} style={{transitionDelay:`${i*0.1}s`}}>
                 <Image src={f.src} alt={f.label} width={800} height={600} style={{width:"100%",height:"100%",objectFit:"cover"}} unoptimized/>
                 <div className="foto-label">{f.label}</div>
               </div>
@@ -803,7 +811,7 @@ export default function Home() {
               <a className="interes-card reveal" href={item.url} key={i}
                 target={item.url.startsWith("/")?"_self":"_blank"} rel="noopener noreferrer"
                 style={{transitionDelay:`${i*0.1}s`}}>
-                <div className="interes-icon" style={{color:"var(--yellow)"}}>{item.icon}</div>
+                <div className="interes-icon" style={{color:"var(--yellow)",background:"rgba(255,230,0,0.08)",padding:"0.5rem",borderRadius:"8px",display:"inline-flex",marginBottom:"0.2rem"}}>{item.icon}</div>
                 <div><h3>{item.title}</h3><p>{item.desc}</p></div>
               </a>
             ))}
@@ -924,7 +932,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER */}
-      <footer ref={footerRef}>
+      <footer ref={footerRef} style={{marginBottom:0,paddingBottom:0}}>
         <div className="footer-inner">
           <div className="footer-grid">
             <div className="footer-brand">
@@ -958,11 +966,7 @@ export default function Home() {
                 <li><Link href="/instituciones" style={{fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none"}}>Instituciones Médicas</Link></li>
                 <li><a href="#materiales">Materiales PDF</a></li>
                 <li>
-                  <button onClick={() => setSimOpen(true)} style={{
-                    background:"none",border:"none",cursor:"pointer",padding:0,
-                    fontSize:"0.83rem",color:"rgba(255,255,255,0.4)",textDecoration:"none",
-                    fontFamily:"inherit",textAlign:"left",
-                  }}>🧠 Simulador Teórico</button>
+                  <Link href="/simulador" style={{fontSize:"0.83rem",color:"rgba(255,255,0,0.5)",textDecoration:"none"}}>🧠 Simulador Teórico</Link>
                 </li>
               </ul>
             </div>
@@ -977,7 +981,7 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© 2025 Academia de Choferes Punta — Maldonado, Uruguay</span>
+            <span>© 2026 Academia de Choferes Punta — Maldonado, Uruguay</span>
             <div style={{display:"flex",gap:"1.2rem",flexWrap:"wrap",justifyContent:"center"}}>
               <Link href="/terminos"   style={{fontSize:"0.72rem",color:"rgba(255,255,255,0.3)",textDecoration:"none",fontFamily:"Barlow Condensed,sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Términos</Link>
               <Link href="/privacidad" style={{fontSize:"0.72rem",color:"rgba(255,255,255,0.3)",textDecoration:"none",fontFamily:"Barlow Condensed,sans-serif",letterSpacing:"0.08em",textTransform:"uppercase"}}>Privacidad</Link>
@@ -995,16 +999,8 @@ export default function Home() {
         <IconWhatsApp/>
       </a>
 
-      {/* Quiz / Simulador — botón flotante siempre visible, se oculta solo al llegar al footer */}
-      <div style={{
-        transition:"opacity 0.4s, transform 0.4s, visibility 0.4s",
-        opacity: showQuiz ? 1 : 0,
-        transform: showQuiz ? "translateY(0)" : "translateY(20px)",
-        visibility: showQuiz ? "visible" : "hidden",
-        pointerEvents: showQuiz ? "auto" : "none",
-      }}>
-        <QuizModal forceOpen={simOpen} onForceClose={() => setSimOpen(false)}/>
-      </div>
+      {/* QuizModal — siempre visible, botón flotante nunca se oculta */}
+      <QuizModal forceOpen={simOpen} onForceClose={() => setSimOpen(false)}/>
     </>
   );
 }
