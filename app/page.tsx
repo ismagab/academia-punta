@@ -373,7 +373,7 @@ const heroSlides = [
     src: "/fotos/1001029674.jpg",
     alt: "Cambiá de licencia sin drama — Academia Punta",
     badge: "🚗 Punta del Este, Maldonado — Uruguay",
-    title: <>Tu licencia,<span className="highlight">sin dramas.</span><span className="tagline">Academia Punta</span></>,
+    title: <>TU LICENCIA<span className="highlight">A UN CLICK</span><span className="tagline">Academia Punta</span></>,
     sub: "Clases personalizadas para autos y motos. Instructores certificados. Tramitamos todo ante la IDM.",
     ctaLabel: "Quiero empezar 🚀",
     ctaHref: "#contacto",
@@ -384,7 +384,7 @@ const heroSlides = [
     badge: "🇬🇧 English lessons available",
     title: <>Driving lessons<span className="highlight" style={{fontFamily:"Bebas Neue,sans-serif"}}>in English</span><span className="tagline" style={{fontFamily:"Bebas Neue,sans-serif"}}>For everyone</span></>,
     sub: "International visitors and residents welcome. Certified instructors. WhatsApp: +598 93 312 019",
-    ctaLabel: "Contact us on WhatsApp",
+    ctaLabel: "Contact us on WhatsApp →",
     ctaHref: "https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English.",
     ctaExternal: true,
   },
@@ -573,15 +573,15 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 
 /* ══ FLEET CAROUSEL ══ */
 const fleetItems = [
-  {src:"/fotos/1001079125.jpg", label:"Toda la flota", cat:"Equipo"},
-  {src:"/fotos/1001079209.jpg", label:"Flota en rambla", cat:"Autos"},
-  {src:"/fotos/1001079134.jpg", label:"Citroën C3 — BED 7080", cat:"Auto"},
-  {src:"/fotos/1001079143.jpg", label:"Chevrolet — BEC 2806", cat:"Auto"},
-  {src:"/fotos/1001079146.jpg", label:"Suzuki Alto — BEC 9215", cat:"Auto"},
-  {src:"/fotos/1001079170.jpg", label:"Chevrolet RS — BEC 7380", cat:"Auto"},
-  {src:"/fotos/1001079137.jpg", label:"BMW G310 — Motos G2/G3", cat:"Moto"},
-  {src:"/fotos/1001079116.jpg", label:"Honda Wave — Motos G1", cat:"Moto"},
-  {src:"/fotos/1001079161.jpg", label:"Flota en Punta del Este", cat:"Flota"},
+  {src:"/fotos/1001079125.jpg", label:"Instructores", cat:"Instructores"},
+  {src:"/fotos/1001079209.jpg", label:"Auto", cat:"Auto"},
+  {src:"/fotos/1001079134.jpg", label:"Auto", cat:"Auto"},
+  {src:"/fotos/1001079143.jpg", label:"Auto", cat:"Auto"},
+  {src:"/fotos/1001079146.jpg", label:"Auto", cat:"Auto"},
+  {src:"/fotos/1001079170.jpg", label:"Auto", cat:"Auto"},
+  {src:"/fotos/1001079137.jpg", label:"Moto", cat:"Moto"},
+  {src:"/fotos/1001079116.jpg", label:"Moto", cat:"Moto"},
+  {src:"/fotos/1001079161.jpg", label:"Instructores", cat:"Instructores"},
 ];
 
 function FleetCarousel() {
@@ -671,12 +671,12 @@ function FleetCarousel() {
 
 /* ══ INSTRUCTOR CAROUSEL ══ */
 const instructorSlides = [
-  {src:"/fotos/1001079176.jpg", name:"Clase de Motos",      role:"Pista La Loma — G1, G2, G3"},
-  {src:"/fotos/1001079215.jpg", name:"Instructor en Acción",role:"Clases personalizadas"},
-  {src:"/fotos/1001079203.jpg", name:"Equipo Academia",     role:"Más de 15 años formando conductores"},
-  {src:"/fotos/1001079128.jpg", name:"Instructor — Autos",  role:"Chevrolet doble mando"},
-  {src:"/fotos/1001079188.jpg", name:"Instructora",         role:"Suzuki Alto — Clases de autos"},
-  {src:"/fotos/1001079218.jpg", name:"Toda la Academia",    role:"Punta del Este & Maldonado"},
+  {src:"/fotos/1001079176.jpg", name:"Moto",      role:"Pista La Loma — G1, G2, G3"},
+  {src:"/fotos/1001079215.jpg", name:"Instructores",role:"Clases personalizadas"},
+  {src:"/fotos/1001079203.jpg", name:"Instructores",     role:"Más de 15 años formando conductores"},
+  {src:"/fotos/1001079128.jpg", name:"Auto",  role:"Doble mando — Licencia Categoría A"},
+  {src:"/fotos/1001079188.jpg", name:"Instructores",         role:"Clases de autos"},
+  {src:"/fotos/1001079218.jpg", name:"Instructores",    role:"Punta del Este & Maldonado"},
 ];
 
 function InstructorCarousel() {
@@ -795,8 +795,8 @@ export default function Home() {
     };
     const labels: Record<string,string> = {
       autos:"clases de autos", motos:"clases de motos",
-      tramites:"gestoría de trámites IDM", teorica:"la prueba teórica",
-      defensivo:"la charla de manejo defensivo", psicologia:"apoyo psicológico",
+      tramites:"gestoría de trámites IDM", teorica:"el simulador de prueba teórica",
+      defensivo:"clases de apoyo para prueba teórica", psicologia:"apoyo psicológico",
       ingles:"driving lessons in English",
     };
     const phone = phones[servicio] || phones.autos;
@@ -828,7 +828,7 @@ export default function Home() {
                 fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,
                 fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",
                 color:"var(--yellow)",
-              }}>🧠 Simulador</button>
+              }}>🧠 Iniciar Simulador</button>
             </li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
@@ -849,7 +849,7 @@ export default function Home() {
             fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",
             textTransform:"uppercase",color:"var(--yellow)",
             padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem",
-          }}>🧠 Simulador Teórico</button>
+          }}>🧠 Iniciar Simulador</button>
           <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
         </div>
       </nav>
@@ -866,10 +866,10 @@ export default function Home() {
         <h2 className="section-title reveal-left">Todo para <span>tu licencia</span></h2>
         <div className="services-grid">
           {[
-            {icon:<SvgCar/>,      title:"Clases de Autos",             desc:"Unidades nuevas, lunes a sábados. Te pasamos a buscar para cada clase."},
-            {icon:<SvgMoto/>,     title:"Clases de Motos G1, G2 y G3", desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos. BMW G310."},
+            {icon:<SvgCar/>,      title:"Clases de Autos",             desc:"LICENCIA CATEGORÍA A. Vehículos registrados y habilitados en IDM. Cuentan con doble pedalera e identificación de auto escuela para clases y pruebas prácticas en Pista La Loma y en la vía pública."},
+            {icon:<SvgMoto/>,     title:"Clases de Motos G1, G2 y G3", desc:"En pista La Loma. Vehículo, casco y reflectivos incluidos. VEHÍCULO CAT. G2: HONDA WAVE 110 — CAT. G3: BMW G310r"},
             {icon:<SvgDoc/>,      title:"Gestoría IDM",                 desc:"Hacemos todos los trámites en la Intendencia por vos. Tu tiempo vale oro."},
-            {icon:<SvgBrain/>,    title:"Prueba Teórica",               desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
+            {icon:<SvgBrain/>,    title:"Clases de apoyo para PRUEBA TEÓRICA", desc:"Clase de apoyo con docente. El 70% reprueba sin preparación."},
             {icon:<SvgShield/>,   title:"Manejo Defensivo",             desc:"Lunes, miércoles y viernes. Doble horario: 8:00 y 18:30 hs."},
             {icon:<SvgGlobe/>,    title:"Clases en Inglés",             desc:"Need driving lessons in English? We offer classes for international visitors."},
             {icon:<SvgProfLicense/>, title:"Licencias Profesionales",  desc:"Vehículos especiales. Formación y gestoría ante la IDM Maldonado."},
@@ -889,7 +889,7 @@ export default function Home() {
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Nuestra <span>flota</span></h2>
-            <p>Chevrolets nuevos con doble mando registrados y habilitados en IDM como Coche Escuela.</p>
+            <p>Autos nuevos con doble mando registrados y habilitados en IDM como Coche Escuela.</p>
             <a href="#contacto" className="btn-primary">Reservar clase</a>
           </div>
         </div>
@@ -905,9 +905,9 @@ export default function Home() {
           <h2 className="section-title reveal-left">Guía para <span>obtener tu licencia</span></h2>
           <div className="guia-grid">
             {[
-              {title:"Trámite en IDM",   desc:"Realizamos los trámites para las diferentes licencias ante la Intendencia de Maldonado."},
-              {title:"Charla Defensivo",  desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
-              {title:"Prueba Teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
+              {title:"CUÁNDO HACERLO?",  desc:"TU INSTRUCTOR/A TE ASESORARÁ PARA SABER CUÁNDO Y CÓMO PODER OBTENERLO"},
+              {title:"Clases de apoyo para prueba teórica",    desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
+              {title:"Simulador de prueba teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
               {title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido.", link:true},
               {title:"Prueba Práctica",   desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
               {title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
@@ -943,8 +943,8 @@ export default function Home() {
             <a href="/pdfs/GuiaProfesional.pdf" className="btn-download" target="_blank" rel="noopener noreferrer">⬇️ Descargar</a>
           </div>
           <div className="material-card reveal" style={{gridColumn:"1 / -1"}}>
-            <div className="material-info"><h3>💻 Clase Virtual — Apoyo Teórico</h3><p>Clase con docente online. El 70% reprueba sin preparación.</p></div>
-            <a href="https://www.youtube.com/@academiadechoferespunta" className="btn-download" target="_blank" rel="noopener noreferrer">Ver clase →</a>
+            <div className="material-info"><h3>💻 Clase Virtual — Apoyo Teórico</h3><p>Clase con docente online o presencial. El 70% reprueba sin preparación.</p></div>
+            <a href="https://api.whatsapp.com/send?phone=59898151659" className="btn-download" target="_blank" rel="noopener noreferrer">CONSULTANOS →</a>
           </div>
         </div>
       </section>
@@ -954,7 +954,7 @@ export default function Home() {
         <div className="section-inner">
           <div className="section-tag"><span>Nuestros vehículos</span></div>
           <h2 className="section-title reveal-left">Flota <span>de la academia</span></h2>
-          <p style={{color:"rgba(255,255,255,0.55)",marginBottom:"1.5rem",fontSize:"0.9rem"}}>5 autos · 3 motos categorías G1, G2 y G3</p>
+          <p style={{color:"rgba(255,255,255,0.55)",marginBottom:"1.5rem",fontSize:"0.9rem"}}>Vehículos nuevos, registrados y habilitados</p>
           <FleetCarousel/>
         </div>
       </div>
@@ -965,7 +965,7 @@ export default function Home() {
         <div className="img-banner-overlay">
           <div className="img-banner-text">
             <h2>Clases de <span>motos</span></h2>
-            <p>BMW G310 con casco y reflectivos. Pista La Loma, lunes a sábados. Categorías G1, G2 y G3.</p>
+            <p>En pista La Loma. Vehículo, casco y reflectivos incluidos. VEHÍCULO CAT. G2: HONDA WAVE 110 — CAT. G3: BMW G310r. Lunes a sábados.</p>
             <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:"0.45rem",background:"rgba(37,211,102,0.92)",color:"#000",padding:"0.55rem 1.1rem",fontFamily:"Barlow Condensed,sans-serif",fontSize:"0.85rem",letterSpacing:"0.08em",textDecoration:"none",borderRadius:"4px",fontWeight:700,backdropFilter:"blur(4px)",border:"1px solid rgba(255,255,255,0.2)"}}>
               <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsAppGreen/></span> Motos — 098 151 659
             </a>
@@ -974,16 +974,27 @@ export default function Home() {
       </div>
 
       {/* BANNER INGLÉS */}
-      <div className="img-banner" style={{height:"220px"}}>
-        <Image src="/fotos/1001079155.jpg" alt="Driving lessons in English" width={1600} height={220} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.3)"}} unoptimized/>
+      <div className="img-banner" style={{height:"260px"}}>
+        <Image src="/fotos/1001079155.jpg" alt="Driving lessons in English" width={1600} height={260} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 60%",filter:"brightness(0.25)"}} unoptimized/>
+        {/* Franja amarilla superior */}
+        <div style={{position:"absolute",top:0,left:0,right:0,height:"4px",background:"#FFE600",zIndex:3}}/>
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
-          <div style={{display:"flex",gap:"0.5rem",alignItems:"center",justifyContent:"center"}}>
-            <span style={{fontSize:"1.5rem"}}>🇬🇧</span>
-            <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.4rem,3.5vw,2.2rem)",color:"white",letterSpacing:"0.08em",margin:0}}>Driving lessons in English</p>
+          <div style={{display:"flex",gap:"0.6rem",alignItems:"center",justifyContent:"center"}}>
+            <span style={{fontSize:"1.8rem"}}>🇬🇧</span>
+            <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.6rem,4vw,2.6rem)",color:"white",letterSpacing:"0.1em",margin:0}}>Driving lessons in English</p>
           </div>
-          <p style={{color:"rgba(255,255,255,0.75)",fontSize:"0.9rem",margin:0}}>International visitors welcome · Certified instructors</p>
-          <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-primary" target="_blank" rel="noopener noreferrer" style={{background:"#c62828",animation:"none",display:"inline-flex",alignItems:"center",gap:"0.45rem",padding:"0.55rem 1.1rem",fontSize:"0.85rem",letterSpacing:"0.08em",borderRadius:"4px"}}>
-            <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsAppGreen/></span> Contact us — +598 93 312 019
+          <p style={{color:"rgba(255,255,255,0.7)",fontSize:"0.88rem",margin:0,letterSpacing:"0.05em",fontFamily:"Barlow Condensed,sans-serif"}}>International visitors welcome · Certified instructors · Punta del Este, Uruguay</p>
+          <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." target="_blank" rel="noopener noreferrer" style={{
+            display:"inline-flex",alignItems:"center",gap:"0.6rem",
+            background:"#FFE600",color:"#000",
+            padding:"0.7rem 1.6rem",
+            fontFamily:"Bebas Neue,sans-serif",fontSize:"1rem",letterSpacing:"0.12em",
+            textDecoration:"none",borderRadius:"4px",fontWeight:700,
+            boxShadow:"0 4px 20px rgba(255,230,0,0.35)",
+            border:"2px solid #FFE600",
+          }}>
+            <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsApp/></span>
+            Contact us — +598 93 312 019
           </a>
         </div>
       </div>
@@ -1069,6 +1080,7 @@ export default function Home() {
         <div className="section-inner">
           <div className="section-tag"><span>Dónde estamos</span></div>
           <h2 className="section-title reveal-left">Maldonado, <span>Uruguay</span></h2>
+          <p style={{color:"rgba(255,255,255,0.5)",marginBottom:"1rem",fontSize:"0.85rem"}}>Punta del Este – Maldonado – Piriápolis</p>
           <div className="mapa-wrapper reveal">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26176.04!2d-54.9516!3d-34.9013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x957511348d9fc7b7%3A0xe755a1d8711427e8!2sAcademia%20de%20Choferes%20Punta!5e0!3m2!1ses!2suy!4v1" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mapa Academia Punta"></iframe>
           </div>
@@ -1086,7 +1098,7 @@ export default function Home() {
             <div className="sem-luz sem-amarillo"></div>
             <div className="sem-luz sem-verde"></div>
           </div>
-          <h2 className="reveal">¿Listo para sacar<br/>tu licencia hoy?</h2>
+          <h2 className="reveal">¿Listo para obtener<br/>tu licencia?</h2>
           <div className="cta-band-btns">
             <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." className="btn-dark reveal" target="_blank" rel="noopener noreferrer">
               <IconWhatsAppGreen/> Autos — 094 774 465
@@ -1094,8 +1106,8 @@ export default function Home() {
             <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." className="btn-dark reveal" target="_blank" rel="noopener noreferrer">
               <IconWhatsAppGreen/> Motos — 098 151 659
             </a>
-            <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-dark reveal" target="_blank" rel="noopener noreferrer" style={{background:"#e53935",borderColor:"#e53935"}}>
-              <IconWhatsAppGreen/> English — 093 312 019
+            <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." className="btn-dark reveal" target="_blank" rel="noopener noreferrer" style={{background:"#FFE600",borderColor:"#FFE600",color:"#000",boxShadow:"0 4px 16px rgba(255,230,0,0.3)"}}>
+              <IconWhatsApp/> English — 093 312 019
             </a>
           </div>
         </div>
@@ -1113,7 +1125,7 @@ export default function Home() {
                 {icon:"🚗", strong:"WhatsApp — Autos",   text:"094 774 465"},
                 {icon:"🏍️",strong:"WhatsApp — Motos",   text:"098 151 659"},
                 {icon:"🇬🇧",strong:"WhatsApp — Inglés",  text:"093 312 019"},
-                {icon:"📍", strong:"Ubicación",           text:"Maldonado, Uruguay — Punta del Este y alrededores"},
+                {icon:"📍", strong:"Ubicación",           text:"Uruguay, Punta del Este – Maldonado – Piriápolis"},
                 {icon:"🕐", strong:"Horario de clases",   text:"Lunes a Sábados — Amplio y flexible"},
                 {icon:"📸", strong:"Instagram",           text:"@academiadechoferespunta"},
               ].map((c, i) => (
@@ -1132,8 +1144,8 @@ export default function Home() {
                   <option value="motos">🏍️ Clases de Motos G1 / G2 / G3</option>
                   <option value="ingles">🇬🇧 Driving lessons in English</option>
                   <option value="tramites">📋 Gestoría de Trámites IDM</option>
-                  <option value="teorica">🧠 Prueba Teórica</option>
-                  <option value="defensivo">🛡️ Charla de Manejo Defensivo</option>
+                  <option value="teorica">🧠 Simulador de Prueba Teórica</option>
+                  <option value="defensivo">🛡️ Clases de Apoyo para Prueba Teórica</option>
                   <option value="psicologia">🧘 Apoyo Psicológico</option>
                 </select>
               </div>
@@ -1159,7 +1171,7 @@ export default function Home() {
                 <Image src={LOGO} alt="Logo" width={42} height={42} unoptimized/>
                 <div className="footer-logo-text">Academia <span>Punta</span></div>
               </a>
-              <p>La academia de choferes de referencia en Punta del Este y Maldonado, Uruguay. Más de 15 años formando conductores seguros.</p>
+              <p>Academia de Choferes Punta, referente en Punta del Este – Maldonado – Piriápolis; con más de 15 años formando conductores seguros.</p>
               <div className="footer-social">
                 <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer"><IconInstagram/></a>
                 <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer"><IconFacebook/></a>

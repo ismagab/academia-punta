@@ -234,7 +234,7 @@ export default function SimuladorPage() {
           {/* ── INICIO ── */}
           {estado === "idle" && (
             <>
-              <div className="sim-badge">🧠 Prueba teórica oficial IDM</div>
+              <div className="sim-badge">🧠 Simulador de Prueba Teórica — IDM</div>
               <h1 className="sim-title">Simulador<br/><span>Teórico</span></h1>
               <p className="sim-sub">30 preguntas aleatorias basadas en el examen real de la IDM. Aprobás con no más de 5 errores. Al finalizar podés descargar tu resultado en PDF.</p>
               <div className="sim-stats">
@@ -249,7 +249,7 @@ export default function SimuladorPage() {
                 Tu nombre para el PDF (opcional)
               </label>
               <input className="sim-name-input" type="text" value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Ej: Juan Pérez"/>
-              <button className="sim-start-btn" onClick={iniciar}>Comenzar simulador →</button>
+              <button className="sim-start-btn" onClick={iniciar}>Iniciar Simulador →</button>
             </>
           )}
 
@@ -336,7 +336,7 @@ export default function SimuladorPage() {
 
               {!aprobado && (
                 <div style={{background:"rgba(244,67,54,0.08)",border:"1px solid rgba(244,67,54,0.25)",padding:"1rem 1.2rem",marginBottom:"1.2rem",fontSize:"0.85rem",color:"#aaa",lineHeight:1.6}}>
-                  Academia Punta ofrece una <strong style={{color:"#FFFF00"}}>clase de apoyo a la prueba teórica</strong> con docente. ¡Te ayudamos a aprobar!
+                  Academia Punta ofrece <strong style={{color:"#FFFF00"}}>clases de apoyo para prueba teórica</strong> con docente. ¡Te ayudamos a aprobar!
                 </div>
               )}
 
