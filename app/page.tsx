@@ -772,6 +772,35 @@ export default function Home() {
   const footerRef = useRef<HTMLElement>(null); // kept for layout reference
   /* Estado para abrir el simulador desde el nav */
   const [simOpen, setSimOpen]     = useState(false);
+  /* Idioma: detecta automáticamente el idioma del dispositivo */
+  const [lang, setLang] = useState<"es"|"en">(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("academiaPuntaLang");
+      if (stored === "en" || stored === "es") return stored as "es"|"en";
+      const browser = navigator.language || "";
+      return browser.toLowerCase().startsWith("en") ? "en" : "es";
+    }
+    return "es";
+  });
+
+  const toggleLang = () => {
+    const next = lang === "es" ? "en" : "es";
+    setLang(next);
+    if (typeof window !== "undefined") localStorage.setItem("academiaPuntaLang", next);
+  };
+
+  /* Textos traducidos */
+  const t = {
+    navNosotros:   lang==="en" ? "About us"       : "Nosotros",
+    navServicios:  lang==="en" ? "Services"        : "Servicios",
+    navGuia:       lang==="en" ? "Guide"           : "Guía",
+    navMateriales: lang==="en" ? "Materials"       : "Materiales",
+    navOpiniones:  lang==="en" ? "Reviews"         : "Opiniones",
+    navSimulador:  lang==="en" ? "🧠 Start Simulator" : "🧠 Iniciar Simulador",
+    navContacto:   lang==="en" ? "Contact"         : "Contacto",
+    navCta:        lang==="en" ? "Get started →"   : "Empezar →",
+    navCtaMobile:  lang==="en" ? "Get started"     : "Empezar ahora",
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -816,11 +845,11 @@ export default function Home() {
             <div className="logo-text">Academia <span>Punta</span></div>
           </a>
           <ul className="nav-links">
-            <li><Link href="/nosotros" style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none"}}>Nosotros</Link></li>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#guia">Guía</a></li>
-            <li><a href="#materiales">Materiales</a></li>
-            <li><a href="#testimonios">Opiniones</a></li>
+            <li><Link href="/nosotros" style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none"}}>{t.navNosotros}</Link></li>
+            <li><a href="#servicios">{t.navServicios}</a></li>
+            <li><a href="#guia">{t.navGuia}</a></li>
+            <li><a href="#materiales">{t.navMateriales}</a></li>
+            <li><a href="#testimonios">{t.navOpiniones}</a></li>
             <li>
               {/* Link directo al Simulador — abre el modal flotante */}
               <button onClick={() => setSimOpen(true)} style={{
@@ -828,29 +857,49 @@ export default function Home() {
                 fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,
                 fontSize:"0.8rem",letterSpacing:"0.12em",textTransform:"uppercase",
                 color:"var(--yellow)",
-              }}>🧠 Iniciar Simulador</button>
+              }}>{t.navSimulador}</button>
             </li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#contacto">{t.navContacto}</a></li>
           </ul>
-          <a href="#contacto" className="btn-nav">Empezar →</a>
+          {/* Language switcher */}
+          <button onClick={toggleLang} title={lang==="es"?"Switch to English":"Cambiar a Español"} style={{
+            background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.2)",
+            color:"white",borderRadius:"4px",cursor:"pointer",
+            padding:"0.28rem 0.6rem",fontFamily:"Barlow Condensed,sans-serif",
+            fontWeight:700,fontSize:"0.75rem",letterSpacing:"0.1em",
+            display:"flex",alignItems:"center",gap:"0.3rem",flexShrink:0,
+            transition:"background 0.2s",
+          }}>
+            {lang==="es" ? "🇬🇧 EN" : "🇺🇾 ES"}
+          </button>
+          <a href="#contacto" className="btn-nav">{t.navCta}</a>
           <button className="hamburger" onClick={()=>setMenuOpen(!menuOpen)} aria-label="Menú">
             <span></span><span></span><span></span>
           </button>
         </div>
         <div className={`mobile-menu${menuOpen?" open":""}`}>
-          <Link href="/nosotros" onClick={()=>setMenuOpen(false)} style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem"}}>Nosotros</Link>
-          <a href="#servicios"   onClick={()=>setMenuOpen(false)}>Servicios</a>
-          <a href="#guia"        onClick={()=>setMenuOpen(false)}>Guía</a>
-          <a href="#materiales"  onClick={()=>setMenuOpen(false)}>Materiales</a>
-          <a href="#testimonios" onClick={()=>setMenuOpen(false)}>Opiniones</a>
+          <Link href="/nosotros" onClick={()=>setMenuOpen(false)} style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",color:"rgba(255,255,255,0.65)",textDecoration:"none",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem"}}>{t.navNosotros}</Link>
+          <a href="#servicios"   onClick={()=>setMenuOpen(false)}>{t.navServicios}</a>
+          <a href="#guia"        onClick={()=>setMenuOpen(false)}>{t.navGuia}</a>
+          <a href="#materiales"  onClick={()=>setMenuOpen(false)}>{t.navMateriales}</a>
+          <a href="#testimonios" onClick={()=>setMenuOpen(false)}>{t.navOpiniones}</a>
           {/* Simulador en mobile menu */}
           <button onClick={()=>{setSimOpen(true);setMenuOpen(false);}} style={{
             background:"none",border:"none",cursor:"pointer",textAlign:"left",width:"100%",
             fontFamily:"Barlow Condensed,sans-serif",fontWeight:600,letterSpacing:"0.1em",
             textTransform:"uppercase",color:"var(--yellow)",
             padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.08)",fontSize:"0.95rem",
-          }}>🧠 Iniciar Simulador</button>
-          <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>Empezar ahora</a>
+          }}>{t.navSimulador}</button>
+          {/* Language toggle en mobile */}
+          <button onClick={()=>{toggleLang();}} style={{
+            background:"rgba(255,255,255,0.08)",border:"1px solid rgba(255,255,255,0.2)",
+            color:"white",borderRadius:"4px",cursor:"pointer",width:"fit-content",
+            padding:"0.5rem 1rem",fontFamily:"Barlow Condensed,sans-serif",
+            fontWeight:700,fontSize:"0.85rem",letterSpacing:"0.1em",margin:"0.5rem 0",
+          }}>
+            {lang==="es" ? "🇬🇧 Switch to English" : "🇺🇾 Cambiar a Español"}
+          </button>
+          <a href="#contacto" className="btn-mobile" onClick={()=>setMenuOpen(false)}>{t.navCtaMobile}</a>
         </div>
       </nav>
 
@@ -905,7 +954,7 @@ export default function Home() {
           <h2 className="section-title reveal-left">Guía para <span>obtener tu licencia</span></h2>
           <div className="guia-grid">
             {[
-              {title:"CUÁNDO HACERLO?",  desc:"TU INSTRUCTOR/A TE ASESORARÁ PARA SABER CUÁNDO Y CÓMO PODER OBTENERLO"},
+              {title:"¿CUÁNDO HACERLO?",  desc:"TU INSTRUCTOR/A TE ASESORARÁ PARA SABER CUÁNDO Y CÓMO PODER OBTENERLO"},
               {title:"Clases de apoyo para prueba teórica",    desc:"Se coordina con el docente de la academia. Formato presencial o virtual."},
               {title:"Simulador de prueba teórica",    desc:"Buscalo aquí para evaluar tus conocimientos y entrenar para la prueba.", link2:true},
               {title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido.", link:true},
