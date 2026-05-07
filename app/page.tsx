@@ -906,8 +906,8 @@ export default function Home() {
           <div className="guia-grid">
             {[
               {title:"CUÁNDO HACERLO?",  desc:"TU INSTRUCTOR/A TE ASESORARÁ PARA SABER CUÁNDO Y CÓMO PODER OBTENERLO"},
-              {title:"Clases de apoyo para prueba teórica",    desc:"Lunes, miércoles y viernes. 8:00 hs y 18:30 hs. Con documento de identidad, 5 min antes."},
-              {title:"Simulador de prueba teórica",    desc:"En la oficina de Licencias IDM. Coordinamos fecha a tu conveniencia."},
+              {title:"Clases de apoyo para prueba teórica",    desc:"Se coordina con el docente de la academia. Formato presencial o virtual."},
+              {title:"Simulador de prueba teórica",    desc:"Buscalo aquí para evaluar tus conocimientos y entrenar para la prueba.", link2:true},
               {title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido.", link:true},
               {title:"Prueba Práctica",   desc:"En pista La Loma con nuestro vehículo e instructor habilitado."},
               {title:"¡Licencia!",        desc:"Gestionamos el trámite final. Vos solo disfrutás el resultado."},
@@ -918,6 +918,11 @@ export default function Home() {
                 {g.link && (
                   <Link href="/instituciones" style={{display:"inline-flex",alignItems:"center",gap:"0.4rem",marginTop:"0.7rem",color:"#FFE600",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.78rem",letterSpacing:"0.12em",textTransform:"uppercase",textDecoration:"none"}}>
                     Ver instituciones →
+                  </Link>
+                )}
+                {g.link2 && (
+                  <Link href="/simulador" style={{display:"inline-flex",alignItems:"center",gap:"0.4rem",marginTop:"0.7rem",color:"#FFE600",fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.78rem",letterSpacing:"0.12em",textTransform:"uppercase",textDecoration:"none"}}>
+                    🧠 Ir al Simulador →
                   </Link>
                 )}
               </div>
