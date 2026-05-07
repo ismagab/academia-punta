@@ -954,7 +954,7 @@ export default function Home() {
           <h2 className="section-title reveal-left">Guía para <span>obtener tu licencia</span></h2>
           <div className="guia-grid">
             {[
-              {title:"¿CUÁNDO HACERLO?",  desc:"TU INSTRUCTOR/A TE ASESORARÁ PARA SABER CUÁNDO Y CÓMO PODER OBTENERLO"},
+              {title:"¿CUÁNDO HACERLO?",  desc:"Tu instructor/a te asesorará para saber cuándo y cómo poder obtenerlo."},
               {title:"Clases de apoyo para prueba teórica",    desc:"Se coordina con el docente de la academia. Formato presencial o virtual."},
               {title:"Simulador de prueba teórica",    desc:"Buscalo aquí para evaluar tus conocimientos y entrenar para la prueba.", link2:true},
               {title:"Aptitud Física",    desc:"Concurrí a una institución autorizada. El carnet de salud NO es válido.", link:true},
