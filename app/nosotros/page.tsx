@@ -9,9 +9,17 @@ export const metadata: Metadata = {
 
 const LOGO = "/logo.jpg";
 
-const DARIO_FOTO   = "/equipo/dario.png";
-const FERNANDO_FOTO = "/equipo/fernando.png";
-const ANA_FOTO     = "/equipo/ana.png";
+// Fotos del equipo — colocar en /public/equipo/
+const JUANCARLOS_FOTO = "/equipo/juancarlos.png";
+const DARIO_FOTO      = "/equipo/dario.png";
+const FERNANDO_FOTO   = "/equipo/fernando.png";
+const ALICIA_FOTO     = "/equipo/alicia.png";
+const ELSY_FOTO       = "/equipo/elsy.png";
+const ANA_FOTO        = "/equipo/ana.png";
+
+// WhatsApp links
+const WA_AUTOS  = "https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora.";
+const WA_MOTOS  = "https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora.";
 
 export default function NosotrosPage() {
   const navLinkStyle = {
@@ -19,6 +27,64 @@ export default function NosotrosPage() {
     letterSpacing:"0.12em", textTransform:"uppercase" as const,
     color:"rgba(255,255,255,0.65)", textDecoration:"none", whiteSpace:"nowrap" as const,
   };
+
+  const team = [
+    {
+      num: "01",
+      foto: JUANCARLOS_FOTO,
+      alt: "Juan Carlos Sosa — Instructor Categoría A",
+      badge: "🚗 Instructor",
+      name: "Juan Carlos Sosa",
+      acred: "Instructor de categoría: A · Clases disponibles en Inglés",
+      lic: "Licencia: Cat. A",
+      whatsapp: WA_AUTOS,
+      waLabel: "WhatsApp · 094 774 465",
+    },
+    {
+      num: "02",
+      foto: DARIO_FOTO,
+      alt: "Darío Agesta — Instructor múltiples categorías",
+      badge: "🏍️ Instructor",
+      name: "Darío Agesta",
+      acred: "Instructor para categorías: A, B, C, D, F, H, G1 y G3",
+      lic: "Licencias: Cat. A · B · C · D · F · H · G1 · G3",
+      whatsapp: WA_MOTOS,
+      waLabel: "WhatsApp · 098 151 659",
+    },
+    {
+      num: "03",
+      foto: FERNANDO_FOTO,
+      alt: "Fernando Agesta — Instructor y Docente",
+      badge: "🎓 Instructor & Docente",
+      name: "Fernando Agesta",
+      acred: "Instructor para categorías: A, G1, G2 y G3 · Docente para clases de apoyo teórico amateur y profesional",
+      lic: "Licencias: Cat. A · G1 · G2 · G3",
+      whatsapp: WA_MOTOS,
+      waLabel: "WhatsApp · 098 151 659",
+    },
+    {
+      num: "04",
+      foto: ALICIA_FOTO,
+      alt: "Alicia Rodríguez — Instructora Categoría A",
+      badge: "🚗 Instructora",
+      name: "Alicia Rodríguez",
+      acred: "Instructora de categoría: A",
+      lic: "Licencia: Cat. A",
+      whatsapp: WA_AUTOS,
+      waLabel: "WhatsApp · 094 774 465",
+    },
+    {
+      num: "05",
+      foto: ELSY_FOTO,
+      alt: "Elsy Sosa — Instructora Categoría A",
+      badge: "🚗 Instructora",
+      name: "Elsy Sosa",
+      acred: "Instructora de categoría: A",
+      lic: "Licencia: Cat. A",
+      whatsapp: WA_AUTOS,
+      waLabel: "WhatsApp · 094 774 465",
+    },
+  ];
 
   return (
     <>
@@ -30,7 +96,7 @@ export default function NosotrosPage() {
         body { background: #fafaf7; color: #2a2a2a; font-family: 'Barlow', sans-serif; font-weight: 300; }
         ::selection { background: #FFE600; color: #000; }
 
-        /* Foto tarjeta — efecto elegante */
+        /* ── TARJETA INSTRUCTOR ── */
         .team-card {
           background: #0d0d0d;
           border: 1px solid #1e1e1e;
@@ -45,7 +111,6 @@ export default function NosotrosPage() {
           box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,230,0,0.2);
         }
 
-        /* Foto wrapper — clip diagonal + overlay */
         .team-photo-wrap {
           position: relative;
           width: 100%;
@@ -54,7 +119,6 @@ export default function NosotrosPage() {
           background: #111;
         }
 
-        /* Overlay negro degradado desde abajo */
         .team-photo-wrap::after {
           content: '';
           position: absolute;
@@ -69,7 +133,6 @@ export default function NosotrosPage() {
           transition: opacity 0.4s;
         }
 
-        /* Línea amarilla decorativa en hover */
         .team-photo-wrap::before {
           content: '';
           position: absolute;
@@ -86,7 +149,6 @@ export default function NosotrosPage() {
           transform: scaleX(1);
         }
 
-        /* Foto se agranda y se desatura al hover */
         .team-photo {
           width: 100%;
           height: 100%;
@@ -101,7 +163,6 @@ export default function NosotrosPage() {
           filter: grayscale(0%) contrast(1.08);
         }
 
-        /* Badge rol — sobre la foto */
         .team-role-badge {
           position: absolute;
           bottom: 1rem; left: 1.2rem;
@@ -115,7 +176,6 @@ export default function NosotrosPage() {
           border-radius: 2px;
         }
 
-        /* Número decorativo de fondo */
         .team-num {
           position: absolute;
           top: 0.5rem; right: 0.8rem;
@@ -132,7 +192,6 @@ export default function NosotrosPage() {
           color: rgba(255,230,0,0.15);
         }
 
-        /* Info bajo la foto */
         .team-info {
           padding: 1.5rem 1.6rem 2rem;
         }
@@ -178,6 +237,70 @@ export default function NosotrosPage() {
         }
 
         .team-link:hover { opacity: 0.85; transform: translateY(-1px); }
+
+        /* ── TARJETA ANA (psicóloga) ── */
+        .ana-card {
+          background: #0d0d0d;
+          border: 1px solid #1e1e1e;
+          border-top: 3px solid #FFE600;
+          border-radius: 4px;
+          overflow: hidden;
+          display: grid;
+          grid-template-columns: 1fr 1.6fr;
+          transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s ease;
+        }
+
+        @media (max-width: 600px) {
+          .ana-card { grid-template-columns: 1fr; }
+        }
+
+        .ana-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,230,0,0.2);
+        }
+
+        .ana-photo-wrap {
+          position: relative;
+          width: 100%;
+          min-height: 280px;
+          overflow: hidden;
+          background: #111;
+        }
+
+        .ana-photo-wrap::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to right, rgba(13,13,13,0) 60%, rgba(13,13,13,0.9) 100%);
+          z-index: 1;
+        }
+
+        @media (max-width: 600px) {
+          .ana-photo-wrap::after {
+            background: linear-gradient(to top, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0) 60%);
+          }
+        }
+
+        .ana-photo {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 15%;
+          filter: grayscale(20%) contrast(1.05);
+          transition: transform 0.6s ease, filter 0.4s ease;
+        }
+
+        .ana-card:hover .ana-photo {
+          transform: scale(1.04);
+          filter: grayscale(0%) contrast(1.08);
+        }
+
+        .ana-info {
+          padding: 2rem 2rem 2rem 1.8rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
 
         /* Valores cards */
         .valor-card {
@@ -226,6 +349,15 @@ export default function NosotrosPage() {
           padding: 3.5rem 2rem;
           border-radius: 4px;
           text-align: center;
+        }
+
+        /* Divisor de sección psicóloga */
+        .psi-section-label {
+          display: flex;
+          align-items: center;
+          gap: 0.7rem;
+          margin-bottom: 0.8rem;
+          margin-top: 3rem;
         }
       `}</style>
 
@@ -277,7 +409,7 @@ export default function NosotrosPage() {
 
       <main style={{maxWidth:"1200px",margin:"0 auto",padding:"4rem 2rem"}}>
 
-        {/* ══ EQUIPO — fotos con efecto ══ */}
+        {/* ══ EQUIPO — INSTRUCTORES ══ */}
         <section style={{marginBottom:"5rem"}}>
           <div style={{display:"flex",alignItems:"center",gap:"0.7rem",marginBottom:"0.8rem"}}>
             <div style={{width:"2.2rem",height:"3px",background:"#FFE600",borderRadius:"2px"}}></div>
@@ -287,81 +419,85 @@ export default function NosotrosPage() {
             Nuestros <span style={{color:"#c9a800"}}>instructores</span>
           </h2>
 
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"2rem"}}>
-
-            {/* DARÍO */}
-            <div className="team-card">
-              <div className="team-photo-wrap">
-                <span className="team-num">01</span>
-                <Image
-                  src={DARIO_FOTO}
-                  alt="Darío Agesta Catania — Instructor de Autos"
-                  width={400} height={500}
-                  className="team-photo"
-                  unoptimized
-                />
-                <span className="team-role-badge">🚗 Instructor de Autos</span>
-              </div>
-              <div className="team-info">
-                <div className="team-name">Darío Agesta Catania</div>
-                <p className="team-acred">Acreditado por UNASEV — Curso de Instructores de Academias de Conducir</p>
-                <p className="team-lic">Licencias: Cat. E · Cat. F · Cat. G3</p>
-                <div className="team-links">
-                  <a href="https://www.facebook.com/dario.agesta" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#1877F2",color:"white"}}>Facebook</a>
-                  <a href="https://www.instagram.com/darioagestarun/" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#dc2743",color:"white"}}>Instagram</a>
+          {/* Grid de 5 instructores */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:"2rem"}}>
+            {team.map((m) => (
+              <div key={m.num} className="team-card">
+                <div className="team-photo-wrap">
+                  <span className="team-num">{m.num}</span>
+                  <Image
+                    src={m.foto}
+                    alt={m.alt}
+                    width={400} height={500}
+                    className="team-photo"
+                    unoptimized
+                  />
+                  <span className="team-role-badge">{m.badge}</span>
+                </div>
+                <div className="team-info">
+                  <div className="team-name">{m.name}</div>
+                  <p className="team-acred">{m.acred}</p>
+                  <p className="team-lic">{m.lic}</p>
+                  <div className="team-links">
+                    <a
+                      href={m.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="team-link"
+                      style={{background:"#25D366",color:"white"}}
+                    >
+                      📱 {m.waLabel}
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* FERNANDO */}
-            <div className="team-card">
-              <div className="team-photo-wrap">
-                <span className="team-num">02</span>
-                <Image
-                  src={FERNANDO_FOTO}
-                  alt="Fernando Agesta Catania — Instructor de Motos"
-                  width={400} height={500}
-                  className="team-photo"
-                  unoptimized
-                />
-                <span className="team-role-badge">🏍️ Instructor de Motos</span>
-              </div>
-              <div className="team-info">
-                <div className="team-name">Fernando Agesta Catania</div>
-                <p className="team-acred">Instructor de manejo · Maestro en Educación Primaria</p>
-                <p className="team-lic">Licencias: Cat. E · Cat. B · Cat. G3</p>
-                <div className="team-links">
-                  <a href="https://www.facebook.com/NanoAgesta6" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#1877F2",color:"white"}}>Facebook</a>
-                  <a href="https://www.instagram.com/nanoagesta/" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#dc2743",color:"white"}}>Instagram</a>
-                </div>
-              </div>
-            </div>
+          {/* ── ANA CLAUDIA — tarjeta horizontal destacada ── */}
+          <div className="psi-section-label">
+            <div style={{width:"2.2rem",height:"3px",background:"#FFE600",borderRadius:"2px"}}></div>
+            <span style={{fontFamily:"Barlow Condensed,sans-serif",fontWeight:700,fontSize:"0.72rem",letterSpacing:"0.2em",textTransform:"uppercase",color:"#c9a800"}}>Equipo de apoyo</span>
+          </div>
 
-            {/* ANA CLAUDIA */}
-            <div className="team-card">
-              <div className="team-photo-wrap">
-                <span className="team-num">03</span>
-                <Image
-                  src={ANA_FOTO}
-                  alt="Lic. Psic. Ana Claudia Martínez — Psicóloga"
-                  width={400} height={500}
-                  className="team-photo"
-                  style={{objectPosition:"center 15%"}}
-                  unoptimized
-                />
-                <span className="team-role-badge">🧘 Psicóloga Colaboradora</span>
+          <div className="ana-card">
+            {/* Foto */}
+            <div className="ana-photo-wrap">
+              <Image
+                src={ANA_FOTO}
+                alt="Lic. Psic. Ana Claudia Martínez — Psicóloga"
+                width={400} height={500}
+                className="ana-photo"
+                unoptimized
+              />
+              <span style={{
+                position:"absolute", bottom:"1rem", left:"1rem",
+                zIndex:3, background:"#FFE600", color:"#000",
+                fontFamily:"'Bebas Neue',sans-serif", fontSize:"0.85rem",
+                letterSpacing:"0.12em", padding:"0.25rem 0.8rem", borderRadius:"2px"
+              }}>🧘 Psicóloga Colaboradora</span>
+            </div>
+            {/* Info */}
+            <div className="ana-info">
+              <div style={{fontFamily:"'Bebas Neue',sans-serif",fontSize:"1.6rem",letterSpacing:"0.04em",color:"white",marginBottom:"0.4rem",lineHeight:1.1}}>
+                Lic. Psic. Ana Claudia Martínez
               </div>
-              <div className="team-info">
-                <div className="team-name">Lic. Psic. Ana Claudia Martínez</div>
-                <p className="team-acred">Egresada UCUDAL 2005 · Orientación en ansiedad, fobia y estrés al volante · Descuento en arancel para alumnos de la academia</p>
-                <p className="team-lic">Consultorio privado desde 2006 · Ministerio del Interior</p>
-                <div className="team-links">
-                  <a href="https://www.facebook.com/amartinezeguren" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#1877F2",color:"white"}}>Facebook</a>
-                  <a href="https://www.consultoriopsicologico.wordpress.com" target="_blank" rel="noopener noreferrer" className="team-link" style={{background:"#444",color:"white"}}>Sitio web</a>
-                </div>
+              <p style={{fontSize:"0.83rem",color:"rgba(255,255,255,0.5)",lineHeight:1.7,marginBottom:"0.5rem"}}>
+                Egresada UCUDAL 2005 · Orientación en ansiedad, fobia y estrés al volante
+              </p>
+              <p style={{fontSize:"0.78rem",color:"rgba(255,255,255,0.3)",fontStyle:"italic",marginBottom:"0.4rem"}}>
+                Descuento en arancel para alumnos de la academia
+              </p>
+              <p style={{fontSize:"0.78rem",color:"rgba(255,255,255,0.3)",fontStyle:"italic",marginBottom:"1.4rem"}}>
+                Consultorio privado desde 2006 · Ministerio del Interior
+              </p>
+              <div style={{display:"flex",gap:"0.5rem",flexWrap:"wrap"}}>
+                <a href="https://www.facebook.com/amartinezeguren" target="_blank" rel="noopener noreferrer"
+                  className="team-link" style={{background:"#1877F2",color:"white"}}>Facebook</a>
+                <a href="https://www.consultoriopsicologico.wordpress.com" target="_blank" rel="noopener noreferrer"
+                  className="team-link" style={{background:"#444",color:"white"}}>Sitio web</a>
               </div>
             </div>
-
           </div>
         </section>
 
@@ -436,11 +572,11 @@ export default function NosotrosPage() {
             ¿Listo para empezar con nosotros?
           </h2>
           <div style={{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap"}}>
-            <a href="https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora." target="_blank" rel="noopener noreferrer"
+            <a href={WA_AUTOS} target="_blank" rel="noopener noreferrer"
               style={{background:"#000",color:"#FFE600",padding:"1rem 2rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"1rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",display:"inline-flex",alignItems:"center",gap:"0.5rem"}}>
               📱 Autos — 094 774 465
             </a>
-            <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20empezar%20ahora." target="_blank" rel="noopener noreferrer"
+            <a href={WA_MOTOS} target="_blank" rel="noopener noreferrer"
               style={{background:"#000",color:"#FFE600",padding:"1rem 2rem",fontFamily:"Bebas Neue,sans-serif",fontSize:"1rem",letterSpacing:"0.1em",textDecoration:"none",borderRadius:"3px",display:"inline-flex",alignItems:"center",gap:"0.5rem"}}>
               📱 Motos — 098 151 659
             </a>
