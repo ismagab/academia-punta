@@ -937,8 +937,8 @@ export default function Home() {
         <Image src="/fotos/1001079218.jpg" alt="Equipo Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 40%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
-            <h2>Nuestra <span>flota</span></h2>
-            <p>Autos nuevos con doble mando registrados y habilitados en IDM como Coche Escuela.</p>
+            <h2 style={{color:"#fff",fontWeight:900,textShadow:"0 2px 12px rgba(0,0,0,0.85),0 1px 4px rgba(0,0,0,0.9)"}}>Nuestra <span>flota</span></h2>
+            <p style={{color:"#fff",fontWeight:700,textShadow:"0 1px 8px rgba(0,0,0,0.9),0 1px 3px rgba(0,0,0,0.95)"}}>Autos nuevos con doble mando registrados y habilitados en IDM como Coche Escuela.</p>
             <a href="#contacto" className="btn-primary">Reservar clase</a>
           </div>
         </div>
@@ -1018,8 +1018,8 @@ export default function Home() {
         <Image src="/fotos/1001079137.jpg" alt="Clases de moto BMW G310 — Academia Punta" width={1600} height={420} style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 30%"}} unoptimized/>
         <div className="img-banner-overlay">
           <div className="img-banner-text">
-            <h2>Clases de <span>motos</span></h2>
-            <p>En pista La Loma. Vehículo, casco y reflectivos incluidos. VEHÍCULO CAT. G2: HONDA WAVE 110 — CAT. G3: BMW G310r. Lunes a sábados.</p>
+            <h2 style={{color:"#fff",fontWeight:900,textShadow:"0 2px 12px rgba(0,0,0,0.85),0 1px 4px rgba(0,0,0,0.9)"}}>Clases de <span>motos</span></h2>
+            <p style={{color:"#fff",fontWeight:700,textShadow:"0 1px 8px rgba(0,0,0,0.9),0 1px 3px rgba(0,0,0,0.95)"}}>En pista La Loma. Vehículo, casco y reflectivos incluidos. VEHÍCULO CAT. G2: HONDA WAVE 110 — CAT. G3: BMW G310r. Lunes a sábados.</p>
             <a href="https://api.whatsapp.com/send?phone=59898151659&text=Quiero%20clases%20de%20motos." target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:"0.45rem",background:"rgba(37,211,102,0.92)",color:"#000",padding:"0.55rem 1.1rem",fontFamily:"Barlow Condensed,sans-serif",fontSize:"0.85rem",letterSpacing:"0.08em",textDecoration:"none",borderRadius:"4px",fontWeight:700,backdropFilter:"blur(4px)",border:"1px solid rgba(255,255,255,0.2)"}}>
               <span style={{width:"18px",height:"18px",display:"inline-flex",flexShrink:0}}><IconWhatsAppGreen/></span> Motos — 098 151 659
             </a>
@@ -1035,9 +1035,9 @@ export default function Home() {
         <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:"1rem",padding:"2rem",textAlign:"center",zIndex:2}}>
           <div style={{display:"flex",gap:"0.6rem",alignItems:"center",justifyContent:"center"}}>
             <span style={{fontSize:"1.8rem"}}>🇬🇧</span>
-            <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.6rem,4vw,2.6rem)",color:"white",letterSpacing:"0.1em",margin:0}}>Driving lessons in English</p>
+            <p style={{fontFamily:"Bebas Neue,sans-serif",fontSize:"clamp(1.6rem,4vw,2.6rem)",color:"#fff",fontWeight:900,letterSpacing:"0.1em",margin:0,textShadow:"0 2px 12px rgba(0,0,0,0.9),0 1px 4px rgba(0,0,0,0.95)"}}>Driving lessons in English</p>
           </div>
-          <p style={{color:"rgba(255,255,255,0.7)",fontSize:"0.88rem",margin:0,letterSpacing:"0.05em",fontFamily:"Barlow Condensed,sans-serif"}}>International visitors welcome · Certified instructors · Punta del Este, Uruguay</p>
+          <p style={{color:"#fff",fontWeight:700,fontSize:"0.88rem",margin:0,letterSpacing:"0.05em",fontFamily:"Barlow Condensed,sans-serif",textShadow:"0 1px 8px rgba(0,0,0,0.9),0 1px 3px rgba(0,0,0,0.95)"}}>International visitors welcome · Certified instructors · Punta del Este, Uruguay</p>
           <a href="https://api.whatsapp.com/send?phone=59893312019&text=Hi!%20I%20need%20driving%20lessons%20in%20English." target="_blank" rel="noopener noreferrer" style={{
             display:"inline-flex",alignItems:"center",gap:"0.6rem",
             background:"#FFE600",color:"#000",
