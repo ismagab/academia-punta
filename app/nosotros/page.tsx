@@ -15,7 +15,7 @@ const DARIO_FOTO      = "/equipo/dario.png";
 const FERNANDO_FOTO   = "/equipo/fernando.png";
 const ALICIA_FOTO     = "/equipo/alicia.png";
 const ELSY_FOTO       = "/equipo/elsy.png";
-const ANA_FOTO        = "/equipo/ana.png";
+const ANA_FOTO        = "/equipo/psicologa-generica.png";
 
 // WhatsApp links
 const WA_AUTOS  = "https://api.whatsapp.com/send?phone=59894774465&text=Quiero%20empezar%20ahora.";
@@ -465,7 +465,7 @@ export default function NosotrosPage() {
             <div className="ana-photo-wrap">
               <Image
                 src={ANA_FOTO}
-                alt="Lic. Psic. Ana Claudia Martínez — Psicóloga"
+                alt="Psicóloga Colaboradora"
                 width={400} height={500}
                 className="ana-photo"
                 unoptimized
@@ -552,8 +552,8 @@ export default function NosotrosPage() {
           </h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.5rem"}}>
             {[
-              {emoji:"🚗",titulo:"Autos",cat:"Licencia Categoría A",modelo:"Chevrolet Onix RS Turbo (2022)",desc:"Registrado y habilitado en IDM como Coche Escuela. Cuenta con doble pedalera y señalización para prácticas en vía pública y examen práctico."},
-              {emoji:"🏍️",titulo:"Motos",cat:"Licencia Categoría G2",modelo:"BMW G310 / Honda Wave 110cc",desc:"Habilitado para entrenamiento en pista La Loma — único lugar habilitado por IDM — y para la prueba práctica de obtención de licencia de motos."},
+              {emoji:"🚗",titulo:"Autos",cat:"Licencia Categoría A",modelo:<span style={{fontWeight:700,color:"#000"}}>Vehículos autorizados por la intendencia</span>,desc:"Registrado y habilitado en IDM como Coche Escuela. Cuenta con doble pedalera y señalización para prácticas en vía pública y examen práctico."},
+              {emoji:"🏍️",titulo:"Motos",cat:"Licencia Categoría G2",modelo:<span style={{fontWeight:700,color:"#000"}}>Motos autorizados por la intendencia</span>,desc:"Habilitado para entrenamiento en pista La Loma — único lugar habilitado por IDM — y para la prueba práctica de obtención de licencia de motos."},
             ].map((v,i)=>(
               <div key={i} className="vehiculo-card">
                 <div style={{fontSize:"2.5rem",marginBottom:"0.8rem"}}>{v.emoji}</div>
