@@ -5,9 +5,7 @@ import { useState, useEffect } from "react";
 const DOMAIN = "https://academiadechoferespunta.com";
 const LOGO_URL = "/logo.jpg";
 
-const WA_AUTOS   = "59894774465";
 const WA_MOTOS   = "59898151659";
-const WA_INGLES  = "59893312019";
 
 const preguntas = [
   { pregunta: "DESPUÉS DE MANEJAR POR MÁS DE 4 HS SE DEBE DESCANSAR POR LO MENOS", opciones: ["10 minutos", "20 minutos", "60 minutos"], correcta: 1 },
@@ -339,7 +337,7 @@ export default function QuizModal({
               padding: "0.7rem 1.2rem", fontFamily: "Syne, sans-serif",
               fontWeight: 700, fontSize: "0.8rem", cursor: "pointer", width: "100%",
             }}>
-              Hacer el simulador →
+              Comenzar simulador →
             </button>
           </div>
           <style>{`
@@ -586,33 +584,42 @@ export default function QuizModal({
                     </button>
                   </div>
 
-                  <div style={{ marginBottom: "1.5rem" }}>
-                    <div style={{ fontSize: "0.72rem", color: "#555", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.7rem", textAlign: "left" }}>
-                      Contactar instructor / docente
+                  {/* ── CTA WHATSAPP LLAMATIVO ── */}
+                  <div style={{ background: "linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(37,211,102,0.05) 100%)", border: "1px solid rgba(37,211,102,0.35)", borderRadius: "4px", padding: "1.4rem 1.2rem", marginBottom: "1.5rem", textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#FFFF00", letterSpacing: "0.04em", lineHeight: 1.25, marginBottom: "0.6rem" }}>
+                      ¿NECESITA AYUDA PARA MEJORAR EL RESULTADO?
                     </div>
-                    <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", justifyContent: "center" }}>
-                      <a
-                        href={`https://api.whatsapp.com/send?phone=${WA_AUTOS}&text=Hola%2C%20quiero%20consultar%20sobre%20la%20clase%20de%20apoyo%20a%20la%20prueba%20te%C3%B3rica.`}
-                        target="_blank" rel="noopener noreferrer"
-                        style={{ background: "#25D366", color: "#000", padding: "0.75rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem", borderRadius: "2px" }}
-                      >
-                        🚗 Autos — 094 774 465
-                      </a>
-                      <a
-                        href={`https://api.whatsapp.com/send?phone=${WA_MOTOS}&text=Hola%2C%20quiero%20consultar%20sobre%20la%20clase%20te%C3%B3rica%20de%20motos.`}
-                        target="_blank" rel="noopener noreferrer"
-                        style={{ background: "#25D366", color: "#000", padding: "0.75rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem", borderRadius: "2px" }}
-                      >
-                        🏍️ Motos — 098 151 659
-                      </a>
-                      <a
-                        href={`https://api.whatsapp.com/send?phone=${WA_INGLES}&text=Hi!%20I%20need%20help%20with%20the%20theory%20test.`}
-                        target="_blank" rel="noopener noreferrer"
-                        style={{ background: "#e53935", color: "#fff", padding: "0.75rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.8rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem", borderRadius: "2px" }}
-                      >
-                        🇬🇧 English — 093 312 019
-                      </a>
-                    </div>
+                    <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.1rem", lineHeight: 1.55 }}>
+                      Escribí al WhatsApp y agendá tu clase teórica con docente. ¡Te ayudamos a aprobar!
+                    </p>
+                    <style>{`
+                      @keyframes waGlow {
+                        0%,100% { box-shadow: 0 0 14px rgba(37,211,102,0.55), 0 0 28px rgba(37,211,102,0.25); }
+                        50%     { box-shadow: 0 0 26px rgba(37,211,102,0.9), 0 0 52px rgba(37,211,102,0.45), 0 0 72px rgba(37,211,102,0.18); }
+                      }
+                      @keyframes waPulse {
+                        0%,100% { transform: scale(1); }
+                        50%     { transform: scale(1.018); }
+                      }
+                      .wa-glow-btn {
+                        display: block; width: 100%;
+                        background: #25D366; color: #000;
+                        text-decoration: none;
+                        padding: 1rem 1.2rem;
+                        font-family: Syne, sans-serif; font-weight: 800; font-size: 1rem;
+                        letter-spacing: 0.04em; border-radius: 3px;
+                        animation: waGlow 2s ease-in-out infinite, waPulse 2s ease-in-out infinite;
+                        transition: opacity 0.2s;
+                      }
+                      .wa-glow-btn:hover { opacity: 0.9; }
+                    `}</style>
+                    <a
+                      href={`https://api.whatsapp.com/send?phone=${WA_MOTOS}&text=Hola%2C%20quiero%20mejorar%20mi%20resultado%20en%20la%20prueba%20te%C3%B3rica.`}
+                      target="_blank" rel="noopener noreferrer"
+                      className="wa-glow-btn"
+                    >
+                      💬 Escribir al WhatsApp — +598 98 151 659
+                    </a>
                   </div>
 
                   <div style={{ textAlign: "left", borderTop: "1px solid #222", paddingTop: "1.2rem" }}>
