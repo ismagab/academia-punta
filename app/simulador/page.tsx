@@ -5,9 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const LOGO_URL = "/logo.jpg";
-const WA_AUTOS  = "59894774465";
 const WA_MOTOS  = "59898151659";
-const WA_INGLES = "59893312019";
 
 const preguntas = [
   { pregunta: "DESPUÉS DE MANEJAR POR MÁS DE 4 HS SE DEBE DESCANSAR POR LO MENOS", opciones: ["10 minutos", "20 minutos", "60 minutos"], correcta: 1 },
@@ -205,6 +203,13 @@ export default function SimuladorPage() {
         .sim-result-stat { background: #161616; border: 1px solid #222; padding: 1rem 0.5rem; text-align: center; }
         .sim-wa-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; }
         .sim-wa-btn { padding: 0.75rem 1rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 3px; }
+        .sim-wa-cta { background: linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(37,211,102,0.06) 100%); border: 1px solid rgba(37,211,102,0.35); padding: 1.5rem 1.2rem; margin-bottom: 2rem; text-align: center; border-radius: 4px; }
+        .sim-wa-cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.3rem, 4vw, 1.8rem); letter-spacing: 0.06em; color: #FFFF00; line-height: 1.2; margin-bottom: 0.6rem; }
+        .sim-wa-cta-sub { font-size: 0.88rem; color: rgba(255,255,255,0.6); margin-bottom: 1.2rem; line-height: 1.5; }
+        @keyframes waGlow { 0%,100% { box-shadow: 0 0 16px rgba(37,211,102,0.6), 0 0 32px rgba(37,211,102,0.3); } 50% { box-shadow: 0 0 28px rgba(37,211,102,0.9), 0 0 56px rgba(37,211,102,0.5), 0 0 80px rgba(37,211,102,0.2); } }
+        @keyframes waPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
+        .sim-wa-glow-btn { display: block; width: 100%; background: #25D366; color: #000; text-decoration: none; padding: 1.1rem 1.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; letter-spacing: 0.08em; border-radius: 4px; animation: waGlow 2s ease-in-out infinite, waPulse 2s ease-in-out infinite; transition: opacity 0.2s; font-weight: 900; }
+        .sim-wa-glow-btn:hover { opacity: 0.92; }
         .sim-detail { text-align: left; border-top: 1px solid #1a1a1a; padding-top: 1.5rem; }
         .sim-detail-title { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: #FFFF00; letter-spacing: 0.15em; margin-bottom: 1rem; }
         .sim-detail-item { display: flex; gap: 0.8rem; align-items: flex-start; padding: 0.7rem 0; border-bottom: 1px solid #1a1a1a; }
@@ -249,7 +254,7 @@ export default function SimuladorPage() {
                 Tu nombre para el PDF (opcional)
               </label>
               <input className="sim-name-input" type="text" value={nombre} onChange={e=>setNombre(e.target.value)} placeholder="Ej: Juan Pérez"/>
-              <button className="sim-start-btn" onClick={iniciar}>Iniciar Simulador →</button>
+              <button className="sim-start-btn" onClick={iniciar}>Comenzar Simulador →</button>
             </>
           )}
 
@@ -349,10 +354,12 @@ export default function SimuladorPage() {
                 </button>
               </div>
 
-              <div className="sim-wa-btns">
-                <a href={`https://api.whatsapp.com/send?phone=${WA_AUTOS}&text=Hola%2C%20quiero%20consultar%20sobre%20la%20prueba%20te%C3%B3rica.`} target="_blank" rel="noopener noreferrer" className="sim-wa-btn" style={{background:"#25D366",color:"#000"}}>🚗 Autos — 094 774 465</a>
-                <a href={`https://api.whatsapp.com/send?phone=${WA_MOTOS}&text=Hola%2C%20quiero%20consultar%20sobre%20la%20te%C3%B3rica%20de%20motos.`} target="_blank" rel="noopener noreferrer" className="sim-wa-btn" style={{background:"#25D366",color:"#000"}}>🏍️ Motos — 098 151 659</a>
-                <a href={`https://api.whatsapp.com/send?phone=${WA_INGLES}&text=Hi!%20I%20need%20theory%20test%20help.`} target="_blank" rel="noopener noreferrer" className="sim-wa-btn" style={{background:"#e53935",color:"#fff"}}>🇬🇧 English — 093 312 019</a>
+              <div className="sim-wa-cta">
+                <div className="sim-wa-cta-title">¿NECESITA AYUDA PARA MEJORAR EL RESULTADO?</div>
+                <p className="sim-wa-cta-sub">Escribí al WhatsApp y agendá tu clase teórica con docente. ¡Te ayudamos a aprobar!</p>
+                <a href={`https://api.whatsapp.com/send?phone=${WA_MOTOS}&text=Hola%2C%20quiero%20mejorar%20mi%20resultado%20en%20la%20prueba%20te%C3%B3rica.`} target="_blank" rel="noopener noreferrer" className="sim-wa-glow-btn">
+                  💬 Escribir al WhatsApp — +598 98 151 659
+                </a>
               </div>
 
               <div className="sim-detail">
