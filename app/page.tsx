@@ -1225,7 +1225,7 @@ export default function Home() {
                 <Image src={LOGO} alt="Logo" width={42} height={42} unoptimized/>
                 <div className="footer-logo-text">Academia <span>Punta</span></div>
               </a>
-              <p>Academia de Choferes Punta, referente en Punta del Este – Maldonado – Piriápolis; con más de 15 años formando conductores seguros.</p>
+              <p>Academia de Choferes Punta, referente en Punta del Este – Maldonado – Piriápolis; con más de 8 años formando conductores seguros.</p>
               <div className="footer-social">
                 <a href="https://www.instagram.com/academiadechoferespunta/" className="social-btn" target="_blank" rel="noopener noreferrer"><IconInstagram/></a>
                 <a href="https://www.facebook.com/Academia-de-choferes-Punta-339658393468083" className="social-btn" target="_blank" rel="noopener noreferrer"><IconFacebook/></a>
