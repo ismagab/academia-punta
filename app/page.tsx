@@ -673,7 +673,7 @@ function FleetCarousel() {
 const instructorSlides = [
   {src:"/fotos/1001079176.jpg", name:"Moto",      role:"Pista La Loma — G1, G2, G3"},
   {src:"/fotos/1001079215.jpg", name:"Instructores",role:"Clases personalizadas"},
-  {src:"/fotos/1001079203.jpg", name:"Instructores",     role:"Más de 15 años formando conductores"},
+  {src:"/fotos/1001079203.jpg", name:"Instructores",     role:"Más de 8 años formando conductores"},
   {src:"/fotos/1001079128.jpg", name:"Auto",  role:"Doble mando — Licencia Categoría A"},
   {src:"/fotos/1001079188.jpg", name:"Instructores",         role:"Clases de autos"},
   {src:"/fotos/1001079218.jpg", name:"Instructores",    role:"Punta del Este & Maldonado"},
