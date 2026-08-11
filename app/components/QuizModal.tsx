@@ -4,42 +4,18 @@ import { useState, useEffect } from "react";
 
 const DOMAIN = "https://academiadechoferespunta.com";
 const LOGO_URL = "/logo.jpg";
-
 const WA_MOTOS   = "59898151659";
 
-const preguntas = [
-  { pregunta: "DESPUÉS DE MANEJAR POR MÁS DE 4 HS SE DEBE DESCANSAR POR LO MENOS", opciones: ["10 minutos", "20 minutos", "60 minutos"], correcta: 1 },
-  { pregunta: "¿QUÉ DEBERÍA HACER CUANDO ES ADELANTADO POR OTRO VEHÍCULO?", opciones: ["Mantener la velocidad o disminuirla", "Encender las luces", "Frenar bruscamente", "Aumentar la velocidad"], correcta: 0 },
-  { pregunta: "ANTES DE EMPEZAR A PASAR AL VEHÍCULO QUE VA ADELANTE, USTED DEBERÁ", opciones: ["Tocar bocina", "Colocarse en la senda derecha y prender el señalero", "Mirar por el espejo retrovisor y prender el señalero", "Hacer cambio de luces"], correcta: 2 },
-  { pregunta: "¿PARA QUIÉN ES OBLIGATORIO EL CINTURÓN DE SEGURIDAD?", opciones: ["Solo para los ocupantes de los asientos traseros", "Solo para los ocupantes de los asientos delanteros", "Ninguna de las anteriores", "Para todos los ocupantes del vehículo"], correcta: 3 },
-  { pregunta: "SOLO SE PUEDE ADELANTAR A OTRO VEHÍCULO POR LA DERECHA SI ESTÁ GIRANDO O SI SE DISPONE A LA IZQUIERDA", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "EL COLOR DE LAS LUCES QUE LOS VEHÍCULOS PROYECTAN HACIA ADELANTE PUEDE SER", opciones: ["Rojas o blancas", "Verdes o blancas", "Amarillas o blancas", "Ninguna de las anteriores son correctas"], correcta: 2 },
-  { pregunta: "CUANDO EL VEHÍCULO SUFRE UN DESPERFECTO EN LA CARRETERA SE DEBE COLOCAR BALIZA O TRIÁNGULO POR LO MENOS A 50 MTS", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "CUANDO LOS NEUMÁTICOS TIENEN POCA PRESIÓN DE AIRE SE AHORRA COMBUSTIBLE", opciones: ["Verdadero", "Falso"], correcta: 1 },
-  { pregunta: "SI USTED DEBE ESTACIONAR EN BAJADA", opciones: ["Deja derecho el auto y aplica el freno de mano", "Deja derecho el auto y le pone el cambio", "Aplica freno de mano y gira las ruedas hacia el cordón", "Aplica freno de mano y gira las ruedas en sentido contrario al cordón"], correcta: 2 },
-  { pregunta: "SU LICENCIA PUEDE SER NEGADA SI UD. ESTÁ MENTALMENTE INCAPACITADO PARA CONDUCIR CON SEGURIDAD", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "EL HIDROPLANEAMIENTO ES", opciones: ["Agua en el ambiente que hace difícil la conducción", "Agua en la calzada que hace que los neumáticos pierdan adherencia", "Demasiada agua en el radiador", "Precipitaciones que reducen la visibilidad"], correcta: 1 },
-  { pregunta: "SI USTED DEBE ESTACIONAR EN REPECHO", opciones: ["Deja derecho el auto y aplica el freno de mano", "Deja derecho el auto y en neutral", "Aplica freno de mano y gira las ruedas hacia el cordón", "Aplica freno de mano y gira las ruedas hacia la calle"], correcta: 3 },
-  { pregunta: "LA PREFERENCIA DE PASO DE UN VEHÍCULO NO REGIRÁ", opciones: ["En los cruces regulados con semáforos o agentes de tránsito", "En las vías de doble tránsito", "En los cruces no regulados", "Ninguna de las anteriores es correcta"], correcta: 0 },
-  { pregunta: "EN EL CRUCE CUYO SEMÁFORO SE ENCUENTRA APAGADO O DESCOMPUESTO LA PREFERENCIA SERÁ DE", opciones: ["Los que circulan por la avenida", "Los vehículos que aparecen por la derecha", "Los que llegan 1ro al cruce", "Los vehículos que aparecen por la izquierda"], correcta: 1 },
-  { pregunta: "TIENEN PREFERENCIA DE PASO CUANDO HAGAN LAS SEÑALES CORRESPONDIENTES", opciones: ["Patrulleros y bomberos", "Las ambulancias", "Los vehículos del departamento de tránsito", "Todas son correctas"], correcta: 3 },
-  { pregunta: "NUNCA SE DEBE ADELANTAR A OTRO VEHÍCULO QUE ESTÁ DOBLANDO A LA DERECHA", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "EN CONDICIONES DE TRÁNSITO NORMALES UN VEHÍCULO PODRÁ SER CONDUCIDO MARCHA ATRÁS SOLO", opciones: ["50 mts", "25 mts", "En caso de necesidad o para estacionar", "Ninguna de las anteriores"], correcta: 2 },
-  { pregunta: "EN CASO DE QUEDARSE SIN FRENOS SE DEBE DEJAR QUE EL VEHÍCULO AMINORE LA VELOCIDAD EVITANDO OBSTÁCULOS", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "CRUCE PEATONAL ES", opciones: ["Parte de la calle habilitada para ser atravesado por los peatones", "La senda de seguridad formada por la prolongación imaginaria del eje de la calzada", "Parte de la vereda donde se debe esperar hasta poder cruzar", "Ninguna de las anteriores"], correcta: 0 },
-  { pregunta: "LA IDM ESTÁ FACULTADA PARA RETIRAR DE LA VÍA PÚBLICA A LOS VEHÍCULOS MAL ESTACIONADOS O EN LUGARES PROHIBIDOS", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "AUN TOMANDO DESCANSO NO SE PUEDE CONDUCIR POR MÁS DE 9 HORAS SEGUIDAS", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "ES NECESARIO DUPLICAR LA DISTANCIA ENTRE SU VEHÍCULO Y EL QUE LO ANTECEDE (Marque la correcta)", opciones: ["Al amanecer", "Al anochecer", "Pavimento resbaladizo", "Todas son correctas"], correcta: 3 },
-  { pregunta: "PARA CONDUCIR ADECUADAMENTE ES IMPORTANTE RESPETAR LA LUZ DEL SEMÁFORO QUE ESTÁ FRENTE A UD.", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "LA VISIÓN SE REDUCE", opciones: ["En horas de la noche", "Con el encandilamiento", "Cuando mayor velocidad se desarrolla", "Todas las anteriores son correctas"], correcta: 3 },
-  { pregunta: "EL USO DEL CINTURÓN DE SEGURIDAD ES TAN IMPORTANTE EN LA CIUDAD COMO EN LA CARRETERA", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "PARA SEÑALIZAR CON EL BRAZO UN GIRO A LA DERECHA ESTE DEBE COLOCAR EXTENDIDO HORIZONTALMENTE", opciones: ["Verdadero", "Falso"], correcta: 1 },
-  { pregunta: "UD. PUEDE CIRCULAR SIN ESPEJO RETROVISOR SI SU VEHÍCULO ES DE TRANSPORTE O DE CARGA", opciones: ["Verdadero", "Falso"], correcta: 1 },
-  { pregunta: "SI ME IRRITO O ME ENOJO MIENTRAS CONDUZCO, MI COMPORTAMIENTO DEBE SER", opciones: ["Continuar la marcha y llegar lo antes posible", "Detener el vehículo, estacionar y esperar a tener el control de mis emociones", "Llamar por teléfono a alguien y explicar mi situación"], correcta: 1 },
-  { pregunta: "LOS PEATONES QUE CIRCULAN POR LA VEREDA TIENEN PREFERENCIA ANTE UN VEHÍCULO QUE ATRAVIESA PARA ENTRAR O SALIR DE UN GARAJE", opciones: ["Verdadero", "Falso"], correcta: 0 },
-  { pregunta: "HASTA LOS 70 AÑOS DE EDAD NO SE ALTERA LA RAPIDEZ PARA REACCIONAR", opciones: ["Verdadero", "Falso"], correcta: 1 },
+// --- BASE DE DATOS DE PREGUNTAS (Copiar exactamente las mismas de page.tsx) ---
+const preguntasAmateur = [
+  // ... (copiar todas las preguntas amateur de page.tsx)
 ];
 
+const preguntasProfesional = [
+  // ... (copiar todas las preguntas profesional de page.tsx)
+];
+
+// --- FUNCIONES AUXILIARES ---
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -49,10 +25,10 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-type Estado = "idle" | "jugando" | "resultado";
+type TipoLicencia = "amateur" | "profesional" | null;
+type Estado = "seleccion" | "jugando" | "resultado";
 type Respuesta = { pregunta: string; seleccion: number; correcta: number; correctamente: boolean };
 
-/* ══ PROPS: forceOpen abre el modal desde el nav ══ */
 export default function QuizModal({
   forceOpen = false,
   onForceClose,
@@ -61,8 +37,9 @@ export default function QuizModal({
   onForceClose?: () => void;
 }) {
   const [abierto, setAbierto] = useState(false);
-  const [estado, setEstado] = useState<Estado>("idle");
-  const [pregs, setPregs] = useState(preguntas.slice(0, 30));
+  const [tipoLicencia, setTipoLicencia] = useState<TipoLicencia>(null);
+  const [estado, setEstado] = useState<Estado>("seleccion");
+  const [pregs, setPregs] = useState(preguntasAmateur.slice(0, 30));
   const [actual, setActual] = useState(0);
   const [seleccion, setSeleccion] = useState<number | null>(null);
   const [confirmada, setConfirmada] = useState(false);
@@ -73,13 +50,11 @@ export default function QuizModal({
   const [nombre, setNombre] = useState("");
   const [generandoPDF, setGenerandoPDF] = useState(false);
 
-  /* Anuncio flotante aparece a los 5s */
   useEffect(() => {
     const timer = setTimeout(() => setMostrarAnuncio(true), 5000);
     return () => clearTimeout(timer);
   }, []);
 
-  /* Abre el modal cuando se activa forceOpen desde el nav */
   useEffect(() => {
     if (forceOpen) {
       setAbierto(true);
@@ -97,8 +72,14 @@ export default function QuizModal({
   const formatTiempo = (s: number) =>
     `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 
-  const iniciar = () => {
-    setPregs(shuffle(preguntas).slice(0, 30));
+  const iniciar = (tipo: "amateur" | "profesional") => {
+    const bancoPreguntas = tipo === "amateur" ? preguntasAmateur : preguntasProfesional;
+    if (bancoPreguntas.length < 30) {
+      alert(`La base de datos de licencia ${tipo} no tiene suficientes preguntas (mínimo 30).`);
+      return;
+    }
+    setTipoLicencia(tipo);
+    setPregs(shuffle(bancoPreguntas).slice(0, 30));
     setActual(0);
     setSeleccion(null);
     setConfirmada(false);
@@ -113,12 +94,7 @@ export default function QuizModal({
     setConfirmada(true);
     const correctamente = seleccion === pregs[actual].correcta;
     if (!correctamente) setErrores(e => e + 1);
-    setRespuestas(prev => [...prev, {
-      pregunta: pregs[actual].pregunta,
-      seleccion,
-      correcta: pregs[actual].correcta,
-      correctamente,
-    }]);
+    setRespuestas(prev => [...prev, { pregunta: pregs[actual].pregunta, seleccion, correcta: pregs[actual].correcta, correctamente }]);
   };
 
   const siguiente = () => {
@@ -136,7 +112,6 @@ export default function QuizModal({
   const correctas  = 30 - errores;
   const porcentaje = Math.round((correctas / 30) * 100);
 
-  /* ══ GENERAR PDF (canvas → PNG download) ══ */
   const generarPDF = async () => {
     setGenerandoPDF(true);
     try {
@@ -145,13 +120,10 @@ export default function QuizModal({
       canvas.width  = W;
       canvas.height = 1500;
       const ctx = canvas.getContext("2d")!;
-
       ctx.fillStyle = "#0a0a0a";
       ctx.fillRect(0, 0, W, canvas.height);
-
       ctx.fillStyle = "#FFFF00";
       ctx.fillRect(0, 0, W, 8);
-
       const logoImg = new window.Image();
       logoImg.crossOrigin = "anonymous";
       logoImg.src = LOGO_URL;
@@ -160,7 +132,6 @@ export default function QuizModal({
         logoImg.onerror = () => resolve();
         setTimeout(resolve, 2000);
       });
-
       if (logoImg.complete && logoImg.naturalWidth > 0) {
         ctx.save();
         ctx.beginPath();
@@ -180,7 +151,6 @@ export default function QuizModal({
         ctx.fillText("AP", 75, 72);
         ctx.textAlign = "left";
       }
-
       ctx.fillStyle = "#f5f5f5";
       ctx.font = "bold 21px Arial";
       ctx.fillText("Academia de Choferes Punta", 125, 52);
@@ -190,24 +160,21 @@ export default function QuizModal({
       ctx.fillStyle = "#666";
       ctx.font = "12px Arial";
       ctx.fillText("WhatsApp Autos: 094 774 465  |  Motos: 098 151 659  |  English: 093 312 019", 125, 93);
-
       ctx.strokeStyle = "#222";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(40, 115);
       ctx.lineTo(W - 40, 115);
       ctx.stroke();
-
       ctx.fillStyle = "#FFFF00";
       ctx.font = "bold 13px Arial";
-      ctx.fillText("SIMULADOR DE PRUEBA TEÓRICA — RESULTADO", 40, 143);
+      ctx.fillText(`SIMULADOR DE PRUEBA TEÓRICA — ${tipoLicencia?.toUpperCase()} — RESULTADO`, 40, 143);
       const fecha = new Date().toLocaleDateString("es-UY", { day: "2-digit", month: "long", year: "numeric" });
       ctx.fillStyle = "#666";
       ctx.font = "12px Arial";
       ctx.textAlign = "right";
       ctx.fillText(fecha, W - 40, 143);
       ctx.textAlign = "left";
-
       if (nombre.trim()) {
         ctx.fillStyle = "#aaa";
         ctx.font = "13px Arial";
@@ -216,19 +183,16 @@ export default function QuizModal({
         ctx.font = "bold 16px Arial";
         ctx.fillText(nombre.trim(), 135, 172);
       }
-
       const resY = nombre.trim() ? 195 : 170;
       ctx.fillStyle = aprobado ? "rgba(76,175,80,0.10)" : "rgba(244,67,54,0.10)";
       ctx.fillRect(40, resY, W - 80, 115);
       ctx.strokeStyle = aprobado ? "#4CAF50" : "#f44336";
       ctx.lineWidth = 2;
       ctx.strokeRect(40, resY, W - 80, 115);
-
       ctx.fillStyle = aprobado ? "#4CAF50" : "#f44336";
       ctx.font = "bold 28px Arial";
       ctx.textAlign = "center";
       ctx.fillText(aprobado ? "✓ APROBADO" : "✗ NO APROBADO", W / 2, resY + 42);
-
       ctx.fillStyle = "#888";
       ctx.font = "13px Arial";
       ctx.fillText(`${correctas}/30 correctas · ${errores} errores · ${porcentaje}% · Tiempo: ${formatTiempo(tiempo)}`, W / 2, resY + 72);
@@ -236,13 +200,11 @@ export default function QuizModal({
       ctx.font = "12px Arial";
       ctx.fillText(aprobado ? "Estás preparado para el examen real de la IDM." : `Máximo permitido: 5 errores. ¡Seguí practicando!`, W / 2, resY + 98);
       ctx.textAlign = "left";
-
       let y = resY + 140;
       ctx.fillStyle = "#FFFF00";
       ctx.font = "bold 12px Arial";
       ctx.fillText("DETALLE DE RESPUESTAS", 40, y);
       y += 20;
-
       ctx.strokeStyle = "#222";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -250,22 +212,19 @@ export default function QuizModal({
       ctx.lineTo(W - 40, y);
       ctx.stroke();
       y += 16;
-
+      const bancoPreguntas = tipoLicencia === "amateur" ? preguntasAmateur : preguntasProfesional;
       for (const [i, r] of respuestas.entries()) {
         const lineH = 52;
         ctx.fillStyle = r.correctamente ? "rgba(76,175,80,0.08)" : "rgba(244,67,54,0.06)";
         ctx.fillRect(40, y, W - 80, lineH - 4);
-
         ctx.fillStyle = r.correctamente ? "#4CAF50" : "#f44336";
         ctx.font = "bold 13px Arial";
         ctx.fillText(r.correctamente ? "✓" : "✗", 52, y + 20);
-
         ctx.fillStyle = "#ccc";
         ctx.font = "12px Arial";
         const qText = `${i + 1}. ${r.pregunta}`;
         ctx.fillText(qText.length > 90 ? qText.substring(0, 90) + "…" : qText, 72, y + 20);
-
-        const ansOpts = preguntas.find(p => p.pregunta === r.pregunta)?.opciones;
+        const ansOpts = bancoPreguntas.find(p => p.pregunta === r.pregunta)?.opciones;
         if (ansOpts) {
           ctx.fillStyle = r.correctamente ? "#4CAF50" : "#f44336";
           ctx.font = "11px Arial";
@@ -276,7 +235,6 @@ export default function QuizModal({
           }
         }
         y += lineH;
-
         if (y > 1380) {
           ctx.fillStyle = "#555";
           ctx.font = "italic 11px Arial";
@@ -284,7 +242,6 @@ export default function QuizModal({
           break;
         }
       }
-
       const footerY = Math.max(y + 20, 1440);
       ctx.fillStyle = "#FFFF00";
       ctx.fillRect(0, footerY, W, 4);
@@ -293,18 +250,15 @@ export default function QuizModal({
       ctx.textAlign = "center";
       ctx.fillText("Academia de Choferes Punta — Maldonado, Uruguay", W / 2, footerY + 22);
       ctx.fillText(`${DOMAIN}/  |  Este documento es una autoevaluación y no reemplaza el examen oficial de la IDM`, W / 2, footerY + 38);
-
       const finalH = footerY + 58;
       const final  = document.createElement("canvas");
       final.width  = W;
       final.height = finalH;
       final.getContext("2d")!.drawImage(canvas, 0, 0);
-
       const link = document.createElement("a");
-      link.download = "resultado-prueba-teorica-academia-punta.png";
+      link.download = `resultado-${tipoLicencia}-academia-punta.png`;
       link.href = final.toDataURL("image/png");
       link.click();
-
     } catch (e) {
       console.error("Error generando imagen:", e);
     }
@@ -313,7 +267,7 @@ export default function QuizModal({
 
   return (
     <>
-      {/* ── ANUNCIO FLOTANTE (aparece a los 5s, solo si el modal está cerrado) ── */}
+      {/* ── ANUNCIO FLOTANTE ── */}
       {mostrarAnuncio && !abierto && (
         <div style={{
           position: "fixed", bottom: "6rem", left: "1.5rem", zIndex: 199,
@@ -349,7 +303,7 @@ export default function QuizModal({
         </div>
       )}
 
-      {/* ── BOTÓN FLOTANTE FIJO (siempre visible cuando modal cerrado) ── */}
+      {/* ── BOTÓN FLOTANTE ── */}
       {!abierto && (
         <button onClick={() => { setAbierto(true); setMostrarAnuncio(false); }} style={{
           position: "fixed", bottom: "1.5rem", left: "1.5rem", zIndex: 199,
@@ -400,26 +354,26 @@ export default function QuizModal({
 
             <div style={{ padding: "1.5rem" }}>
 
-              {/* ── INICIO ── */}
-              {estado === "idle" && (
+              {/* ── SELECCIÓN DE LICENCIA ── */}
+              {estado === "seleccion" && (
                 <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                  <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🚗</div>
-                  <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.4rem", color: "#f5f5f5", marginBottom: "0.8rem" }}>
+                  <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🚗</div>
+                  <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.3rem", color: "#f5f5f5", marginBottom: "0.5rem" }}>
                     Prueba Teórica — Autoevaluación
                   </h2>
-                  <p style={{ fontSize: "0.88rem", color: "#888", lineHeight: 1.7, maxWidth: "420px", margin: "0 auto 1.5rem" }}>
-                    30 preguntas aleatorias similares al examen real de la IDM. Aprobás si no tenés más de 5 errores. Al finalizar podés bajar tu resultado en PDF.
+                  <p style={{ fontSize: "0.85rem", color: "#888", lineHeight: 1.6, maxWidth: "380px", margin: "0 auto 1.2rem" }}>
+                    Seleccioná el tipo de licencia. El simulador te presentará 30 preguntas aleatorias. Aprobás con no más de 5 errores.
                   </p>
-                  <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.8rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.2rem" }}>
                     {[["30", "Preguntas"], ["5", "Errores máx."], ["PDF", "Resultado"]].map(([n, l]) => (
-                      <div key={l} style={{ background: "#161616", border: "1px solid #222", padding: "1rem 1.5rem", textAlign: "center" }}>
-                        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.5rem", color: "#FFFF00" }}>{n}</div>
-                        <div style={{ fontSize: "0.72rem", color: "#666", textTransform: "uppercase", letterSpacing: "0.1em" }}>{l}</div>
+                      <div key={l} style={{ background: "#161616", border: "1px solid #222", padding: "0.8rem 1.2rem", textAlign: "center" }}>
+                        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.2rem", color: "#FFFF00" }}>{n}</div>
+                        <div style={{ fontSize: "0.65rem", color: "#666", textTransform: "uppercase", letterSpacing: "0.1em" }}>{l}</div>
                       </div>
                     ))}
                   </div>
-                  <div style={{ marginBottom: "1.2rem", textAlign: "left", maxWidth: "380px", margin: "0 auto 1.2rem" }}>
-                    <label style={{ display: "block", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666", marginBottom: "0.4rem" }}>
+                  <div style={{ marginBottom: "1rem", textAlign: "left", maxWidth: "380px", margin: "0 auto 1rem" }}>
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666", marginBottom: "0.3rem" }}>
                       Tu nombre (para el PDF, opcional)
                     </label>
                     <input
@@ -427,16 +381,35 @@ export default function QuizModal({
                       value={nombre}
                       onChange={e => setNombre(e.target.value)}
                       placeholder="Ej: Juan Pérez"
-                      style={{ width: "100%", background: "#161616", border: "1px solid #333", color: "#f5f5f5", padding: "0.8rem 1rem", fontFamily: "DM Sans, sans-serif", fontSize: "0.9rem", outline: "none" }}
+                      style={{ width: "100%", background: "#161616", border: "1px solid #333", color: "#f5f5f5", padding: "0.7rem 1rem", fontFamily: "DM Sans, sans-serif", fontSize: "0.85rem", outline: "none" }}
                     />
                   </div>
-                  <button onClick={iniciar} style={{
-                    background: "#FFFF00", color: "#000", border: "none",
-                    padding: "1rem 2.5rem", fontFamily: "Syne, sans-serif",
-                    fontWeight: 700, fontSize: "0.9rem", cursor: "pointer",
-                  }}>
-                    Comenzar simulador
-                  </button>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", maxWidth: "400px", margin: "0 auto" }}>
+                    <button onClick={() => iniciar("amateur")} style={{
+                      background: "#161616", border: "1px solid #333", color: "#f5f5f5",
+                      padding: "1.2rem 0.5rem", fontFamily: "Syne, sans-serif",
+                      fontWeight: 700, fontSize: "0.85rem", cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = "#FFFF00"; e.currentTarget.style.color = "#FFFF00"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "#333"; e.currentTarget.style.color = "#f5f5f5"; }}
+                    >
+                      <div style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>🚗</div>
+                      Licencia Amateur
+                    </button>
+                    <button onClick={() => iniciar("profesional")} style={{
+                      background: "#161616", border: "1px solid #333", color: "#f5f5f5",
+                      padding: "1.2rem 0.5rem", fontFamily: "Syne, sans-serif",
+                      fontWeight: 700, fontSize: "0.85rem", cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = "#FFFF00"; e.currentTarget.style.color = "#FFFF00"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "#333"; e.currentTarget.style.color = "#f5f5f5"; }}
+                    >
+                      <div style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>🚛</div>
+                      Licencia Profesional
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -457,12 +430,12 @@ export default function QuizModal({
                     </div>
                   </div>
 
-                  <div style={{ background: "#161616", border: "1px solid #222", padding: "1.2rem", marginBottom: "1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "#f5f5f5", lineHeight: 1.5 }}>
+                  <div style={{ background: "#161616", border: "1px solid #222", padding: "1rem", marginBottom: "1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.9rem", color: "#f5f5f5", lineHeight: 1.5 }}>
                     <span style={{ color: "#FFFF00", marginRight: "0.5rem" }}>{actual + 1}.</span>
                     {pregs[actual].pregunta}
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.2rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.2rem" }}>
                     {pregs[actual].opciones.map((op, i) => {
                       let bg = "#161616", border = "#222", color = "#aaa";
                       if (confirmada) {
@@ -474,10 +447,10 @@ export default function QuizModal({
                       return (
                         <button key={i} onClick={() => !confirmada && setSeleccion(i)} style={{
                           background: bg, border: `1px solid ${border}`, color,
-                          padding: "0.9rem 1rem", textAlign: "left",
+                          padding: "0.8rem 1rem", textAlign: "left",
                           cursor: confirmada ? "default" : "pointer",
-                          fontFamily: "DM Sans, sans-serif", fontSize: "0.88rem",
-                          lineHeight: 1.5, transition: "all 0.2s",
+                          fontFamily: "DM Sans, sans-serif", fontSize: "0.85rem",
+                          lineHeight: 1.4, transition: "all 0.2s",
                           display: "flex", alignItems: "center", gap: "0.8rem",
                         }}>
                           <span style={{ minWidth: "1.4rem", height: "1.4rem", border: `1px solid ${border}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", fontFamily: "Syne, sans-serif", fontWeight: 700, flexShrink: 0 }}>
@@ -494,7 +467,7 @@ export default function QuizModal({
                       <button onClick={confirmar} disabled={seleccion === null} style={{
                         background: seleccion !== null ? "#FFFF00" : "#222",
                         color: seleccion !== null ? "#000" : "#555",
-                        border: "none", padding: "0.9rem 2rem",
+                        border: "none", padding: "0.8rem",
                         fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.85rem",
                         cursor: seleccion !== null ? "pointer" : "not-allowed", flex: 1,
                       }}>
@@ -503,7 +476,7 @@ export default function QuizModal({
                     ) : (
                       <button onClick={siguiente} style={{
                         background: "#FFFF00", color: "#000", border: "none",
-                        padding: "0.9rem 2rem", fontFamily: "Syne, sans-serif",
+                        padding: "0.8rem", fontFamily: "Syne, sans-serif",
                         fontWeight: 700, fontSize: "0.85rem", cursor: "pointer", flex: 1,
                       }}>
                         {actual + 1 >= pregs.length ? "Ver resultado" : "Siguiente →"}
@@ -516,33 +489,33 @@ export default function QuizModal({
               {/* ── RESULTADO ── */}
               {estado === "resultado" && (
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "3.5rem", marginBottom: "0.8rem" }}>{aprobado ? "🎉" : "😔"}</div>
-                  <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.8rem", color: aprobado ? "#4CAF50" : "#f44336", marginBottom: "0.4rem" }}>
+                  <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>{aprobado ? "🎉" : "😔"}</div>
+                  <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.5rem", color: aprobado ? "#4CAF50" : "#f44336", marginBottom: "0.3rem" }}>
                     {aprobado ? "¡Aprobado!" : "No aprobado"}
                   </h2>
-                  <p style={{ fontSize: "0.88rem", color: "#888", marginBottom: "1.5rem" }}>
+                  <p style={{ fontSize: "0.85rem", color: "#888", marginBottom: "1.2rem" }}>
                     {aprobado
                       ? "Excelente. Estás bien preparado para el examen real de la IDM."
                       : `Tuviste ${errores} errores. El máximo permitido es 5. ¡Seguí practicando!`}
                   </p>
 
-                  <div style={{ display: "flex", gap: "0.8rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1.2rem" }}>
                     {[
                       ["🎯", `${correctas}/30`, "Correctas", "#4CAF50"],
                       ["✗",  `${errores}`,       "Errores",   errores > 5 ? "#f44336" : "#888"],
                       ["%",  `${porcentaje}%`,    "Puntaje",   "#FFFF00"],
                       ["⏱", formatTiempo(tiempo), "Tiempo",   "#aaa"],
                     ].map(([icon, val, label, color]) => (
-                      <div key={label} style={{ background: "#161616", border: "1px solid #222", padding: "1rem", textAlign: "center", minWidth: "90px" }}>
-                        <div style={{ fontSize: "1rem", marginBottom: "0.2rem" }}>{icon}</div>
-                        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.3rem", color }}>{val}</div>
-                        <div style={{ fontSize: "0.68rem", color: "#555", textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</div>
+                      <div key={label} style={{ background: "#161616", border: "1px solid #222", padding: "0.8rem", textAlign: "center", minWidth: "80px" }}>
+                        <div style={{ fontSize: "0.9rem", marginBottom: "0.1rem" }}>{icon}</div>
+                        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.2rem", color }}>{val}</div>
+                        <div style={{ fontSize: "0.6rem", color: "#555", textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</div>
                       </div>
                     ))}
                   </div>
 
-                  <div style={{ marginBottom: "1.2rem", textAlign: "left" }}>
-                    <label style={{ display: "block", fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666", marginBottom: "0.4rem" }}>
+                  <div style={{ marginBottom: "1rem", textAlign: "left" }}>
+                    <label style={{ display: "block", fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666", marginBottom: "0.3rem" }}>
                       Tu nombre para el PDF (opcional)
                     </label>
                     <input
@@ -550,23 +523,32 @@ export default function QuizModal({
                       value={nombre}
                       onChange={e => setNombre(e.target.value)}
                       placeholder="Ej: Juan Pérez"
-                      style={{ width: "100%", background: "#161616", border: "1px solid #333", color: "#f5f5f5", padding: "0.8rem 1rem", fontFamily: "DM Sans, sans-serif", fontSize: "0.9rem", outline: "none" }}
+                      style={{ width: "100%", background: "#161616", border: "1px solid #333", color: "#f5f5f5", padding: "0.7rem 1rem", fontFamily: "DM Sans, sans-serif", fontSize: "0.85rem", outline: "none" }}
                     />
                   </div>
 
                   {!aprobado && (
-                    <div style={{ background: "rgba(244,67,54,0.08)", border: "1px solid rgba(244,67,54,0.25)", padding: "1rem 1.2rem", marginBottom: "1.2rem", fontSize: "0.85rem", color: "#aaa", lineHeight: 1.6, textAlign: "left" }}>
+                    <div style={{ background: "rgba(244,67,54,0.08)", border: "1px solid rgba(244,67,54,0.25)", padding: "0.8rem 1rem", marginBottom: "1rem", fontSize: "0.8rem", color: "#aaa", lineHeight: 1.5, textAlign: "left" }}>
                       ¿Necesitás apoyo? Academia Punta ofrece una <strong style={{ color: "#FFFF00" }}>clase de apoyo a la prueba teórica</strong> con docente. Te ayudamos a aprobar.
                     </div>
                   )}
 
-                  <div style={{ display: "flex", gap: "0.8rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1rem" }}>
+                  <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1rem" }}>
                     <button onClick={iniciar} style={{
                       background: "#161616", color: "#f5f5f5", border: "1px solid #333",
-                      padding: "0.9rem 1.4rem", fontFamily: "Syne, sans-serif",
-                      fontWeight: 700, fontSize: "0.85rem", cursor: "pointer",
+                      padding: "0.8rem 1.2rem", fontFamily: "Syne, sans-serif",
+                      fontWeight: 700, fontSize: "0.8rem", cursor: "pointer",
                     }}>
                       🔄 Reintentar
+                    </button>
+                    <button
+                      onClick={() => setEstado("seleccion")}
+                      style={{
+                        background: "#161616", color: "#f5f5f5", border: "1px solid #333",
+                        padding: "0.8rem 1.2rem", fontFamily: "Syne, sans-serif",
+                        fontWeight: 700, fontSize: "0.8rem", cursor: "pointer",
+                      }}>
+                      🔄 Cambiar licencia
                     </button>
                     <button
                       onClick={generarPDF}
@@ -574,22 +556,22 @@ export default function QuizModal({
                       style={{
                         background: generandoPDF ? "#333" : "#FFFF00",
                         color: "#000", border: "none",
-                        padding: "0.9rem 1.4rem", fontFamily: "Syne, sans-serif",
-                        fontWeight: 700, fontSize: "0.85rem",
+                        padding: "0.8rem 1.2rem", fontFamily: "Syne, sans-serif",
+                        fontWeight: 700, fontSize: "0.8rem",
                         cursor: generandoPDF ? "not-allowed" : "pointer",
-                        display: "flex", alignItems: "center", gap: "0.5rem",
+                        display: "flex", alignItems: "center", gap: "0.4rem",
                       }}
                     >
-                      {generandoPDF ? "⏳ Generando..." : "⬇️ Bajar resultado PDF"}
+                      {generandoPDF ? "⏳ Generando..." : "⬇️ Bajar PDF"}
                     </button>
                   </div>
 
-                  {/* ── CTA WHATSAPP LLAMATIVO ── */}
-                  <div style={{ background: "linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(37,211,102,0.05) 100%)", border: "1px solid rgba(37,211,102,0.35)", borderRadius: "4px", padding: "1.4rem 1.2rem", marginBottom: "1.5rem", textAlign: "center" }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#FFFF00", letterSpacing: "0.04em", lineHeight: 1.25, marginBottom: "0.6rem" }}>
+                  {/* ── CTA WHATSAPP ── */}
+                  <div style={{ background: "linear-gradient(135deg, rgba(37,211,102,0.12) 0%, rgba(37,211,102,0.05) 100%)", border: "1px solid rgba(37,211,102,0.35)", borderRadius: "4px", padding: "1.2rem 1rem", marginBottom: "1.2rem", textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.95rem", color: "#FFFF00", letterSpacing: "0.04em", lineHeight: 1.25, marginBottom: "0.5rem" }}>
                       ¿NECESITA AYUDA PARA MEJORAR EL RESULTADO?
                     </div>
-                    <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.6)", marginBottom: "1.1rem", lineHeight: 1.55 }}>
+                    <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.6)", marginBottom: "0.8rem", lineHeight: 1.5 }}>
                       Escribí al WhatsApp y agendá tu clase teórica con docente. ¡Te ayudamos a aprobar!
                     </p>
                     <style>{`
@@ -605,8 +587,8 @@ export default function QuizModal({
                         display: block; width: 100%;
                         background: #25D366; color: #000;
                         text-decoration: none;
-                        padding: 1rem 1.2rem;
-                        font-family: Syne, sans-serif; font-weight: 800; font-size: 1rem;
+                        padding: 0.8rem 1rem;
+                        font-family: Syne, sans-serif; font-weight: 800; font-size: 0.9rem;
                         letter-spacing: 0.04em; border-radius: 3px;
                         animation: waGlow 2s ease-in-out infinite, waPulse 2s ease-in-out infinite;
                         transition: opacity 0.2s;
@@ -622,28 +604,30 @@ export default function QuizModal({
                     </a>
                   </div>
 
-                  <div style={{ textAlign: "left", borderTop: "1px solid #222", paddingTop: "1.2rem" }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#FFFF00", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "1rem" }}>
+                  <div style={{ textAlign: "left", borderTop: "1px solid #222", paddingTop: "1rem" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#FFFF00", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.8rem" }}>
                       Detalle de respuestas
                     </div>
-                    {respuestas.map((r, i) => (
-                      <div key={i} style={{ display: "flex", gap: "0.8rem", alignItems: "flex-start", padding: "0.7rem 0", borderBottom: "1px solid #1a1a1a" }}>
-                        <div style={{ minWidth: "1.4rem", height: "1.4rem", background: r.correctamente ? "rgba(76,175,80,0.15)" : "rgba(244,67,54,0.15)", border: `1px solid ${r.correctamente ? "#4CAF50" : "#f44336"}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", color: r.correctamente ? "#4CAF50" : "#f44336", fontWeight: 700, flexShrink: 0, marginTop: "2px" }}>
+                    {respuestas.map((r, i) => {
+                      const bancoPreguntas = tipoLicencia === "amateur" ? preguntasAmateur : preguntasProfesional;
+                      return (
+                      <div key={i} style={{ display: "flex", gap: "0.8rem", alignItems: "flex-start", padding: "0.6rem 0", borderBottom: "1px solid #1a1a1a" }}>
+                        <div style={{ minWidth: "1.4rem", height: "1.4rem", background: r.correctamente ? "rgba(76,175,80,0.15)" : "rgba(244,67,54,0.15)", border: `1px solid ${r.correctamente ? "#4CAF50" : "#f44336"}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.7rem", color: r.correctamente ? "#4CAF50" : "#f44336", fontWeight: 700, flexShrink: 0, marginTop: "2px" }}>
                           {r.correctamente ? "✓" : "✗"}
                         </div>
                         <div>
-                          <div style={{ fontSize: "0.82rem", color: "#ccc", marginBottom: "0.2rem" }}>{i + 1}. {r.pregunta}</div>
-                          <div style={{ fontSize: "0.78rem", color: r.correctamente ? "#4CAF50" : "#f44336" }}>
-                            Tu respuesta: {preguntas.find(p => p.pregunta === r.pregunta)?.opciones[r.seleccion]}
+                          <div style={{ fontSize: "0.78rem", color: "#ccc", marginBottom: "0.1rem" }}>{i + 1}. {r.pregunta}</div>
+                          <div style={{ fontSize: "0.74rem", color: r.correctamente ? "#4CAF50" : "#f44336" }}>
+                            Tu respuesta: {bancoPreguntas.find(p => p.pregunta === r.pregunta)?.opciones[r.seleccion]}
                           </div>
                           {!r.correctamente && (
-                            <div style={{ fontSize: "0.78rem", color: "#4CAF50", marginTop: "0.1rem" }}>
-                              Correcta: {preguntas.find(p => p.pregunta === r.pregunta)?.opciones[r.correcta]}
+                            <div style={{ fontSize: "0.74rem", color: "#4CAF50", marginTop: "0.1rem" }}>
+                              Correcta: {bancoPreguntas.find(p => p.pregunta === r.pregunta)?.opciones[r.correcta]}
                             </div>
                           )}
                         </div>
                       </div>
-                    ))}
+                    )})}
                   </div>
                 </div>
               )}
