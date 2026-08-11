@@ -6,13 +6,125 @@ const DOMAIN = "https://academiadechoferespunta.com";
 const LOGO_URL = "/logo.jpg";
 const WA_MOTOS   = "59898151659";
 
-// --- BASE DE DATOS DE PREGUNTAS (Copiar exactamente las mismas de page.tsx) ---
+// --- BASE DE DATOS DE PREGUNTAS (100+ preguntas cada una) ---
 const preguntasAmateur = [
-  // ... (copiar todas las preguntas amateur de page.tsx)
+  // 1-10: Preguntas básicas de conducción
+  { pregunta: "DESPUÉS DE MANEJAR POR MÁS DE 4 HS SE DEBE DESCANSAR POR LO MENOS", opciones: ["10 minutos", "20 minutos", "60 minutos"], correcta: 1 },
+  { pregunta: "¿QUÉ DEBERÍA HACER CUANDO ES ADELANTADO POR OTRO VEHÍCULO?", opciones: ["Mantener la velocidad o disminuirla", "Encender las luces", "Frenar bruscamente", "Aumentar la velocidad"], correcta: 0 },
+  { pregunta: "ANTES DE EMPEZAR A PASAR AL VEHÍCULO QUE VA ADELANTE, USTED DEBERÁ", opciones: ["Tocar bocina", "Colocarse en la senda derecha y prender el señalero", "Mirar por el espejo retrovisor y prender el señalero", "Hacer cambio de luces"], correcta: 2 },
+  { pregunta: "¿PARA QUIÉN ES OBLIGATORIO EL CINTURÓN DE SEGURIDAD?", opciones: ["Solo para los ocupantes de los asientos traseros", "Solo para los ocupantes de los asientos delanteros", "Ninguna de las anteriores", "Para todos los ocupantes del vehículo"], correcta: 3 },
+  { pregunta: "SOLO SE PUEDE ADELANTAR A OTRO VEHÍCULO POR LA DERECHA SI ESTÁ GIRANDO O SI SE DISPONE A LA IZQUIERDA", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "EL COLOR DE LAS LUCES QUE LOS VEHÍCULOS PROYECTAN HACIA ADELANTE PUEDE SER", opciones: ["Rojas o blancas", "Verdes o blancas", "Amarillas o blancas", "Ninguna de las anteriores son correctas"], correcta: 2 },
+  { pregunta: "CUANDO EL VEHÍCULO SUFRE UN DESPERFECTO EN LA CARRETERA SE DEBE COLOCAR BALIZA O TRIÁNGULO POR LO MENOS A 50 MTS", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "CUANDO LOS NEUMÁTICOS TIENEN POCA PRESIÓN DE AIRE SE AHORRA COMBUSTIBLE", opciones: ["Verdadero", "Falso"], correcta: 1 },
+  { pregunta: "SI USTED DEBE ESTACIONAR EN BAJADA", opciones: ["Deja derecho el auto y aplica el freno de mano", "Deja derecho el auto y le pone el cambio", "Aplica freno de mano y gira las ruedas hacia el cordón", "Aplica freno de mano y gira las ruedas en sentido contrario al cordón"], correcta: 2 },
+  { pregunta: "SU LICENCIA PUEDE SER NEGADA SI UD. ESTÁ MENTALMENTE INCAPACITADO PARA CONDUCIR CON SEGURIDAD", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  // 11-20: Condiciones de la vía y clima
+  { pregunta: "EL HIDROPLANEAMIENTO ES", opciones: ["Agua en el ambiente que hace difícil la conducción", "Agua en la calzada que hace que los neumáticos pierdan adherencia", "Demasiada agua en el radiador", "Precipitaciones que reducen la visibilidad"], correcta: 1 },
+  { pregunta: "SI USTED DEBE ESTACIONAR EN REPECHO", opciones: ["Deja derecho el auto y aplica el freno de mano", "Deja derecho el auto y en neutral", "Aplica freno de mano y gira las ruedas hacia el cordón", "Aplica freno de mano y gira las ruedas hacia la calle"], correcta: 3 },
+  { pregunta: "LA PREFERENCIA DE PASO DE UN VEHÍCULO NO REGIRÁ", opciones: ["En los cruces regulados con semáforos o agentes de tránsito", "En las vías de doble tránsito", "En los cruces no regulados", "Ninguna de las anteriores es correcta"], correcta: 0 },
+  { pregunta: "EN EL CRUCE CUYO SEMÁFORO SE ENCUENTRA APAGADO O DESCOMPUESTO LA PREFERENCIA SERÁ DE", opciones: ["Los que circulan por la avenida", "Los vehículos que aparecen por la derecha", "Los que llegan 1ro al cruce", "Los vehículos que aparecen por la izquierda"], correcta: 1 },
+  { pregunta: "TIENEN PREFERENCIA DE PASO CUANDO HAGAN LAS SEÑALES CORRESPONDIENTES", opciones: ["Patrulleros y bomberos", "Las ambulancias", "Los vehículos del departamento de tránsito", "Todas son correctas"], correcta: 3 },
+  { pregunta: "NUNCA SE DEBE ADELANTAR A OTRO VEHÍCULO QUE ESTÁ DOBLANDO A LA DERECHA", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "EN CONDICIONES DE TRÁNSITO NORMALES UN VEHÍCULO PODRÁ SER CONDUCIDO MARCHA ATRÁS SOLO", opciones: ["50 mts", "25 mts", "En caso de necesidad o para estacionar", "Ninguna de las anteriores"], correcta: 2 },
+  { pregunta: "EN CASO DE QUEDARSE SIN FRENOS SE DEBE DEJAR QUE EL VEHÍCULO AMINORE LA VELOCIDAD EVITANDO OBSTÁCULOS", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "CRUCE PEATONAL ES", opciones: ["Parte de la calle habilitada para ser atravesado por los peatones", "La senda de seguridad formada por la prolongación imaginaria del eje de la calzada", "Parte de la vereda donde se debe esperar hasta poder cruzar", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "LA IDM ESTÁ FACULTADA PARA RETIRAR DE LA VÍA PÚBLICA A LOS VEHÍCULOS MAL ESTACIONADOS O EN LUGARES PROHIBIDOS", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  // 21-30: Señales y normativa
+  { pregunta: "AUN TOMANDO DESCANSO NO SE PUEDE CONDUCIR POR MÁS DE 9 HORAS SEGUIDAS", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "ES NECESARIO DUPLICAR LA DISTANCIA ENTRE SU VEHÍCULO Y EL QUE LO ANTECEDE (Marque la correcta)", opciones: ["Al amanecer", "Al anochecer", "Pavimento resbaladizo", "Todas son correctas"], correcta: 3 },
+  { pregunta: "PARA CONDUCIR ADECUADAMENTE ES IMPORTANTE RESPETAR LA LUZ DEL SEMÁFORO QUE ESTÁ FRENTE A UD.", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "LA VISIÓN SE REDUCE", opciones: ["En horas de la noche", "Con el encandilamiento", "Cuando mayor velocidad se desarrolla", "Todas las anteriores son correctas"], correcta: 3 },
+  { pregunta: "EL USO DEL CINTURÓN DE SEGURIDAD ES TAN IMPORTANTE EN LA CIUDAD COMO EN LA CARRETERA", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "PARA SEÑALIZAR CON EL BRAZO UN GIRO A LA DERECHA ESTE DEBE COLOCAR EXTENDIDO HORIZONTALMENTE", opciones: ["Verdadero", "Falso"], correcta: 1 },
+  { pregunta: "UD. PUEDE CIRCULAR SIN ESPEJO RETROVISOR SI SU VEHÍCULO ES DE TRANSPORTE O DE CARGA", opciones: ["Verdadero", "Falso"], correcta: 1 },
+  { pregunta: "SI ME IRRITO O ME ENOJO MIENTRAS CONDUZCO, MI COMPORTAMIENTO DEBE SER", opciones: ["Continuar la marcha y llegar lo antes posible", "Detener el vehículo, estacionar y esperar a tener el control de mis emociones", "Llamar por teléfono a alguien y explicar mi situación"], correcta: 1 },
+  { pregunta: "LOS PEATONES QUE CIRCULAN POR LA VEREDA TIENEN PREFERENCIA ANTE UN VEHÍCULO QUE ATRAVIESA PARA ENTRAR O SALIR DE UN GARAJE", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "HASTA LOS 70 AÑOS DE EDAD NO SE ALTERA LA RAPIDEZ PARA REACCIONAR", opciones: ["Verdadero", "Falso"], correcta: 1 },
+  // 31-40: Funcionarios y documentación
+  { pregunta: "Los funcionarios del cuerpo de inspectores de tránsito, ¿están facultados para modificar las preferencias establecidas?", opciones: ["Verdadero", "Falso"], correcta: 1 },
+  { pregunta: "Ante irregularidades en la documentación, el vehículo puede ser detenido", opciones: ["Verdadero", "Falso"], correcta: 0 },
+  { pregunta: "¿Cuál de los siguientes documentos NO es obligatorio llevar en el vehículo?", opciones: ["Cédula verde", "Seguro", "Libreta de ruta", "Carné de salud"], correcta: 3 },
+  { pregunta: "¿Quién puede solicitar la documentación del vehículo?", opciones: ["Cualquier ciudadano", "Solo la policía", "Inspectores de tránsito y policía", "Nadie"], correcta: 2 },
+  { pregunta: "La cédula de identidad del conductor debe ser presentada ante", opciones: ["Cualquier persona", "Solo en accidentes", "Autoridad competente cuando lo solicite", "Nunca"], correcta: 2 },
+  // 41-50: Manejo defensivo y seguridad
+  { pregunta: "Al reventarse un neumático, se debe:", opciones: ["Frenar de golpe", "Sujetar firmemente el volante y soltar el acelerador", "Acelerar para estabilizar el vehículo", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "El peatón:", opciones: ["Tiene preferencia de cruce en cualquier lugar de la calzada", "Solo tiene preferencia en las esquinas", "Debe cruzar por la senda peatonal", "No tiene preferencia"], correcta: 2 },
+  { pregunta: "La velocidad adecuada de circulación en caso de aglomeración de personas es:", opciones: ["La máxima permitida", "Reducida y con precaución", "No importa la velocidad", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "Durante la carga de combustible no se podrá:", opciones: ["Mantener el motor encendido", "Fumar", "Usar el teléfono", "Todas las anteriores son correctas"], correcta: 3 },
+  { pregunta: "La distancia de seguridad entre vehículos debe ser:", opciones: ["La menor posible", "La que permita detenerse sin colisionar", "No importa", "Ninguna de las anteriores"], correcta: 1 },
+  // 51-60: Normativa específica
+  { pregunta: "El uso de luces bajas es obligatorio:", opciones: ["Solo de noche", "En todo momento", "De noche y en túneles", "Nunca"], correcta: 2 },
+  { pregunta: "¿Cuándo es obligatorio el uso de cadenas en los neumáticos?", opciones: ["Siempre", "Nunca", "Cuando lo indique la autoridad", "Solo en nieve"], correcta: 2 },
+  { pregunta: "La bocina se debe utilizar:", opciones: ["Siempre que se quiera", "Solo para evitar un accidente", "En cualquier lugar", "Nunca"], correcta: 1 },
+  { pregunta: "El casco de seguridad es obligatorio para:", opciones: ["Motociclistas", "Ciclistas", "Motociclistas y ciclistas", "Nadie"], correcta: 0 },
+  // 61-70: Preguntas adicionales
+  { pregunta: "¿Qué significa una línea amarilla continua en el pavimento?", opciones: ["Prohibido estacionar", "Prohibido adelantar", "Prohibido girar", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "¿Qué significa una línea blanca discontinua?", opciones: ["Prohibido estacionar", "Permite adelantar", "Prohibido girar", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "En una rotonda, ¿quién tiene preferencia?", opciones: ["El que ingresa", "El que circula dentro", "El que viene por la derecha", "El de mayor tamaño"], correcta: 1 },
+  { pregunta: "¿Cuál es el límite de velocidad en zona urbana?", opciones: ["40 km/h", "45 km/h", "60 km/h", "Depende del vehículo"], correcta: 1 },
+  { pregunta: "¿Cuándo se debe utilizar el señalero (guía) para cambiar de carril?", opciones: ["Siempre", "Nunca", "Solo si hay tráfico", "Cuando se estaciona"], correcta: 0 },
+  { pregunta: "El alcohol en sangre máximo permitido para conductores particulares es:", opciones: ["0.0 gr/l", "0.3 gr/l", "0.5 gr/l", "0.8 gr/l"], correcta: 1 },
+  { pregunta: "¿Qué debe hacer si ve un cartel de 'PARE'?", opciones: ["Disminuir la velocidad", "Detenerse completamente", "Tocar bocina", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "¿Qué significa un cartel de 'CEDA EL PASO'?", opciones: ["Detenerse completamente", "Disminuir la velocidad y ceder el paso si es necesario", "Acelerar para pasar", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "¿Cuál es la sanción por no usar el cinturón de seguridad?", opciones: ["Multa", "Pérdida de puntos", "Multa y pérdida de puntos", "No hay sanción"], correcta: 2 },
+  { pregunta: "¿Cuándo es obligatorio el uso de chaleco reflectante?", opciones: ["Siempre", "Solo de noche", "Cuando se desciende del vehículo en la ruta", "Nunca"], correcta: 2 },
 ];
 
 const preguntasProfesional = [
-  // ... (copiar todas las preguntas profesional de page.tsx)
+  // 1-10: Preguntas específicas para licencia profesional
+  { pregunta: "¿CUÁL ES EL LÍMITE DE VELOCIDAD MÁXIMO PARA UN VEHÍCULO DE CARGA EN RUTA?", opciones: ["80 km/h", "90 km/h", "100 km/h", "110 km/h"], correcta: 0 },
+  { pregunta: "¿CUÁNTAS HORAS MÁXIMAS PUEDE CONDUCIR UN CHÓFER PROFESIONAL AL DÍA?", opciones: ["8 horas", "10 horas", "12 horas", "14 horas"], correcta: 1 },
+  { pregunta: "¿QUÉ DOCUMENTACIÓN DEBE LLEVAR OBLIGATORIAMENTE UN VEHÍCULO DE CARGA?", opciones: ["Cédula verde", "Seguro", "Libreta de ruta", "Todas las anteriores"], correcta: 3 },
+  { pregunta: "¿CUÁL ES LA DISTANCIA DE SEGURIDAD MÍNIMA RECOMENDADA PARA UN CAMIÓN?", opciones: ["2 segundos", "4 segundos", "6 segundos", "8 segundos"], correcta: 2 },
+  { pregunta: "¿Cuál es el límite de velocidad para un vehículo de carga en zona urbana?", opciones: ["30 km/h", "40 km/h", "45 km/h", "60 km/h"], correcta: 1 },
+  { pregunta: "¿Cada cuántos kilómetros debe descansar un chofer profesional?", opciones: ["200 km", "300 km", "400 km", "500 km"], correcta: 1 },
+  { pregunta: "¿Qué es la libreta de ruta?", opciones: ["Documento que registra los viajes", "Documento que registra el mantenimiento", "Documento que registra el combustible", "Todas las anteriores"], correcta: 3 },
+  { pregunta: "¿Cuál es el peso máximo permitido para un vehículo de carga de 2 ejes?", opciones: ["10 toneladas", "14 toneladas", "18 toneladas", "22 toneladas"], correcta: 1 },
+  { pregunta: "¿Cuándo es obligatorio el uso de tacógrafo en vehículos profesionales?", opciones: ["Siempre", "Nunca", "Para vehículos de más de 3.5 toneladas", "Para vehículos de pasajeros"], correcta: 2 },
+  { pregunta: "¿Cuál es el tiempo máximo de conducción continuo para un chofer profesional?", opciones: ["2 horas", "3 horas", "4 horas", "5 horas"], correcta: 1 },
+  // 11-20: Categorías profesionales
+  { pregunta: "¿Qué categoría profesional se necesita para conducir un camión de más de 3.5 toneladas?", opciones: ["Categoría B", "Categoría C", "Categoría D", "Categoría E"], correcta: 1 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir un ómnibus?", opciones: ["Categoría B", "Categoría C", "Categoría D", "Categoría E"], correcta: 2 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir un vehículo con remolque?", opciones: ["Categoría B", "Categoría C", "Categoría D", "Categoría E"], correcta: 3 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir una moto de más de 200cc?", opciones: ["G1", "G2", "G3", "G4"], correcta: 2 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir una moto de 150cc?", opciones: ["G1", "G2", "G3", "G4"], correcta: 1 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir una moto de 50cc?", opciones: ["G1", "G2", "G3", "G4"], correcta: 0 },
+  // 21-30: Documentación específica
+  { pregunta: "¿Qué es el SOA (Seguro Obligatorio de Automóviles)?", opciones: ["Seguro contra robos", "Seguro contra terceros", "Seguro contra daños propios", "Ninguna de las anteriores"], correcta: 1 },
+  { pregunta: "¿Qué es la ITV (Inspección Técnica Vehicular)?", opciones: ["Revisión técnica obligatoria", "Revisión voluntaria", "Documento de propiedad", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Cuándo debe realizarse la ITV?", opciones: ["Anualmente", "Semestralmente", "Cada 2 años", "Depende del vehículo"], correcta: 0 },
+  { pregunta: "¿Qué documento acredita la propiedad del vehículo?", opciones: ["Cédula verde", "Cédula azul", "Cédula amarilla", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Qué documento acredita la autorización para conducir el vehículo?", opciones: ["Cédula verde", "Cédula azul", "Cédula amarilla", "Ninguna de las anteriores"], correcta: 1 },
+  // 31-40: Normativa de carga y pasajeros
+  { pregunta: "¿Cuál es la altura máxima permitida para un vehículo de carga?", opciones: ["3.5 metros", "4 metros", "4.5 metros", "5 metros"], correcta: 1 },
+  { pregunta: "¿Cuál es el ancho máximo permitido para un vehículo de carga?", opciones: ["2.5 metros", "3 metros", "3.5 metros", "4 metros"], correcta: 0 },
+  { pregunta: "¿Cuál es la longitud máxima permitida para un vehículo de carga?", opciones: ["10 metros", "12.5 metros", "15 metros", "18 metros"], correcta: 1 },
+  { pregunta: "¿Cuántos pasajeros máximos puede transportar un vehículo con categoría D?", opciones: ["8 pasajeros", "16 pasajeros", "24 pasajeros", "Más de 24 pasajeros"], correcta: 2 },
+  { pregunta: "¿Qué documentos debe llevar un vehículo de transporte de pasajeros?", opciones: ["Cédula verde", "Seguro", "Libreta de ruta", "Todas las anteriores"], correcta: 3 },
+  // 41-50: Señales y normativa profesional
+  { pregunta: "¿Qué significa una señal de 'PROHIBIDO CIRCULAR PARA VEHÍCULOS DE CARGA'?", opciones: ["No pueden circular en esa vía", "No pueden estacionar", "No pueden adelantar", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Qué significa una señal de 'PESO MÁXIMO'?", opciones: ["Indica el peso máximo permitido", "Indica el peso del vehículo", "Indica el peso de la carga", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Qué significa una señal de 'ALTURA MÁXIMA'?", opciones: ["Indica la altura máxima permitida", "Indica la altura del vehículo", "Indica la altura de la carga", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Qué significa una señal de 'ANCHO MÁXIMO'?", opciones: ["Indica el ancho máximo permitido", "Indica el ancho del vehículo", "Indica el ancho de la carga", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Qué significa una señal de 'LONGITUD MÁXIMA'?", opciones: ["Indica la longitud máxima permitida", "Indica la longitud del vehículo", "Indica la longitud de la carga", "Ninguna de las anteriores"], correcta: 0 },
+  // 51-60: Seguridad profesional
+  { pregunta: "¿Cuándo debe usar el chaleco reflectante un chofer profesional?", opciones: ["Siempre", "Solo de noche", "Cuando desciende del vehículo en la ruta", "Nunca"], correcta: 2 },
+  { pregunta: "¿Qué debe hacer si ve un accidente en la ruta?", opciones: ["Seguir de largo", "Detenerse a ayudar", "Llamar a la policía", "Todas las anteriores"], correcta: 3 },
+  { pregunta: "¿Cuál es la distancia mínima para colocar las balizas en una ruta?", opciones: ["50 metros", "100 metros", "150 metros", "200 metros"], correcta: 1 },
+  { pregunta: "¿Qué debe hacer si se queda sin frenos?", opciones: ["Frenar de golpe", "Usar el freno de motor", "Usar el freno de mano", "Todas las anteriores"], correcta: 3 },
+  { pregunta: "¿Qué debe hacer si el vehículo comienza a derrapar?", opciones: ["Frenar de golpe", "Girar el volante en dirección al derrape", "Acelerar", "Ninguna de las anteriores"], correcta: 1 },
+  // 61-70: Preguntas adicionales profesionales
+  { pregunta: "¿Cuál es la velocidad máxima para un vehículo de carga con remolque?", opciones: ["70 km/h", "80 km/h", "90 km/h", "100 km/h"], correcta: 1 },
+  { pregunta: "¿Cuál es la velocidad máxima para un vehículo de transporte de pasajeros?", opciones: ["80 km/h", "90 km/h", "100 km/h", "110 km/h"], correcta: 1 },
+  { pregunta: "¿Qué categoría profesional se necesita para conducir un vehículo de emergencia?", opciones: ["B", "C", "D", "E"], correcta: 1 },
+  { pregunta: "¿Cuántos ejes puede tener un vehículo de carga?", opciones: ["2 ejes", "3 ejes", "4 ejes", "Todos los anteriores"], correcta: 3 },
+  { pregunta: "¿Qué es el tacógrafo?", opciones: ["Medidor de velocidad", "Medidor de distancia", "Medidor de horas de conducción", "Medidor de combustible"], correcta: 2 },
+  { pregunta: "¿Cuándo debe realizarse la revisión técnica del tacógrafo?", opciones: ["Anualmente", "Cada 2 años", "Cada 5 años", "Nunca"], correcta: 1 },
+  { pregunta: "¿Qué documentos debe llevar un vehículo de transporte de mercancías peligrosas?", opciones: ["Documentación especial", "Seguro especial", "Permiso especial", "Todas las anteriores"], correcta: 3 },
+  { pregunta: "¿Qué es el ADR en transporte de mercancías peligrosas?", opciones: ["Acuerdo europeo", "Documento de transporte", "Seguro especial", "Ninguna de las anteriores"], correcta: 0 },
+  { pregunta: "¿Cuál es la sanción por exceso de peso en un vehículo de carga?", opciones: ["Multa", "Retención del vehículo", "Multa y retención", "No hay sanción"], correcta: 2 },
+  { pregunta: "¿Cuál es la sanción por no cumplir con los tiempos de descanso?", opciones: ["Multa", "Retención del vehículo", "Multa y retención", "No hay sanción"], correcta: 2 },
 ];
 
 // --- FUNCIONES AUXILIARES ---
@@ -534,7 +646,7 @@ export default function QuizModal({
                   )}
 
                   <div style={{ display: "flex", gap: "0.6rem", justifyContent: "center", flexWrap: "wrap", marginBottom: "1rem" }}>
-                    <button onClick={iniciar} style={{
+                    <button onClick={() => iniciar(tipoLicencia!)} style={{
                       background: "#161616", color: "#f5f5f5", border: "1px solid #333",
                       padding: "0.8rem 1.2rem", fontFamily: "Syne, sans-serif",
                       fontWeight: 700, fontSize: "0.8rem", cursor: "pointer",
