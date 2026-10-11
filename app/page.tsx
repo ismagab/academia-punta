@@ -573,6 +573,12 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 
 /* ══ FLEET CAROUSEL ══ */
 const fleetItems = [
+  {src:"/fotos/electrico-1.jpg", label:"Nuevo vehículo 100% eléctrico", cat:"Eléctrico"},
+  {src:"/fotos/electrico-2.jpg", label:"Clases en inglés — vehículo eléctrico", cat:"Eléctrico"},
+  {src:"/fotos/electrico-3.jpg", label:"Driving Lessons — English Speaking Instructor", cat:"Eléctrico"},
+  {src:"/fotos/automatico-1.jpg", label:"Vehículo automático — clases de manejo", cat:"Automático"},
+  {src:"/fotos/automatico-2.jpg", label:"Vehículo automático — clases de manejo", cat:"Automático"},
+  {src:"/fotos/automatico-3.jpg", label:"Vehículo automático — clases de manejo", cat:"Automático"},
   {src:"/fotos/1001079125.jpg", label:"Instructores", cat:"Instructores"},
   {src:"/fotos/1001079209.jpg", label:"Auto", cat:"Auto"},
   {src:"/fotos/1001079134.jpg", label:"Auto", cat:"Auto"},
@@ -1009,6 +1015,33 @@ export default function Home() {
           <div className="section-tag"><span>Nuestros vehículos</span></div>
           <h2 className="section-title reveal-left">Flota <span>de la academia</span></h2>
           <p style={{color:"rgba(255,255,255,0.55)",marginBottom:"1.5rem",fontSize:"0.9rem"}}>Vehículos nuevos, registrados y habilitados</p>
+
+          {/* DESTACADO: VEHÍCULO ELÉCTRICO */}
+          <div style={{
+            display:"flex",flexWrap:"wrap",marginBottom:"1.8rem",overflow:"hidden",
+            borderRadius:"8px",border:"1px solid rgba(255,255,255,0.12)",
+            background:"linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))",
+          }}>
+            <div style={{flex:"1 1 340px",minHeight:"260px",position:"relative"}}>
+              <Image src="/fotos/electrico-hero.jpg" alt="Nuevo vehículo eléctrico de Academia Punta frente al mar" width={1600} height={900}
+                style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}} unoptimized/>
+            </div>
+            <div style={{flex:"1 1 320px",padding:"clamp(1.2rem,3vw,2rem)",display:"flex",flexDirection:"column",justifyContent:"center",gap:"0.7rem"}}>
+              <span style={{
+                alignSelf:"flex-start",background:"var(--yellow)",color:"var(--black)",
+                fontFamily:"Barlow Condensed,sans-serif",fontWeight:800,fontSize:"0.75rem",
+                letterSpacing:"0.12em",textTransform:"uppercase",padding:"0.25rem 0.7rem",borderRadius:"2px",
+              }}>⚡ Nuevo · 100% eléctrico</span>
+              <h3 style={{
+                fontFamily:"Barlow Condensed,sans-serif",fontWeight:900,color:"#fff",
+                fontSize:"clamp(1.7rem,4vw,2.5rem)",lineHeight:1.05,textTransform:"uppercase",margin:0,
+              }}>Nos sumamos a la <span style={{color:"var(--yellow)"}}>nueva era</span></h3>
+              <p style={{color:"rgba(255,255,255,0.75)",fontSize:"0.95rem",lineHeight:1.55,margin:0}}>
+                Incorporamos un vehículo eléctrico a nuestra flota: manejo silencioso, moderno y pensado para aprender con la tecnología que ya es el presente. Con instructor que habla inglés.
+              </p>
+            </div>
+          </div>
+
           <FleetCarousel/>
         </div>
       </div>
